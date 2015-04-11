@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<constant name="struts.i18n.encoding" value="UTF-8"/>  
+	<package name="DOWNLOAD" namespace="/DownloadRecoder" extends="struts-default" >
+		<action name="*" class="lab.dmis.web.DownloadRecoderAction" method="{1}">
+		<result name="delete" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param>
+			</result>	
+		</action>
+	</package>
+	
+	<package name="Docdownload" namespace="/Download" extends="struts-default" >
+		<action name="downloadDoc" class="lab.dmis.web.DownloadAction" >
+		  <param name="fileName"></param>
+		<result name="loadSuccess" type="stream">
+				<!--   <param name="contentType">application/octet-stream;charset=ISO8859-1</param> -->
+
+				<param name="contentDisposition">fileName=${downloadFileName}</param>				
+				 <param name="bufferSize">4096</param><!--下载缓冲区大小-->              
+             <param name="inputName">downLoadFile</param>
+			</result>	
+		</action>
+	</package>
+</struts>

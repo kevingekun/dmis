@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<constant name="struts.i18n.encoding" value="UTF-8"/>  
+	<package name="NOTICE" namespace="/Notice" extends="struts-default" >
+		<action name="*" class="lab.dmis.web.NoticeAction" method="{1}">
+			<result name="list">../notice.jsp</result>
+			<result name="listNotice" type="redirect">/Notice/listNotice?pageNo=${#request.pageNo}</result>
+			<result name="listAll">/noticeAll.jsp</result>
+		</action>
+	</package>
+</struts>

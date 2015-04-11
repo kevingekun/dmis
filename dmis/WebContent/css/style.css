@@ -1,0 +1,36 @@
+ul#typeMenu,ul#typeMenu ul{
+	margin:0;list-style:none;padding:0;width:100%;}
+ul#typeMenu ul{
+	display:none;position:absolute;left:100%;top:0;}
+ul#typeMenu li:hover>*{
+	display:block;}
+ul#typeMenu li{
+	position:relative;display:block;white-space:nowrap;font-size:0;}
+ul#typeMenu li:hover{
+	z-index:1;}
+ul#typeMenu ul ul{
+	position:absolute;left:100%;top:0;}
+ul#typeMenu{
+	font-size:0;z-index:999;position:relative;display:block;float:left;}
+ul#typeMenu>li{
+	margin:3px 0 0;}
+ul#typeMenu a:active, ul#typeMenu a:focus{
+	outline-style:none;}
+ul#typeMenu a{
+	display:block;vertical-align:middle;text-align:left;text-decoration:none;font:14px Trebuchet MS;color:#FFF;cursor:pointer;padding:10px;background-image:none;background-repeat:repeat;}
+ul#typeMenu ul li{
+	float:none;margin:0 0 0;}
+ul#typeMenu ul a{
+	text-align:left;color:#FFF;text-decoration:none;}
+ul#typeMenu li:hover>a,ul#typeMenu li a.pressed{
+	background-color:#00aaff;text-decoration:none;}
+ul#typeMenu span{
+	display:block;overflow:visible;background-image:url("arrowsub.png");background-position:right center;background-repeat:no-repeat;padding-right:14px;}
+ul#typeMenu ul span{
+	background-image:url("arrowsub.png");padding-right:14px;}
+ul#typeMenu ul li:hover>a,ul#typeMenu ul li a.pressed{
+	color:#ffffff;text-decoration:none;}
+ul#typeMenu li.topfirst>a{
+	border-width:0;}
+ul#typeMenu li.subfirst>a{
+	border-width:0;}

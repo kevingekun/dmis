@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <package name="Comment" namespace="/Comment"  extends="json-default">
+        <action name="*" class="lab.dmis.web.CommentAction" method="{1}">
+            <result name="pdfsuccess" type="redirect">/Doc/hrefsearch?docId=${#request.docId}</result>
+            <result name="officesuccess" type="redirect">/Doc/hrefsearch?docId=${#request.docId}</result>
+            <result name="applicationSuccess" type="json" />
+            <result name="listSuccess">/alterDoc.jsp</result>
+            <result name="listByhaveHandledSuccess">/alterDoc.jsp</result>
+            <result name="alterHaveHandledSuccess" type="json" />
+            
+        </action>
+    </package>
+    
+</struts>

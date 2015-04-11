@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<constant name="struts.i18n.encoding" value="UTF-8"/>  
+		<package name="USER" namespace="/User" extends="struts-default" >
+			<action name="*" class="lab.dmis.web.UserAction" method="{1}">
+				<result name="loginOut" type="redirect">login.jsp</result>
+				<result name="personalCenter">/personalCenter.jsp</result>
+			
+				<result name="list">../personnel.jsp</result>
+				
+				<result name="error">../error.jsp</result>
+				<result name="listUser" type="redirect">/User/listUser?pageNo=${#request.pageNo}</result>
+				<!-- <result name="updateUser">/personalCenter.jsp</result> -->
+				<!-- <result name="resetpassword">/login.jsp</result>  -->
+			</action>
+			
+		</package>
+		<package name="Page" namespace="/Page" extends="struts-default" >
+			<action name="getPage*" class="lab.dmis.web.UserAction" method="pageRequest">
+			<result name="success">/{1}.jsp</result>
+		</action>
+		</package>
+		<package name="Admin" namespace="/Admin" extends="struts-default" >
+			<action name="getAdmin*" class="lab.dmis.web.UserAction" method="getAdmin{1}">
+			<result name="index">../welcome.jsp</result>
+		</action>
+	</package>
+</struts>
