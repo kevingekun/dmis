@@ -1,6 +1,5 @@
 body {
 	margin: 0;
-	font-family:"¿¬Ìå";
 	font-size: 15px;
 	line-height: 20px;
 	background-color:#2E3740;
@@ -23,6 +22,7 @@ padding-left:30px;
 width:180px;
 height:180px;
 }
+
 #sidebar > ul {
 	list-style: none;
 	background:#2E3740;
@@ -54,12 +54,14 @@ height:15px;
 	color:#666F79;
 	text-decoration: none;
 }
+
 #sidebar > ul > li > a:hover {
 background-color: #27a9e3;
 border-bottom: 1px solid #27a9e3;
 border-top: 1px solid #27a9e3;
 color:#fff;
 }
+
 #sidebar > ul > li > a > i {
 	margin-right:1px;
 	

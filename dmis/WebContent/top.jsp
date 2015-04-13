@@ -14,7 +14,7 @@
 <body>
 	<div id="all_top">
 		<div id="img">
-			<img src="images/backgrounds/logo1.png" />
+			<img src="images/backgrounds/logo.png" />
 		</div>
 		<div id="menu_all">
 			<div id="menu" style="z-index: 22;">

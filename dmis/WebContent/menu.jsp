@@ -16,7 +16,7 @@
 </head>
 <body>
 <div id="sidebar">
-  <img id="img_admin" src="images/backgrounds/admin1.png	"/>
+  <img id="img_admin" src="images/backgrounds/admin.png	"/>
   <ul>
     <li class="fristChild"> 
 		<a href="Doc/list?state=2" target="admin_menu">
@@ -53,21 +53,20 @@
 			<span>类型管理</span>
 		</a>
 	</li>
-	<!-- <li>
+	<li>
 		<a href="Comment/listByhaveHandled?haveHandled=0" target="admin_menu">
 			<i class="icon icon-fullscreen"></i> 
 			<img src="images/backgrounds/comment.png"/>
 			<span>评论管理</span>
 		</a>
-	</li> -->
-	<!-- <li>
-		<a >href="Info/getInfo" target="admin_menu"
+	</li>
+	<li>
+		<a href="Info/getInfo" target="admin_menu">
 			<i class="icon icon-fullscreen"></i> 
-			<img src="images/backgrounds/comment.png"/>
+			<img src="images/backgrounds/info.png"/>
 			<span>信息统计</span>
 		</a>
-	</li> -->
-
+	</li>
   </ul>
 </div>
 </body>
