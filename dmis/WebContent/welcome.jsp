@@ -13,7 +13,7 @@
 	<frame  src="top.jsp" noresize="noresize" scrolling="no"/>
 	<frameset cols="16.8%,83.2%" >
 		<frame src="menu.jsp" noresize="noresize" scrolling="no"/>
-		<frame src="content.jsp" name="admin_menu"  noresize="noresize " scrolling="auto"></frame>
+		<frame src="content.jsp" name="admin_menu"  noresize="noresize " scrolling="no"></frame>
 	</frameset>
 </frameset><noframes></noframes>
 

@@ -95,10 +95,10 @@
 								</div>
 								<br />
 								<div class="main_input_box">
-									<span class="add-on bg_lg"><li class="icon-file"></li></span><input
-										type="text" id="txt" style="width: 203px;"> <span
-										class="add-on bg_ic" onclick="f.click()"><a
-										style="color: #2E363F;" href="javascript:void(0);">浏览</a></span> <br>
+									<span class="add-on bg_lg"><li class="icon-file"></li></span>
+									<input type="text" id="txt" style="width: 203px;"> 
+									<span class="add-on bg_ic" onclick="$('#f').click()">
+										<a style="color: #2E363F;" href="javascript:void(0);">浏览</a></span> <br>
 									<input type="file" id="f" onchange="txt.value=this.value"
 										name="uploadFile" class="files" onblur="checkType('file')" />
 									<input type="button" class="btn btn-success"
@@ -206,10 +206,10 @@
 								</div>
 								<br />
 								<div class="main_input_box">
-									<span class="add-on bg_lg"><li class="icon-file"></li></span><input
-										type="text" id="txt" style="width: 190px;"> <span
-										class="add-on bg_ic" onclick="f.click()"><a
-										style="color: #2E363F;" href="javascript:void(0);">浏览</a></span> <br>
+									<span class="add-on bg_lg"><li class="icon-file"></li></span>
+									<input type="text" id="txt" style="width: 190px;"> 
+									<span class="add-on bg_ic" onclick="$('#f').click()">
+									  <a style="color: #2E363F;" href="javascript:void(0);">浏览</a></span> <br>
 									<input type="file" id="f" onchange="txt.value=this.value"
 										name="uploadFile" class="files" onblur="checkType('file')" />
 									<input type="button" class="btn btn-success"
@@ -498,10 +498,10 @@
 					|| lastname.toLowerCase() == ".pptx"
 					|| lastname.toLowerCase() == ".xlsx"
 					|| lastname.toLowerCase() == ".zip") {
-				alertTip("您上传的文件类型为" + lastname + "文件类型不符");
+				alert("您上传的文件类型为" + lastname + "文件类型不符");
 				return false;
 			} else {
-				alertTip("文件类型符合，可以上传");
+				alert("文件类型符合，可以上传");
 			}
 			return true;
 		}
