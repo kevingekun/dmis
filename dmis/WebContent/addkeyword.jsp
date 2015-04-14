@@ -12,7 +12,7 @@
 <title>addkeyword</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link href='css/goolefont.css' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="css/goolefont.css" />
 <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
 <script src="js/jquery.min.js"></script> 
 </head>

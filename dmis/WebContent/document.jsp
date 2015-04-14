@@ -428,6 +428,11 @@
 		}
 		//加载文档类型
 		$("#fileEdit1").click(
+			function(){
+				location.href="adddoc.jsp";
+			}		
+		)
+		 $("#fileEdit111").click(
 				function() {
 					$("#infoEdit").removeAttr("style");
 					/* $("#mask").slideDown("fast"); */

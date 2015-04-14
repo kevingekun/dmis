@@ -8,7 +8,6 @@
 %>
 <base href="<%=basePath %>">
 <html>
-<link href="style.css" rel="stylesheet" type="text/css" />
 <body style="background:#f9f9f9;">
 管理员你好！！请点击左边进行操作！！
 </body>
