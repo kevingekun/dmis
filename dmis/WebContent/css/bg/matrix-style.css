@@ -56,10 +56,10 @@ height:15px;
 }
 
 #sidebar > ul > li > a:hover {
-background-color: #27a9e3;
+/* background-color: #27a9e3;
 border-bottom: 1px solid #27a9e3;
-border-top: 1px solid #27a9e3;
-color:#fff;
+border-top: 1px solid #27a9e3; */
+color:#ffff66;
 }
 
 #sidebar > ul > li > a > i {

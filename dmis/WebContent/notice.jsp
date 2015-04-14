@@ -10,16 +10,17 @@
 <base href="<%=basePath%>">
 <html>
 <head>
-<link href="css/bg/yetou.css" rel="stylesheet" type="text/css" />
-<link href="css/dmis.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/matrix-style.css" />
-<link rel="stylesheet" href="css/matrix-media.css" />
-<link rel="stylesheet" href="css/uniform.css" />
-<link rel="stylesheet" href="css/select2.css" />
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link href="css/matrix-style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
+<link rel="stylesheet" type="text/css" href="css/dmis.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
+<link rel="stylesheet" type="text/css" href="css/uniform.css" />
+<link rel="stylesheet" type="text/css" href="css/select2.css" />
+<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
@@ -29,11 +30,9 @@
 	<div class="widget-box">
 		<div class="widget-title">
 			<h5>公告管理</h5>
-			<a class="btn btn-small " style="margin: 5px 0 0 3px;"
-				onClick="dele();">删除选中</a>
+			<a class="btn btn-small gray" style="margin: 5px 0 0 3px;" onClick="dele();">删除选中</a>
 			<div class="widget-radio">
-				<input id="addNotice" class="btn btn-small" type="button"
-					value="新增公告" style="margin-bottom: 5px">
+				<input id="addNotice" class="btn btn-small blue" type="button" value="新增公告" style="margin-bottom: 5px">
 			</div>
 		</div>
 		<div id="infoEdit" style="display: none" align="center">
@@ -135,7 +134,7 @@
 								</td>
 								<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"><s:property value="content" /></td>
 								<td><s:date name="time" format="yyyy-MM-dd hh:mm" /></td>
-								<td><a class="btn btn-mini" href="Notice/delete2?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a></td>
+								<td><a class="btn btn-mini gray" href="Notice/delete2?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a></td>
 							</tr>
 						</s:iterator>
 					</tbody>

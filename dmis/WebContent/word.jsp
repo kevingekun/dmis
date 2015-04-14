@@ -10,18 +10,19 @@
 <base href="<%=basePath %>">
 <html>
 <head>
-<link href="css/bg/yetou.css" rel="stylesheet" type="text/css" />
-<link href="css/dmis.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/matrix-style.css" />
-<link rel="stylesheet" href="css/matrix-media.css" />
-<link rel="stylesheet" href="css/uniform.css" />
-<link rel="stylesheet" href="css/select2.css" />
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link href="css/matrix-style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
+<link rel="stylesheet" type="text/css" href="css/dmis.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
+<link rel="stylesheet" type="text/css" href="css/uniform.css" />
+<link rel="stylesheet" type="text/css" href="css/select2.css" />
+<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 
-<script src="js/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquery.min.js" ></script>
 </head>
 <body id="table1">
 <input type="text" id="checkRadio" value="${state}" style='display:none'/>
@@ -29,11 +30,10 @@
 <div class="widget-box">
           <div class="widget-title">
             <h5>词条管理</h5>
-            <a class="btn  btn-small " style="margin:5px 0 0 3px; " onClick="dele();">删除选中</a>
-            <a class="btn  btn-small " style="margin:5px 0 0 3px; " onClick="pass();">通过选中</a>
+            <a class="btn btn-small gray" style="margin:5px 0 0 3px; " onClick="dele();">删除选中</a>
+            <a class="btn btn-small green" style="margin:5px 0 0 3px; " onClick="pass();">通过选中</a>
             <div class="widget-radio">
-
-				<a  href="addkeyword.jsp" targer="admin_menu">新增知识</a>
+				<input id="addkeyword" class="btn btn-small blue" type="button" value="新增词条" style="margin-bottom: 5px">
 				<input type="radio" name="state" id="all"  onClick="allPass();"/>全部
 				<input type="radio" name="state" id="isPass"   onClick="isPass();"/>已录入
 				<input type="radio" name="state" id="noPass"  onClick="noPass();"/>待审核
@@ -73,9 +73,9 @@
                   <td>未通过</td>
                   </s:else>
                   <td>
-                  	<a class="btn btn-mini" href="Keyword/delete.action?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a>
+                  	<a class="btn btn-mini gray" href="Keyword/delete?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a>
                   	<s:if test="!isPass">
-                  	<a class="btn btn-mini" href="Keyword/passKeyword.action?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">通过</a>
+                  	<a class="btn btn-mini green" href="Keyword/passKeyword?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">通过</a>
                   	</s:if>
                   	<s:else>
                   	</s:else>
@@ -121,6 +121,10 @@
           </div>
 	</div>
 <script type="text/javascript">
+$("#addkeyword").click(
+		function(){
+			location.href = "addkeyword.jsp";
+		});
 $(function(){
 	var state = $('#checkRadio').val();
 	if(state == 2)

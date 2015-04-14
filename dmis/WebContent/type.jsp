@@ -10,16 +10,17 @@
 <base href="<%=basePath %>">
 <html>
 <head>
-<link href="css/bg/yetou.css" rel="stylesheet" type="text/css" />
-<link href="css/dmis.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/matrix-style.css" />
-<link rel="stylesheet" href="css/matrix-media.css" />
-<link rel="stylesheet" href="css/uniform.css" />
-<link rel="stylesheet" href="css/select2.css" />
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link href="css/matrix-style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
+<link rel="stylesheet" type="text/css" href="css/dmis.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
+<link rel="stylesheet" type="text/css" href="css/uniform.css" />
+<link rel="stylesheet" type="text/css" href="css/select2.css" />
+<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 </head>
@@ -29,10 +30,10 @@
 <div class="widget-box">
           <div class="widget-title">
             <h5>类型管理</h5>
-            <a class="btn  btn-small " style="margin:5px 0 0 3px; " onClick="dele();">删除选中</a>
+            <a class="btn btn-small gray" style="margin:5px 0 0 3px; " onClick="dele();">删除选中</a>
             <div class="widget-radio">
 
-				<input id="addType" class="btn btn-small" type="button"
+				<input id="addType" class="btn btn-small blue" type="button"
 					value="新增类别" style="margin-bottom: 5px;">
 				<input type="radio" name="state" id="all"  onClick="allType();"/>全部
 				<input type="radio" name="state" id="one_level"   onClick="one_type();"/>一级类
@@ -164,7 +165,7 @@
                   <td><s:property value="name"/></td>
                   <td><s:property value="level"/></td>
                   <td><s:property value="parentId"/></td>
-                  	<td><a class="btn btn-mini" href="Type/delete.action?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a>
+                  	<td><a class="btn btn-mini gray" href="Type/delete.action?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a>
                   </td>                  
                 </tr>
                 </s:iterator>

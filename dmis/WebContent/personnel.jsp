@@ -13,14 +13,15 @@
 <head>
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css"/>
 <link rel="stylesheet" type="text/css" href="css/dmis.css"/>
-<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/matrix-style.css" />
-<link rel="stylesheet" href="css/matrix-media.css" />
-<link rel="stylesheet" href="css/uniform.css" />
-<link rel="stylesheet" href="css/select2.css" />
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link href="css/matrix-style.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
+<link rel="stylesheet" type="text/css" href="css/uniform.css" />
+<link rel="stylesheet" type="text/css" href="css/select2.css" />
+<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
@@ -31,9 +32,9 @@
 	<div class="widget-box">
 		<div class="widget-title">
 			<h5>人员管理</h5>
-			<a class="btn btn-small " style="margin: 5px 0 0 3px;" onClick="dele();">删除选中</a>
+			<a class="btn btn-small gray" style="margin: 5px 0 0 3px;" onClick="dele();">删除选中</a>
 			<div class="widget-radio">
-				<input id="addUser" class="btn btn-small" type="button"
+				<input id="addUser" class="btn btn-small blue" type="button"
 					value="新增人员" style="margin-bottom: 5px">
 					<input type="radio" name="state" id="all"   onClick="allUser();"/>全部
 					<input type="radio" name="state" id="isForbidden"  onClick="isForbidden();"/>已禁用
@@ -132,11 +133,11 @@
 								<td>未禁用</td>
 							</s:else>
 							<td>
-								<a class="btn btn-mini" href="User/delete2?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a>
+								<a class="btn btn-mini gray" href="User/delete2?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a>
 								<s:if test="isForbidden">
-									<a class="btn btn-mini" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">启用</a>
+									<a class="btn btn-mini green" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">启用</a>
 								</s:if> <s:else>
-									<a class="btn btn-mini" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">禁用</a>
+									<a class="btn btn-mini orange" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">禁用</a>
 								</s:else>
 								<input type="hidden" value="<s:property value="id"/>" />							
 								<select id="select<s:property value="id"/>" onchange="t(this)" style="height:20px;width:75px;font-size:12px;padding:0 0;margin-bottom:0.9">															
