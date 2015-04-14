@@ -34,8 +34,10 @@
 			<a class="btn btn-small gray" style="margin: 5px 0 0 3px;"onClick="dele();">删除选中</a> 
 			<a class="btn btn-small green" style="margin: 5px 0 0 3px;" onClick="pass();">通过选中</a>
 			<div class="widget-radio">
+			
 				<input id="fileEdit1" class="btn btn-small blue" type="button" value="新增文档" style="margin-bottom: 5px"> 
-				<input id="fileEdit2" class="btn btn-small orange" type="button" value="新增文献" style="margin-bottom: 5px"> 
+				<input id="fileEdit2" class="btn btn-small orange" type="button" value="弹框文献" style="margin-bottom: 5px">
+				<input id="fileEdit3" class="btn btn-small blue" type="button" value="弹框文档" style="margin-bottom: 5px"> 
 				<input type="radio" name="state" id="all" onClick="allPass();" />全部 
 				<input type="radio" name="state" id="isPass" onClick="isPass();" />已录入 
 				<input type="radio" name="state" id="noPass" onClick="noPass();" />待审核
@@ -429,10 +431,10 @@
 		//加载文档类型
 		$("#fileEdit1").click(
 			function(){
-				location.href="adddoc.jsp";
+				location.href="addDoc.jsp";
 			}		
 		)
-		 $("#fileEdit111").click(
+		 $("#fileEdit3").click(
 				function() {
 					$("#infoEdit").removeAttr("style");
 					/* $("#mask").slideDown("fast"); */
