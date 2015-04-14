@@ -15,16 +15,30 @@
 <script type="text/javascript" src="js/forms/validation.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
 </head>
-<body >
-
+<body>
+ <div class="widget-box">
+ 	<div class="widget-title">
+			<h5>新增文档</h5>
+			<!-- <a class="btn btn-small gray" style="margin: 5px 0 0 3px;"onClick="dele();">删除选中</a> 
+			<a class="btn btn-small green" style="margin: 5px 0 0 3px;" onClick="pass();">通过选中</a>
+			<div class="widget-radio">
+				<input id="fileEdit1" class="btn btn-small blue" type="button" value="新增文档" style="margin-bottom: 5px"> 
+				<input id="fileEdit2" class="btn btn-small orange" type="button" value="新增文献" style="margin-bottom: 5px"> 
+				<input type="radio" name="state" id="all" onClick="allPass();" />全部 
+				<input type="radio" name="state" id="isPass" onClick="isPass();" />已录入 
+				<input type="radio" name="state" id="noPass" onClick="noPass();" />待审核
+			</div> -->
+	</div>
 	<div class="form_content">
 		<form id="test" action="#" method="get">
 			<fieldset>
-				<legend>PERSONAL INFORMATION</legend>
+				<legend>文档上传</legend>
 				<div class="form-row">
 					<div class="field-label">
-						<label for="field1">First Name</label>:
+						<label for="field1">文档标题</label>:
 					</div>
 					<div class="field-widget">
 						<input name="field1" id="field1" class="required"
@@ -198,6 +212,7 @@
 				onclick="valid.reset(); return false" />
 		</form>
 	</div>
+ </div>
 	<script type="text/javascript">
 		function formCallback(result, form) {
 			window.status = "valiation callback for form '" + form.id
