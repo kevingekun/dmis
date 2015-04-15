@@ -9,7 +9,7 @@
 <base href="<%=basePath%>">
 <html>
 <head>
-<title>新增文档</title>
+<title>新增文献</title>
 <script type="text/javascript" src="js/forms/prototype.js"></script>
 <script type="text/javascript" src="js/forms/effects.js"></script>
 <script type="text/javascript" src="js/forms/validation.js"></script>

@@ -55,8 +55,8 @@
 						<div class="control-group">
 							<div class="controls">
 								<div class="main_input_box">
-									<span class="add-on bg_lg"><li class="icon-edit"></li></span><input
-										type="text" placeholder="请输入文档标题" name="doc.title" />
+									<span class="add-on bg_lg"><li class="icon-edit"></li></span>
+									<input type="text" placeholder="请输入文档标题" name="doc.title" />
 								</div>
 								<br />
 								<div class="main_input_box">
@@ -76,15 +76,17 @@
 								</div>
 								<br>
 								<div class="main_input_box" id="docType" style="display: none">
-									<input type="hidden" id="fIdDoc" value="-1" /> <select
-										id="typeOneDoc" name="doc.typeOne"
+									<input type="hidden" id="fIdDoc" value="-1" /> 
+									<select id="typeOneDoc" name="doc.typeOne"
 										onchange="t1(this,'typeTwoDoc')" style="width: 100px;">
 										<option value="-1">一级分类</option>
-									</select> <input type="hidden" id="sIdDoc" value="-1" /> <select
-										id="typeTwoDoc" name="doc.typeTwo"
+									</select> 
+									<input type="hidden" id="sIdDoc" value="-1" /> 
+									<select id="typeTwoDoc" name="doc.typeTwo"
 										onchange="t2(this,'typeThreeDoc')" style="width: 100px;">
 										<option value="-1">二级分类</option>
-									</select> <input type="hidden" id="tIdDoc" value="-1" />
+									</select> 
+									<input type="hidden" id="tIdDoc" value="-1" />
 									<!--设置一个隐藏的input,用于存中间值-->
 									<select id="typeThreeDoc" name="typeThree"
 										style="width: 100px;">

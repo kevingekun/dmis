@@ -13,207 +13,191 @@
 <script type="text/javascript" src="js/forms/prototype.js"></script>
 <script type="text/javascript" src="js/forms/effects.js"></script>
 <script type="text/javascript" src="js/forms/validation.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="js/forms/form.js"></script> -->
 
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
 </head>
-<body>
- <div class="widget-box">
- 	<div class="widget-title">
+<body id="adddoc">
+	<div class="widget-box">
+		<div class="widget-title">
 			<h5>新增文档</h5>
-			<!-- <a class="btn btn-small gray" style="margin: 5px 0 0 3px;"onClick="dele();">删除选中</a> 
-			<a class="btn btn-small green" style="margin: 5px 0 0 3px;" onClick="pass();">通过选中</a>
-			<div class="widget-radio">
-				<input id="fileEdit1" class="btn btn-small blue" type="button" value="新增文档" style="margin-bottom: 5px"> 
-				<input id="fileEdit2" class="btn btn-small orange" type="button" value="新增文献" style="margin-bottom: 5px"> 
-				<input type="radio" name="state" id="all" onClick="allPass();" />全部 
-				<input type="radio" name="state" id="isPass" onClick="isPass();" />已录入 
-				<input type="radio" name="state" id="noPass" onClick="noPass();" />待审核
-			</div> -->
+		</div>
+		<div class="form_content">
+			<form id="test" action="Doc/uploadDocDoc" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend>文档上传</legend>
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field1">文档标题</label>:
+						</div>
+						<div class="field-widget">
+							<input name="doc.title" id="field1" class="required"
+								title="Enter your title" />
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field2">文档类别</label>:
+						</div>
+						<div class="field-widget">
+							<select id="Category" name="category" class="validate-selection">
+								<option>其他</option>
+								<option>分类文档</option>
+							</select> <select name="doc.language" class="validate-selection">
+								<option>选择语言</option>
+								<option value="1">中文</option>
+								<option value="0">英文</option>
+							</select> <select name="doc.level" class="validate-selection">
+								<option>选择级别</option>
+								<option value="1">一类文档</option>
+								<option value="2">二类文档</option>
+								<option value="3">三类文档</option>
+							</select>
+						</div>
+
+						<div class="field-widget2" id="docType" style="display: none;">
+							<input type="hidden" id="fIdDoc" value="-1" /> <select
+								id="typeOneDoc" name="doc.typeOne" class="validate-selection"
+								onchange="t1(this,'typeTwoDoc','typeThreeDoc')" title="Choose your department">
+								<option value="-1">一级分类</option>
+							</select> <input type="hidden" id="sIdDoc" value="-1" /> <select
+								id="typeTwoDoc" name="doc.typeTwo" class="validate-selection"
+								onchange="t2(this,'typeThreeDoc')"
+								title="Choose your department">
+								<option value="-1">二级分类</option>
+							</select> <input type="hidden" id="tIdDoc" value="-1" /> <select
+								id="typeThreeDoc" name="typeThree" class="validate-selection"
+								title="Choose your department">
+								<option value="-1">三级分类</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field3">上传</label>:
+						</div>
+						<div class="field-widget">
+							<!-- <input type="text" id="txt" style="width: 203px;"> -->
+							<!-- <span class="add-on bg_ic" onclick="$('#f').click()">
+							<a style="color: #2E363F;" href="javascript:void(0);">浏览</a>
+						</span> <br> -->
+							<input type="file" id="f" onchange="txt.value=this.value"
+								name="uploadFile" class="files" onblur="checkType('file')" />
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="field-widget-confirm">
+							<input type="submit" class="submit" value="确定" /> <input
+								class="reset" type="button" value="重置"
+								onclick="valid.reset(); return false" />
+						</div>
+					</div>
+
+
+				</fieldset>
+
+
+			</form>
+		</div>
 	</div>
-	<div class="form_content">
-		<form id="test" action="#" method="get">
-			<fieldset>
-				<legend>文档上传</legend>
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field1">文档标题</label>:
-					</div>
-					<div class="field-widget">
-						<input name="field1" id="field1" class="required"
-							title="Enter your name" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field2">Last Name</label>:
-					</div>
-					<div class="field-widget">
-						<input name="field2" id="field2" class="required"
-							title="Enter your name" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field3">Short Description</label>:
-					</div>
-					<div class="field-widget">
-						<textarea class="required"></textarea>
-					</div>
-				</div>
-
-
-			</fieldset>
-			<fieldset>
-				<legend>ACCOUNT DETAILS</legend>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field4">Username</label>:
-					</div>
-					<div class="field-widget">
-						<input name="field4" id="field4" class="required"
-							title="Enter your name" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field5">Email</label>:
-					</div>
-					<div class="field-widget">
-						<input name="field5" id="field5" class="required validate-email"
-							title="Enter your name" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field6">Country</label>:
-					</div>
-					<div class="field-widget">
-						<select id="field6" name="field6" class="validate-selection"
-							title="Choose your department">
-							<option>Select one...</option>
-							<option>Accounts</option>
-							<option>Human Resources</option>
-							<option>Information Technology</option>
-							<option>Animal Management</option>
-							<option>Ultimate Frisby</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field7">Password</label>:
-					</div>
-					<div class="field-widget">
-						<input type="password" name="field7" id="field7"
-							class="required validate-password"
-							title="Enter a password greater than 6 characters" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field9">Confirm Password</label>:
-					</div>
-					<div class="field-widget">
-						<input type="password" name="field8" id="field8"
-							class="required validate-password-confirm"
-							title="Enter the same password for confirmation" />
-					</div>
-				</div>
-
-
-			</fieldset>
-			<fieldset>
-				<legend class="optional">OPTIONAL INFORMATIONS</legend>
-
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field9">City</label>:
-					</div>
-					<div class="field-label">
-						<input name="field3" id="field9" class="optional"
-							title="Enter your employee number, please use only alphanumeric characters" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field10">Phone</label>:
-					</div>
-					<div class="field-label">
-						<input name="field10" id="field10" class="optional"
-							title="Optional: Enter your age" />
-					</div>
-				</div>
-				<div class="form-row-select">
-
-					<fieldset>
-						<legend class="optional">Ocupation</legend>
-						<label class="left"> <input type="radio"
-							class="radio_input" name="field11" id="field11-male" value="1" />Artist
-							<br /> <input type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Businessperson<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Factory worker<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Engineer<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Journalist<br />
-
-						</label> <label class="left"> <input type="radio"
-							class="radio_input" name="field11" id="field11-female" value="2" />Medical
-							Worker<br /> <input type="radio" class="radio_input"
-							name="field11" id="field11-female" value="2" />Military person<br />
-							<input type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Political figure<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Scientist<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Undertaker
-						</label> <label class="left"> <input type="radio"
-							class="radio_input" name="field11" id="field11-male" value="1" />Artist
-							<br /> <input type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Businessperson<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Founder or administrator <br />
-							<input type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Engineer<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Journalist<br />
-
-						</label>
-
-
-
-					</fieldset>
-
-				</div>
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field12">Other Details</label>:
-					</div>
-					<div class="field-widget">
-						<textarea class="optional"></textarea>
-					</div>
-				</div>
-
-			</fieldset>
-			<input type="submit" class="submit" value="Submit" /> <input
-				class="reset" type="button" value="Reset"
-				onclick="valid.reset(); return false" />
-		</form>
-	</div>
- </div>
 	<script type="text/javascript">
+		 $("#Category").change(function() {
+			var category = $("#Category option:selected").text().trim();
+			if (category == "分类文档"){
+				$.ajax({
+					type : 'GET',
+					dataType : 'json',
+					url : '/dmis/Type/TypeAction/lista',
+					success : function(jsonData) {
+						//document.getElementById("typeOne").options.add(new Option("asd",11));
+						var data = eval(jsonData);
+						$.each(data, function(i, n) {
+							document.getElementById("typeOneDoc").options
+									.add(new Option(data[i].name,
+											data[i].id));
+						});
+					},
+					error : function() {
+						alert("err");
+					}
+				});
+				$("#docType").removeAttr('style');
+			}else{
+				$("#docType").attr('style', 'display:none');
+			}
+		});
+		 function t1(obj, TypeTw, TypeTh) {
+				var parentid = obj.value;//获取所选的一级类别的id
+				if (parentid != -1) {//如果id==-1，说明没选任何类别
+					document.getElementById("fIdDoc").value = parentid;//在隐藏的input中存id
+					var typeTwo = document.getElementById(TypeTw);
+					var typeThree = document.getElementById(TypeTh);
+					typeTwo.length = 1;//分类二下拉菜单置一
+					typeThree.length = 1;//分类三下拉菜单置一 
+					$.ajax({
+						type : 'GET',
+						dataType : 'json',
+						url : '/dmis/Type/TypeAction/listaByParentId?parentid='
+								+ parentid,//parentid=父类的id
+						success : function(jsonData) {
+							var data = eval(jsonData);
+							/* if(data == ""){
+							 $('#'+TypeTw).empty();
+							 typeTwo.options.add(new Option("没有分类","1"));
+							 $('option').click();
+							}
+							else */
+							$.each(data, function(i, n) {
+								typeTwo.options.add(new Option(data[i].name,
+										data[i].id));
+								//document.getElementById("typeTwoDoc").options.add(new Option(data[i].name,data[i].id));
+							});
+						},
+						error : function() {
+							alert("error");
+						}
+					});
+				} else {
+					var typeTwo = document.getElementById(TypeTw);
+					var typeThree = document.getElementById(TypeTh);
+					typeTwo.length = 1;
+					typeThree.length = 1;
+				}
+			}
+		 function t2(obj, TypeTh) {
+				var parentwoid = obj.value;
+				if (parentwoid != -1) {
+					document.getElementById("sIdDoc").value = parentwoid;//在隐藏的input中存id
+					var typeThree = document.getElementById(TypeTh);
+					typeThree.length = 1;
+					$.ajax({
+						type : 'GET',
+						dataType : 'json',
+						url : '/dmis/Type/TypeAction/listaaByParentId?parentid='
+								+ parentwoid,
+						success : function(jsonData) {
+							var data = eval(jsonData);
+							$.each(data, function(i, n) {
+								typeThree.options.add(new Option(data[i].name));
+							});
+						},
+						error : function() {
+							alert("error");
+						}
+
+					});
+				} else {
+					var typeTwo = document.getElementById(TypeTw);
+					typeTwo.length = 1;
+				}
+			}
+		 
 		function formCallback(result, form) {
 			window.status = "valiation callback for form '" + form.id
 					+ "': result = " + result;
