@@ -109,7 +109,7 @@
     <welcome-file>/login.jsp</welcome-file>
   </welcome-file-list>
   <session-config>
-    <session-timeout>30</session-timeout>
+    <session-timeout>3000</session-timeout>
   </session-config>
   <servlet>
     <servlet-name>poserver</servlet-name>
