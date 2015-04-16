@@ -97,13 +97,14 @@
 						</div>
 						<div class="field-widget">
 							<input type="file" id="file" name="uploadFile" class="file-class" />
+							<div class="validation-advice" id="file-required" style="display:none;">type error.</div>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="field-widget-confirm">
-							<input id="btn" type="button" class="submit" value="确定" onclick="checkTitle();typeCheck();categoryCheck('language','level');categoryCheck('level','language');isvalidatefile();"/> 
-							<input class="reset" type="button" value="重置"
-								onclick="valid.reset(); return false" />
+							<input id="btn" type="button" class="submit" value="确定" /> <!--onclick="checkTitle();typeCheck();
+							categoryCheck('language','level');categoryCheck('level','language');isvalidatefile();"  -->
+							<input class="reset" type="reset" value="重置"/>
 						</div>
 					</div>
 
@@ -210,9 +211,11 @@
 				if (title.length == 0) {
 					$("#title")[0].className = "required validation-failed";
 					$("#advice-required-field1").removeAttr("style");
+					return false;
 				} else {
 					$("#title")[0].className = "required";
 					$("#advice-required-field1").attr("style","display:none;");
+					return true;
 				}
 			}
 			 /* function languageCheck(lan){
@@ -236,14 +239,15 @@
 					 $("#"+id1)[0].className = "validate-selection validation-failed"
 					 $("#all-selection").removeAttr("style");
 					 $("#"+id1+"id")[0].value="1";
+					 return false;
 				 }else{
 					 $("#"+id1)[0].className = "validate-selection";
 					 $("#"+id1+"id")[0].value="0";
 					 if($("#"+id2+"id").val()=="0"){
 						$("#all-selection").attr("style","display:none;");
 					 }
-						 
-					}
+					 return true;
+				 }
 			 }
 			/* function levelCheck(lev){
 				var level = lev.value;
@@ -265,51 +269,76 @@
 					var typeone = $("#typeOneDoc").val();
 					var typetwo = $("#typeTwoDoc").val();
 					var typethree = $("#typeThreeDoc").val();
+					var one = false;
+					var two = false;
+					var three = false;
 					if(typeone=="-1"){
 						$("#typeOneDoc")[0].className = "validate-selection validation-failed";
 						$("#advice-validate-selection2").removeAttr("style");
+						one = false;
 					}else{
 						$("#typeOneDoc")[0].className = "validate-selection";
 						$("#advice-validate-selection2").attr("style","display:none;");
+						one = true;
 					}
 					if(typetwo=="-1"){
 						$("#typeTwoDoc")[0].className = "validate-selection validation-failed";
 						$("#advice-validate-selection2").removeAttr("style");
+						two = false;
 					}else{
 						$("#typeTwoDoc")[0].className = "validate-selection";
 						$("#advice-validate-selection2").attr("style","display:none;");
+						two = true;
 					}
 					if(typethree=="-1"){
 						$("#typeThreeDoc")[0].className = "validate-selection validation-failed";
 						$("#advice-validate-selection2").removeAttr("style");
+						three = false;
 					}else{
 						$("#typeThreeDoc")[0].className = "validate-selection";
 						$("#advice-validate-selection2").attr("style","display:none;");
+						three = true;
 					}
+					if(one&&two&&three)
+						return true;
+					else
+						return false;
 				}
+				return true;
 				
 			}
 			function isvalidatefile() {
 				var fileType = $("#file").val();
 				var pos = fileType.lastIndexOf(".");
 				var lastname = fileType.substring(pos, fileType.length);
-				if (!(lastname.toLowerCase() == ".doc"
-						|| lastname.toLowerCase() == ".pdf"
-						|| lastname.toLowerCase() == ".docx"
-						|| lastname.toLowerCase() == ".ppt" || lastname
-						.toLowerCase() == ".xls")
-						|| lastname.toLowerCase() == ".pptx"
-						|| lastname.toLowerCase() == ".xlsx"
-						|| lastname.toLowerCase() == ".zip") {
-					alert("您上传的文件类型为" + lastname + "文件类型不符");
+				var type = lastname.toLowerCase();
+				if (!(type == ".doc" || type == ".pdf" || type == ".docx"
+						|| type == ".ppt" || type == ".xls" || type == ".pptx"
+						|| type == ".xlsx" || type == ".zip")) {
+					//alert("您上传的文件类型为" + lastname + "文件类型不符");
 					$("#file")[0].className="file-class-failed";
+					$("#file-required").removeAttr("style");
 					return false;
 				} else {
 					$("#file")[0].className="file-class";
+					$("#file-required").attr("style","display:none;");
 					//alert("文件类型符合，可以上传");
 				}
 				return true;
 			}
+			$("#btn").click(function(){
+				checkTitle();
+				typeCheck();
+				categoryCheck('language','level');
+				categoryCheck('level','language');
+				isvalidatefile();
+				if(isvalidatefile()&&categoryCheck('level','language')
+						&&categoryCheck('language','level')&&typeCheck()
+						&&checkTitle()){
+					$("#test").submit();
+				}
+			});
+			
 		/* function formCallback(result, form) {
 			window.status = "valiation callback for form '" + form.id
 					+ "': result = " + result;

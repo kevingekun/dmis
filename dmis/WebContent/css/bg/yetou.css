@@ -406,6 +406,7 @@ div.widget-content tr td.link_href a:hover{
 #infoCheck .normal_text{ padding:15px 10px; text-align:center; font-size:14px; line-height:20px; background:#2E363F; color:#fff; }
 #infoCheck input[type='text'] ,input[type='file'] {
 	width:250px;
+	float:left;
 }
 #infoCheck{
 	z-index:50;
