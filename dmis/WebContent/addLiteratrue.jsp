@@ -10,211 +10,349 @@
 <html>
 <head>
 <title>新增文献</title>
-<script type="text/javascript" src="js/forms/prototype.js"></script>
+<!-- <script type="text/javascript" src="js/forms/prototype.js"></script>
 <script type="text/javascript" src="js/forms/effects.js"></script>
-<script type="text/javascript" src="js/forms/validation.js"></script>
+<script type="text/javascript" src="js/forms/validation.js"></script> -->
+<script type="text/javascript" src="js/jquery.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
 </head>
-<body>
- <div class="widget-box">
- 	<div class="widget-title">
-			<h5>新增文档</h5>
-			<!-- <a class="btn btn-small gray" style="margin: 5px 0 0 3px;"onClick="dele();">删除选中</a> 
-			<a class="btn btn-small green" style="margin: 5px 0 0 3px;" onClick="pass();">通过选中</a>
-			<div class="widget-radio">
-				<input id="fileEdit1" class="btn btn-small blue" type="button" value="新增文档" style="margin-bottom: 5px"> 
-				<input id="fileEdit2" class="btn btn-small orange" type="button" value="新增文献" style="margin-bottom: 5px"> 
-				<input type="radio" name="state" id="all" onClick="allPass();" />全部 
-				<input type="radio" name="state" id="isPass" onClick="isPass();" />已录入 
-				<input type="radio" name="state" id="noPass" onClick="noPass();" />待审核
-			</div> -->
+<body id="adddoc">
+	<div class="widget-box">
+		<div class="widget-title">
+			<h5>新增文献</h5>
+		</div>
+		<div class="form_content">
+			<form id="test" action="Doc/uploadDoc" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend>文献上传</legend>
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field1">文献标题</label>:
+						</div>
+						<div class="field-widget">
+							<input name="doc.title" id="title" class="required"
+								onblur="checkTitle()" />
+							<div class="validation-advice" id="advice-required-field1"
+								style="display: none;">required field.</div>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field2">文献作者</label>:
+						</div>
+						<div class="field-widget">
+							<input name="doc.author" id="author" class="required"
+								title="Enter your name" />
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field2">文献类别</label>:
+						</div>
+						<div class="field-widget">
+							<select id="category" name="doc.category" class="validate-selection">
+								<option>选择类别</option>
+								<option>外文期刊</option>
+								<option>OA论文</option>
+								<option>期刊论文</option>
+								<option>学位论文</option>
+								<option>会议论文</option>
+							</select> <select id="language" name="doc.language"
+								class="validate-selection" onchange="categoryCheck('language','level')">
+								<!-- languageCheck(this) -->
+								<option value="-1">选择语言</option>
+								<option value="1">中文</option>
+								<option value="0">英文</option>
+							</select> <select id="level" name="doc.level" class="validate-selection"
+								onchange="categoryCheck('level','language')">
+								<!-- levelCheck(this)  -->
+								<option value="-1">选择级别</option>
+								<option value="1">一类文献</option>
+								<option value="2">二类文献</option>
+								<option value="3">三类文献</option>
+							</select>
+							<div class="validation-advice" id="all-selection"
+								style="display: none;">Make a selection</div>
+							<input id="languageid" type="hidden" value="0" /> <input
+								id="levelid" type="hidden" value="0" />
+						</div>
+
+						<div class="field-widget2" id="docType">
+							<input type="hidden" id="fIdDoc" value="-1" /> <select
+								id="typeOneDoc" name="doc.typeOne" class="validate-selection"
+								onchange="selectOne(this,'typeTwoDoc','typeThreeDoc');typeCheck();">
+								<!-- validate-selection validation-failed -->
+								<option value="-1">一级分类</option>
+							</select> <input type="hidden" id="sIdDoc" value="-1" /> <select
+								id="typeTwoDoc" name="doc.typeTwo" class="validate-selection"
+								onchange="selectTwo(this,'typeThreeDoc');typeCheck();">
+								<option value="-1">二级分类</option>
+							</select> <input type="hidden" id="tIdDoc" value="-1" /> <select
+								id="typeThreeDoc" name="typeThree" class="validate-selection"
+								onchange="typeCheck();">
+								<option value="-1">三级分类</option>
+							</select>
+							<div class="validation-advice" id="advice-validate-selection2"
+								style="display: none;">Make a selection</div>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field2">期刊</label>:
+						</div>
+						<div class="field-widget">
+							<input name="doc.journal" id="journal" class="required"
+								title="Enter your name" />
+						</div>
+					</div>
+				</fieldset>
+				<fieldset>
+					<legend>NEXT PAGE</legend>
+
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field12">文章摘要</label>:
+						</div>
+						<div class="field-widget">
+							<textarea name="doc.brief" class="optional"></textarea>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field5">时间</label>:
+						</div>
+						<div class="field-widget">
+							<input name="publishedTime" id="time" type="date"
+								class="required validate-email" title="Enter your name" />
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="field-label">
+							<label for="field3">上传</label>:
+						</div>
+						<div class="field-widget">
+							<input type="file" id="file" name="uploadFile" class="file-class" />
+							<div class="validation-advice" id="file-required"
+								style="display: none;">type error.</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="field-widget-confirm">
+							<input id="btn" type="button" class="submit" value="确定" /> <input
+								class="reset" type="reset" value="重置" />
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
 	</div>
-	<div class="form_content">
-		<form id="test" action="#" method="get">
-			<fieldset>
-				<legend>文档上传</legend>
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field1">文档标题</label>:
-					</div>
-					<div class="field-widget">
-						<input name="field1" id="field1" class="required"
-							title="Enter your name" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field2">Last Name</label>:
-					</div>
-					<div class="field-widget">
-						<input name="field2" id="field2" class="required"
-							title="Enter your name" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field3">Short Description</label>:
-					</div>
-					<div class="field-widget">
-						<textarea class="required"></textarea>
-					</div>
-				</div>
-
-
-			</fieldset>
-			<fieldset>
-				<legend>ACCOUNT DETAILS</legend>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field4">Username</label>:
-					</div>
-					<div class="field-widget">
-						<input name="field4" id="field4" class="required"
-							title="Enter your name" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field5">Email</label>:
-					</div>
-					<div class="field-widget">
-						<input name="field5" id="field5" class="required validate-email"
-							title="Enter your name" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field6">Country</label>:
-					</div>
-					<div class="field-widget">
-						<select id="field6" name="field6" class="validate-selection"
-							title="Choose your department">
-							<option>Select one...</option>
-							<option>Accounts</option>
-							<option>Human Resources</option>
-							<option>Information Technology</option>
-							<option>Animal Management</option>
-							<option>Ultimate Frisby</option>
-						</select>
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field7">Password</label>:
-					</div>
-					<div class="field-widget">
-						<input type="password" name="field7" id="field7"
-							class="required validate-password"
-							title="Enter a password greater than 6 characters" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field9">Confirm Password</label>:
-					</div>
-					<div class="field-widget">
-						<input type="password" name="field8" id="field8"
-							class="required validate-password-confirm"
-							title="Enter the same password for confirmation" />
-					</div>
-				</div>
-
-
-			</fieldset>
-			<fieldset>
-				<legend class="optional">OPTIONAL INFORMATIONS</legend>
-
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field9">City</label>:
-					</div>
-					<div class="field-label">
-						<input name="field3" id="field9" class="optional"
-							title="Enter your employee number, please use only alphanumeric characters" />
-					</div>
-				</div>
-
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field10">Phone</label>:
-					</div>
-					<div class="field-label">
-						<input name="field10" id="field10" class="optional"
-							title="Optional: Enter your age" />
-					</div>
-				</div>
-				<div class="form-row-select">
-
-					<fieldset>
-						<legend class="optional">Ocupation</legend>
-						<label class="left"> <input type="radio"
-							class="radio_input" name="field11" id="field11-male" value="1" />Artist
-							<br /> <input type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Businessperson<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Factory worker<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Engineer<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Journalist<br />
-
-						</label> <label class="left"> <input type="radio"
-							class="radio_input" name="field11" id="field11-female" value="2" />Medical
-							Worker<br /> <input type="radio" class="radio_input"
-							name="field11" id="field11-female" value="2" />Military person<br />
-							<input type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Political figure<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Scientist<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Undertaker
-						</label> <label class="left"> <input type="radio"
-							class="radio_input" name="field11" id="field11-male" value="1" />Artist
-							<br /> <input type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Businessperson<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Founder or administrator <br />
-							<input type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Engineer<br /> <input
-							type="radio" class="radio_input" name="field11"
-							id="field11-female" value="2" />Journalist<br />
-
-						</label>
-
-
-
-					</fieldset>
-
-				</div>
-				<div class="form-row">
-					<div class="field-label">
-						<label for="field12">Other Details</label>:
-					</div>
-					<div class="field-widget">
-						<textarea class="optional"></textarea>
-					</div>
-				</div>
-
-			</fieldset>
-			<input type="submit" class="submit" value="Submit" /> <input
-				class="reset" type="button" value="Reset"
-				onclick="valid.reset(); return false" />
-		</form>
-	</div>
- </div>
 	<script type="text/javascript">
-		function formCallback(result, form) {
+	$(document).ready(function(){
+		$.ajax({
+			type : 'GET',
+			dataType : 'json',
+			url : '/dmis/Type/TypeAction/lista',
+			success : function(jsonData) {
+				//document.getElementById("typeOne").options.add(new Option("asd",11));
+				var data = eval(jsonData);
+				$.each(data, function(i, n) {
+					document.getElementById("typeOneDoc").options
+							.add(new Option(data[i].name,
+									data[i].id));
+				});
+			},
+			error : function() {
+				alert("err");
+			}
+		});
+	});
+	function selectOne(obj, TypeTw, TypeTh) {
+		var parentid = obj.value;//获取所选的一级类别的id
+		if (parentid != -1) {//如果id==-1，说明没选任何类别
+			document.getElementById("fIdDoc").value = parentid;//在隐藏的input中存id
+			var typeTwo = document.getElementById(TypeTw);
+			var typeThree = document.getElementById(TypeTh);
+			typeTwo.length = 1;//分类二下拉菜单置一
+			typeThree.length = 1;//分类三下拉菜单置一 
+			$.ajax({
+				type : 'GET',
+				dataType : 'json',
+				url : '/dmis/Type/TypeAction/listaByParentId?parentid='
+						+ parentid,//parentid=父类的id
+				success : function(jsonData) {
+					var data = eval(jsonData);
+					 if(data == ""){
+					 $('#'+TypeTw).empty();
+					 typeTwo.options.add(new Option("没有分类","1"));
+					 $('option').click();
+					}
+					else
+					$.each(data, function(i, n) {
+						typeTwo.options.add(new Option(data[i].name,
+								data[i].id));
+					});
+				},
+				error : function() {
+					alert("error");
+				}
+			});
+		} else {
+			var typeTwo = document.getElementById(TypeTw);
+			var typeThree = document.getElementById(TypeTh);
+			typeTwo.length = 1;
+			typeThree.length = 1;
+		}
+	}
+ 	function selectTwo(obj, TypeTh) {
+		var parentwoid = obj.value;
+		if (parentwoid != -1) {
+			document.getElementById("sIdDoc").value = parentwoid;
+			var typeThree = document.getElementById(TypeTh);
+			typeThree.length = 1;
+			$.ajax({
+				type : 'GET',
+				dataType : 'json',
+				url : '/dmis/Type/TypeAction/listaaByParentId?parentid='
+						+ parentwoid,
+				success : function(jsonData) {
+					var data = eval(jsonData);
+					$.each(data, function(i, n) {
+						typeThree.options.add(new Option(data[i].name));
+					});
+				},
+				error : function() {
+					alert("error");
+				}
+			});
+		} else {
+			var typeTwo = document.getElementById(TypeTw);
+			typeTwo.length = 1;
+		}
+	}
+ 	function checkTitle(){
+		var str = $("#title").val();
+		title = str.replace(/^\s+|\s+$/g, '');
+		if (title.length == 0) {
+			$("#title")[0].className = "required validation-failed";
+			$("#advice-required-field1").removeAttr("style");
+			return false;
+		} else {
+			$("#title")[0].className = "required";
+			$("#advice-required-field1").attr("style","display:none;");
+			return true;
+		}
+	}
+ 	function categoryCheck(obj1,obj2){
+		 var val = $("#"+obj1)[0].value;
+		 var id1 = $("#"+obj1)[0].id;
+		 var id2 = $("#"+obj2)[0].id;
+		 if(val=="-1"){
+			 $("#"+id1)[0].className = "validate-selection validation-failed"
+			 $("#all-selection").removeAttr("style");
+			 $("#"+id1+"id")[0].value="1";
+			 return false;
+		 }else{
+			 $("#"+id1)[0].className = "validate-selection";
+			 $("#"+id1+"id")[0].value="0";
+			 if($("#"+id2+"id").val()=="0"){
+				$("#all-selection").attr("style","display:none;");
+			 }
+			 return true;
+		 }
+	 }
+ 	function typeCheck(){
+		var tpo = $("#typeOneDoc").val();
+		if(tpo!="-1"){
+			var typeone = $("#typeOneDoc").val();
+			var typetwo = $("#typeTwoDoc").val();
+			var typethree = $("#typeThreeDoc").val();
+			var one = false;
+			var two = false;
+			var three = false;
+			if(typeone=="-1"){
+				$("#typeOneDoc")[0].className = "validate-selection validation-failed";
+				$("#advice-validate-selection2").removeAttr("style");
+				one = false;
+			}else{
+				$("#typeOneDoc")[0].className = "validate-selection";
+				$("#advice-validate-selection2").attr("style","display:none;");
+				one = true;
+			}
+			if(typetwo=="-1"){
+				$("#typeTwoDoc")[0].className = "validate-selection validation-failed";
+				$("#advice-validate-selection2").removeAttr("style");
+				two = false;
+			}else{
+				$("#typeTwoDoc")[0].className = "validate-selection";
+				$("#advice-validate-selection2").attr("style","display:none;");
+				two = true;
+			}
+			if(typethree=="-1"){
+				$("#typeThreeDoc")[0].className = "validate-selection validation-failed";
+				$("#advice-validate-selection2").removeAttr("style");
+				three = false;
+			}else{
+				$("#typeThreeDoc")[0].className = "validate-selection";
+				$("#advice-validate-selection2").attr("style","display:none;");
+				three = true;
+			}
+			if(one&&two&&three)
+				return true;
+			else
+				return false;
+		}else{
+			$("#typeOneDoc")[0].className = "validate-selection validation-failed";
+			$("#advice-validate-selection2").removeAttr("style");
+			$("#typeTwoDoc")[0].className = "validate-selection validation-failed";
+			$("#advice-validate-selection2").removeAttr("style");
+			$("#typeThreeDoc")[0].className = "validate-selection validation-failed";
+			$("#advice-validate-selection2").removeAttr("style");
+			return false;
+		}
+		return true;
+		
+	}
+ 	function isvalidatefile() {
+		var fileType = $("#file").val();
+		var pos = fileType.lastIndexOf(".");
+		var lastname = fileType.substring(pos, fileType.length);
+		var type = lastname.toLowerCase();
+		if (!(type == ".doc" || type == ".pdf" || type == ".docx"
+				|| type == ".ppt" || type == ".xls" || type == ".pptx"
+				|| type == ".xlsx" || type == ".zip")) {
+			//alert("您上传的文件类型为" + lastname + "文件类型不符");
+			$("#file")[0].className="file-class-failed";
+			$("#file-required").removeAttr("style");
+			return false;
+		} else {
+			$("#file")[0].className="file-class";
+			$("#file-required").attr("style","display:none;");
+			//alert("文件类型符合，可以上传");
+		}
+		return true;
+	}
+ 	$("#btn").click(function(){
+		checkTitle();
+		typeCheck();
+		categoryCheck('language','level');
+		categoryCheck('level','language');
+		isvalidatefile();
+		if(isvalidatefile()&&categoryCheck('level','language')
+				&&categoryCheck('language','level')&&typeCheck()
+				&&checkTitle()){
+			$("#test").submit();
+		}
+	});
+		/* function formCallback(result, form) {
 			window.status = "valiation callback for form '" + form.id
 					+ "': result = " + result;
 		}
@@ -229,7 +367,7 @@
 			notEqualToField : 'field1'
 		} ], [ 'validate-password-confirm', 'please try again.', {
 			equalToField : 'field8'
-		} ] ]);
+		} ] ]); */
 	</script>
 </body>
 </html>
