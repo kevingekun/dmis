@@ -11,24 +11,26 @@
 <base href="<%=basePath%>">
 <html>
 <head>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css"/>
+
 <link rel="stylesheet" type="text/css" href="css/dmis.css"/>
 <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
 <link rel="stylesheet" type="text/css" href="css/uniform.css" />
 <link rel="stylesheet" type="text/css" href="css/select2.css" />
 <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
-
-<script src="js/jquery.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 <body id="table1">
 <input type="text" id="checkRadio" value="${state}" style='display:none'/>
-	<div class="mask" style="display: none"></div>
+	<div id="mask" class="mask" style="display: none;background-color: rgb(40, 95, 108);"></div>
 	<div class="widget-box">
 		<div class="widget-title">
 			<h5>人员管理</h5>
@@ -39,6 +41,55 @@
 					<input type="radio" name="state" id="all"   onClick="allUser();"/>全部
 					<input type="radio" name="state" id="isForbidden"  onClick="isForbidden();"/>已禁用
 			</div>
+		</div>
+		<div id="user_add" style="display: none;" align="center">
+		<div id="user_form_content" class="user_form_content" style="display:none;">
+			<form id="test" action="User/add" method="post" enctype="multipart/form-data">
+				<fieldset>
+					<legend>添加 用户</legend>
+					<div class="form-row">
+						<div class="field-label_user">
+							<label for="field1">用户名</label>:
+						</div>
+						<div class="field-widget">
+							<input name="user.name" id="username" class="required"
+								type="text" onblur="checkUsername();"/>
+							<div class="validation-advice" id="advice-required-field1"
+								style="display: none;">required field.</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="field-label_user">
+							<label for="field1">密码</label>:
+						</div>
+						<div class="field-widget">
+							<input name="user.password" id="password" class="required"
+								type="password" onblur="checkPassword();"/>
+							<div class="validation-advice" id="advice-required-field2"
+								style="display: none;">required field.</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="field-label_user">
+							<label for="field1">确认密码</label>:
+						</div>
+						<div class="field-widget">
+							<input id="vpassword" class="required"
+								type="password" onblur="verifyPass()"/>
+							<div class="validation-advice" id="advice-required-field3"
+								style="display: none;">required field.</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="field-widget-confirm_user">
+							<input id="btn" type="button" class="submit" value="确定" /> 
+							<input type="reset" class="reset" value="重置" />
+							<input id="cancleFile" type="button" class="cancle" value="取消" /> 
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
 		</div>
 		<div id="infoEdit" style="display: none" align="center">
 			<div id="passEditContent" style="display: none;">
@@ -165,7 +216,7 @@
 											},
 											error:function(){
 												alert("修改失败");
-												var x=document.getElementById(id)
+												var x=document.getElementById(id);
 												x.selectedIndex = role;			
 											}
 										});								
@@ -182,9 +233,9 @@
 					style="float: left; margin-top: 30px; margin-left: -15px">
 					<ul>
 						<s:if test="#request.page.showPrv != 0">
-							<li class id="firstPage" data-id="PAGE"><a
+							<li id="firstPage" data-id="PAGE"><a
 								href="User/list?pageNo=1&state=${state}">首页</a></li>
-							<li class id="lastPage" data-id="PAGE"><a
+							<li id="lastPage" data-id="PAGE"><a
 								href="User/list?pageNo=<s:property value="#request.page.pageNo -1"/>&state=${state}">上一页</a></li>
 						</s:if>
 						<s:else>
@@ -207,9 +258,9 @@
 							</s:else>
 						</s:iterator>
 						<s:if test="#request.page.showNext != 0">
-							<li class id="nextPage" data-id="PAGE"><a
+							<li id="nextPage" data-id="PAGE"><a
 								href="User/list?pageNo=<s:property value="#request.page.pageNo +1"/>&state=${state}">下一页</a></li>
-							<li class id="endPage" data-id="PAGE"><a
+							<li id="endPage" data-id="PAGE"><a
 								href="User/list?pageNo=<s:property value="#request.page.totalPage"/>&state=${state}">尾页</a></li>
 						</s:if>
 						<s:else>
@@ -227,6 +278,21 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	$("#addUser").click(function() {
+		$("#mask").slideDown("fast",slidedown);
+	})
+	function slidedown(){
+		$("#user_add").fadeIn("slow");
+		$("#user_form_content").fadeIn("slow");
+	}
+	function slideup(){
+		$("#user_add").fadeOut("slow");
+		$("#user_form_content").fadeOut("slow");
+	}
+	$("#cancleFile").click(function(){
+		slideup();
+		$("#mask").slideUp("fast");
+	});
 	function dele(){
 		var cs = $("#checkselect").val();
 		if(cs=="true"){
@@ -236,7 +302,6 @@
 		}else{
 			alert("请选中所需删除数据！");
 		}
-		
 	}
 	
 	$(function(){
@@ -252,10 +317,9 @@
 	function isForbidden(){
 		location.href="User/list?state=2";
 	}
-		$(function() {
+		/* $(function() {
 			$("#addUser").click(function() {
 				$("#infoEdit").removeAttr("style");
-				/* $(".mask").slideDown("slow"); */
 				if (this.id == 'addUser') {
 					$("#passEditContent").removeAttr('style');
 				}
@@ -264,7 +328,7 @@
 				$(".mask").slideUp("slow");
 				$("#infoEdit").attr('style', 'display:none');
 			});
-		});
+		}); */
 		var selAll = document.getElementById("selAll");
 		function selectAll() {
 			var obj = document.getElementsByName("checkAll");
@@ -318,51 +382,65 @@
 			var username = $("#username").val();
 			var regex = /^[0-9A-Za-z_]{3,15}$/;
 			if (regex.exec(username) == null) {
-				document.getElementById("umsg").color = "red";
-				document.getElementById("umsg").innerHTML = "用户名不合法！";
-				$("#usercheck").val("false");
+				$("#username")[0].className = "required validation-failed";
+				$("#advice-required-field1")[0].innerHTML="格式有误！";
+				$("#advice-required-field1").removeAttr("style");
+				return false;
 			} else {
-				$
-						.ajax({
-							type : "GET",
-							url : "User/checkUserName?username=" + username,
-							success : function(msg) {
-								if (msg == "false") {
-									document.getElementById("umsg").color = "red";
-									document.getElementById("umsg").innerHTML = "该用户名已被使用";
-									$("#usercheck").val("false");
-								} else {
-									document.getElementById("umsg").color = "green";
-									document.getElementById("umsg").innerHTML = "恭喜!用户名可用";
-									$("#usercheck").val("true");
-								}
-							},
-							error : function(msg) {
-							
-							}
-						});
+				$.ajax({
+					type : "GET",
+					url : "User/checkUserName?username=" + username,
+					success : function(msg) {
+						if (msg == "false") {
+							$("#username")[0].className = "required validation-failed";
+							$("#advice-required-field1")[0].innerHTML="已被使用！";
+							$("#advice-required-field1").removeAttr("style");
+							return false;
+						} else {
+							$("#username")[0].className = "required";
+							$("#advice-required-field1").attr("style","display:none;");
+							return true;
+						}
+					},
+					error : function(msg) {
+					
+					}
+				});
+				return true;
 			}
 		}
 		function verifyPass() {
 			var pass1, pass2;
-			pass1 = $("#pass").val();
-			pass2 = $("#vfpass").val();
-			if (pass1.length == 0 || pass2.length == 0) {
-				document.getElementById("vpass").color = "red";
-				document.getElementById("vpass").innerHTML = "密码不能为空！";
-				$("#passcheck").val("false");
+			pass1 = $("#password").val();
+			pass2 = $("#vpassword").val();
+			if(pass1.length == 0){
+				$("#password")[0].className = "required validation-failed";
+				$("#advice-required-field2")[0].innerHTML="不能为空！";
+				$("#advice-required-field2").removeAttr("style");
+				return false;
+			}else{
+				$("#password")[0].className = "required";
+				$("#advice-required-field2").attr("style","display:none;");
+			}
+			if (pass2.length == 0) {
+				$("#vpassword")[0].className = "required validation-failed";
+				$("#advice-required-field3")[0].innerHTML="确认密码！";
+				$("#advice-required-field3").removeAttr("style");
+				return false;
 			} else {
 				if (pass1 != pass2) {
-					document.getElementById("vpass").color = "red";
-					document.getElementById("vpass").innerHTML = "两次密码不一致！";
-					$("#passcheck").val("false");
+					$("#vpassword")[0].className = "required validation-failed";
+					$("#advice-required-field3")[0].innerHTML="不一致！";
+					$("#advice-required-field3").removeAttr("style");
+					return false;
 				} else {
-					document.getElementById("vpass").color = "green";
-					document.getElementById("vpass").innerHTML = "密码一致！";
-					$("#passcheck").val("true");
+					$("#password")[0].className = "required";
+					$("#vpassword")[0].className = "required";
+					$("#advice-required-field2").attr("style","display:none;");
+					$("#advice-required-field3").attr("style","display:none;");
+					return true;
 				}
 			}
-
 		}
 		function check() {
 			var usercheck = $("#usercheck").val();
@@ -373,6 +451,11 @@
 				document.getElementById("btn").type = "submit";
 			}
 		}
+		$("#btn").click(function(){
+			if(checkUsername() && verifyPass()){
+				$("#test").submit();
+			}
+		});
 	</script>
 </body>
 </html>

@@ -10,14 +10,7 @@
 <html>
 <head>
 <title>新增文档</title>
-
-
-<!-- <script type="text/javascript" src="js/forms/prototype.js"></script>
-<script type="text/javascript" src="js/forms/effects.js"></script>
-<script type="text/javascript" src="js/forms/validation.js"></script> -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
-<!-- <script type="text/javascript" src="js/forms/form.js"></script> -->
-
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
@@ -102,8 +95,7 @@
 					</div>
 					<div class="form-row">
 						<div class="field-widget-confirm">
-							<input id="btn" type="button" class="submit" value="确定" /> <!--onclick="checkTitle();typeCheck();
-							categoryCheck('language','level');categoryCheck('level','language');isvalidatefile();"  -->
+							<input id="btn" type="button" class="submit" value="确定"/>
 							<input class="reset" type="reset" value="重置"/>
 						</div>
 					</div>
@@ -236,7 +228,7 @@
 				 var id1 = $("#"+obj1)[0].id;
 				 var id2 = $("#"+obj2)[0].id;
 				 if(val=="-1"){
-					 $("#"+id1)[0].className = "validate-selection validation-failed"
+					 $("#"+id1)[0].className = "validate-selection validation-failed";
 					 $("#all-selection").removeAttr("style");
 					 $("#"+id1+"id")[0].value="1";
 					 return false;
@@ -305,7 +297,6 @@
 						return false;
 				}
 				return true;
-				
 			}
 			function isvalidatefile() {
 				var fileType = $("#file").val();
@@ -327,34 +318,16 @@
 				return true;
 			}
 			$("#btn").click(function(){
-				checkTitle();
+				/* checkTitle();
 				typeCheck();
 				categoryCheck('language','level');
 				categoryCheck('level','language');
-				isvalidatefile();
-				if(isvalidatefile()&&categoryCheck('level','language')
-						&&categoryCheck('language','level')&&typeCheck()
-						&&checkTitle()){
+				isvalidatefile(); */
+				if(checkTitle()&&typeCheck()&&categoryCheck('language','level')&&
+						categoryCheck('level','language')&&isvalidatefile()){
 					$("#test").submit();
 				}
 			});
-			
-		/* function formCallback(result, form) {
-			window.status = "valiation callback for form '" + form.id
-					+ "': result = " + result;
-		}
-
-		var valid = new Validation('test', {
-			immediate : true,
-			onFormValidate : formCallback
-		});
-		Validation.addAllThese([ [ 'validate-password', '> 6 characters', {
-			minLength : 7,
-			notOneOf : [ 'password', 'PASSWORD', '1234567', '0123456' ],
-			notEqualToField : 'field1'
-		} ], [ 'validate-password-confirm', 'please try again.', {
-			equalToField : 'field8'
-		} ] ]); */
 	</script>
 
 </body>

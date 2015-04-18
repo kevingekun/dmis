@@ -15,16 +15,15 @@
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
-<link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 <link rel="stylesheet" type="text/css" href="css/dmis.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-
 <link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
 <link rel="stylesheet" type="text/css" href="css/uniform.css" />
 <link rel="stylesheet" type="text/css" href="css/select2.css" />
 <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
+<link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 </head>
 <body id="table1">
 	<input type="text" id="checkRadio" value="${state}"
@@ -57,7 +56,7 @@
 						</div>
 						<div class="field-widget">
 							<input name="keyword.keyword" id="keyword" class="required"
-								onblur="checkKeyword();"/>
+								type="text" onblur="checkKeyword();"/>
 							<div class="validation-advice" id="advice-required-field1"
 								style="display: none;">required field.</div>
 						</div>
@@ -138,9 +137,9 @@
 					style="float: left; margin-top: 30px; margin-left: -15px">
 					<ul>
 						<s:if test="#request.page.showPrv != 0">
-							<li class id="firstPage" data-id="PAGE"><a
+							<li id="firstPage" data-id="PAGE"><a
 								href="Keyword/list?pageNo=1&state=${state}">首页</a></li>
-							<li class id="lastPage" data-id="PAGE"><a
+							<li id="lastPage" data-id="PAGE"><a
 								href="Keyword/list?pageNo=<s:property value="#request.page.pageNo -1"/>&state=${state}">上一页</a></li>
 						</s:if>
 						<s:else>
@@ -164,9 +163,9 @@
 							</s:else>
 						</s:iterator>
 						<s:if test="#request.page.showNext != 0">
-							<li class id="nextPage" data-id="PAGE"><a
+							<li id="nextPage" data-id="PAGE"><a
 								href="Keyword/list?pageNo=<s:property value="#request.page.pageNo +1"/>&state=${state}">下一页</a></li>
-							<li class id="endPage" data-id="PAGE"><a
+							<li id="endPage" data-id="PAGE"><a
 								href="Keyword/list?pageNo=<s:property value="#request.page.totalPage"/>&state=${state}">尾页</a></li>
 						</s:if>
 						<s:else>
@@ -295,8 +294,8 @@
 			$("#close").click(function() {
 				$(".mask").slideUp("slow");
 				$("#infoEdit").attr('style', 'display:none');
-			})
-		})
+			});
+		});
 		var selAll = document.getElementById("selAll");
 		function selectAll() {
 			var obj = document.getElementsByName("checkAll");
