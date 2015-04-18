@@ -34,7 +34,13 @@
 	padding: 10px;
 	background: url(../../images/forms/form_top_bg.gif) repeat-x top #fff;
 }
-
+.type_form_content {
+	width: 487px;
+	/* height: 341px; */
+	margin: 30px auto;
+	padding: 10px;
+	background: url(../../images/forms/form_top_bg.gif) repeat-x top #fff;
+}
 #keyword_add {
 	z-index: 90;
 	position: absolute;
@@ -65,7 +71,12 @@
 	left: 25%;
 	top: 30%;
 }
-
+#type_add {
+	z-index: 90;
+	position: absolute;
+	left: 25%;
+	top: 30%;
+}
 fieldset {
 	border: 1px #ebebeb solid;
 	padding: 15px 10px 15px 10px;
@@ -125,6 +136,11 @@ legend.optional {
 	float: left;
 	line-height: 25px;
 }
+.field-label_type {
+	width: 65px;
+	float: left;
+	line-height: 25px;
+}
 label {
 	float: left;
 	color: #666666;
@@ -163,7 +179,11 @@ label.left {
 	margin-left: 75px;
 	margin-top: 20px;
 }
-
+.field-widget-confirm_type {
+	float: left;
+	margin-left: 75px;
+	margin-top: 20px;
+}
 input.required {
 	width: 300px;
 	height: 22px;

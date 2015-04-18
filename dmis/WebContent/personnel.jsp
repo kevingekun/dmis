@@ -16,7 +16,6 @@
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css"/>
-
 <link rel="stylesheet" type="text/css" href="css/dmis.css"/>
 <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
@@ -280,7 +279,7 @@
 	<script type="text/javascript">
 	$("#addUser").click(function() {
 		$("#mask").slideDown("fast",slidedown);
-	})
+	});
 	function slidedown(){
 		$("#user_add").fadeIn("slow");
 		$("#user_form_content").fadeIn("slow");

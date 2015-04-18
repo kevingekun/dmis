@@ -49,7 +49,7 @@
 			<form id="test" action="Keyword/addKeyword" method="post"
 				enctype="multipart/form-data">
 				<fieldset>
-					<legend>添加  词条</legend>
+					<legend>新增  词条</legend>
 					<div class="form-row">
 						<div class="field-label_keyword">
 							<label for="field1">词条名</label>:
