@@ -6,10 +6,10 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme() + "://"
-		+ request.getServerName() + ":" + request.getServerPort()
-		+ path + "/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 <s:if test="#request.type != 'pdf'">
 	<jsp:include page="office.jsp"></jsp:include>
@@ -25,48 +25,42 @@ String basePath = request.getScheme() + "://"
 <link rel="stylesheet" href=" css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" href=" css/matrix-style.css" />
 <link rel="stylesheet" href=" css/matrix-media.css" />
-<link rel="stylesheet" href=" css/knowledge.css" />
+<link rel="stylesheet" href=" css/dmis.css" />
 <link href=" font-awesome/css/font-awesome.css" rel="stylesheet" />
-
-<!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'> -->
 </head>
 <body>
+	<input id="DOCPATH" value="<s:property value="#request.docPath"/>" type="hidden" />
+	<input id="TYPE" value="<s:property value="#request.type"/>" type="hidden" />
 
-<input id="DOCPATH" value="<s:property value="#request.docPath"/>" type="hidden"/>
-<input id="TYPE" value="<s:property value="#request.type"/>" type="hidden"/>
-	
 	<s:if test="#request.type == 'pdf'">
 		<!-- start pdf -->
-		<div id="showpdf" style="height:100%;">
-	
-			<div class="widget-content" id="pdf"
-				style="width: 100%; height:100%; "></div>
-		</div></s:if>
-		<!-- end pdf -->
-		<s:else><!-- start pageoffice -->
-		<div id="showoffice" style="height:100%;">
-		<div style="width:100%;height:100%;">
-			<po:PageOfficeCtrl id="PageOfficeCtrl1"></po:PageOfficeCtrl></div>
+		<div id="showpdf" style="height: 100%;">
+			<div class="widget-content" id="pdf" style="width: 100%; height: 100%;"></div>
 		</div>
-		</s:else>
-		<!-- end pageoffice --> 
+	</s:if>
+	<!-- end pdf -->
 
+	<!-- start pageoffice -->
+	<s:else>
+		<div id="showoffice" style="height: 100%;">
+			<div style="width: 100%; height: 100%;">
+				<po:PageOfficeCtrl id="PageOfficeCtrl1"></po:PageOfficeCtrl>
+			</div>
+		</div>
+	</s:else>
+	<!-- end pageoffice -->
 	<!--end-Footer-part-->
 	<script src=" js/jquery.min.js"></script>
 	<script src=" js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="js/pdfobject.js"  charset="utf-8"></script>
+	<script type="text/javascript" src="js/pdfobject.js" charset="utf-8"></script>
 	<script type="text/javascript" charset="utf-8">
-		
-	/*  window.onload = function() { */
-
-		var type=$('#TYPE').val().trim();
-		var path=$('#DOCPATH').val().trim();
-		if(type=="pdf"){
-			
+		var type = $('#TYPE').val().trim();
+		var path = $('#DOCPATH').val().trim();
+		if (type == "pdf") {
 			var success = new PDFObject({
-				url :path}).embed("pdf");
-			}
-		
+				url : path
+			}).embed("pdf");
+		}
 	</script>
 </body>
 </html>

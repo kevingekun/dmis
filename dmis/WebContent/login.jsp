@@ -97,12 +97,8 @@
 	<!--  end forgotbox -->
 
 </div>
-<!-- End: login-holder -->
-<%-- <script src="<%=basePath%>js/pagescript/login.js"></script>
-<script src="<%=basePath%>js/pagescript/knowledge.alert.js"></script>  --%>
  <script type="text/javascript">
 $("#loginCheck").click(function(){
-	/* alertTip("<img src='"+hostPath+"images/loading.gif' width='50px' height='50px'>"); */
 	var user = $("#loginform").serialize();
 	$.ajax({
 		type:"POST",

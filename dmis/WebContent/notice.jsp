@@ -105,9 +105,7 @@
 					</div>
 					<div class="form-row">
 						<div class="field-widget-confirm_notice" style="margin-left: 630px;">
-							<!-- <input id="btn" type="button" class="submit" value="确定" />  -->
 							<input id="cancleFile2" type="button" class="reset" value="关闭" />
-							<!-- <input id="cancleFile2" type="button" class="cancle" value="关闭" />  -->
 						</div>
 					</div>
 				</fieldset>

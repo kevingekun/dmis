@@ -339,20 +339,6 @@
 		function noPass() {
 			location.href = "Keyword/list?state=0";
 		}
-		/* $(function() {
-			$("#addWord").click(function() {
-
-				if (this.id == 'addWord') {
-					$("#infoEdit").removeAttr("style");
-					$(".mask").slideDown("slow");
-					$("#addWordContent").removeAttr('style');
-				}
-			});
-			$("#close").click(function() {
-				$(".mask").slideUp("slow");
-				$("#infoEdit").attr('style', 'display:none');
-			});
-		}); */
 		var selAll = document.getElementById("selAll");
 		function selectAll() {
 			var obj = document.getElementsByName("checkAll");
@@ -400,6 +386,5 @@
 			};
 		};
 	</script>
-
 </body>
 </html>

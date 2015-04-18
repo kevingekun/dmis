@@ -16,12 +16,12 @@
 
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css"/>
 <link rel="stylesheet" type="text/css" href="css/dmis.css"/>
-<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
-<link rel="stylesheet" type="text/css" href="css/uniform.css" />
-<link rel="stylesheet" type="text/css" href="css/select2.css" />
-<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/matrix-media.css" /> -->
+<!-- <link rel="stylesheet" type="text/css" href="css/uniform.css" /> -->
+<!-- <link rel="stylesheet" type="text/css" href="css/select2.css" /> -->
+<!-- <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" /> -->
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 
@@ -87,10 +87,6 @@
 			</form>
 		</div>
 		</div>
-		
-		      
-		      
-		 
           <div class="widget-content ">
            <s:form name="form2" id="form2" method="post">
             <table class="table table-bordered table-striped with-check">
@@ -102,7 +98,6 @@
                   <th style="width:200px;">类型级别</th>
                   <th style="width:100px;">父类型编号</th>
                   <th style="width:150px;">操作</th>
-
                 </tr>
               </thead>
               <tbody>

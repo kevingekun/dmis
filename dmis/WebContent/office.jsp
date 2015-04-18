@@ -12,7 +12,7 @@
 	/*pageoffice  */
 	PageOfficeCtrl poCtrl1 = new PageOfficeCtrl(request);
 	poCtrl1.setServerPage("poserver.do"); //此行必须
-	poCtrl1.setSaveFilePage("/dmis/saveDocFile.jsp");//如要保存文件，此行必须
+	//poCtrl1.setSaveFilePage("/dmis/saveDocFile.jsp");//如要保存文件，此行必须
 	String docPath = request.getAttribute("docPath").toString();
 	if (docPath.endsWith(".doc") || docPath.endsWith(".docx")) { //判断后缀名
 		String filePath = request.getSession().getServletContext()

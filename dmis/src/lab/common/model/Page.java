@@ -12,11 +12,10 @@ public class Page {
 
 	private List<?> pageList;
 	private List<String> pageNum = new ArrayList<String>();
-	
+
 	private final int fixSignSize = 5; // 在页面显�?几条)的标签数
 	private int showPrv = 1;
 	private int showNext = 1;
-	
 
 	public Page() {
 	}
@@ -37,10 +36,10 @@ public class Page {
 	}
 
 	public void createPageNum() {
-		int startPage = 0; // �?��标签
+		int startPage = 0; // 开始标签
 		int endPage = 0; // 结束标签
 		int temp = fixSignSize / 2;
-		
+
 		if (totalSize > 0) {
 			if (totalSize % pageContSize == 0) {
 				totalPage = totalSize / pageContSize;
@@ -53,7 +52,8 @@ public class Page {
 			} else if (pageNo < fixSignSize - temp) {
 				startPage = 1;
 				endPage = fixSignSize;
-			} else if (fixSignSize - temp <= pageNo && pageNo <= totalPage - temp) {
+			} else if (fixSignSize - temp <= pageNo
+					&& pageNo <= totalPage - temp) {
 				startPage = pageNo - temp;
 				endPage = pageNo + temp;
 			} else if (totalPage - temp < pageNo) {
@@ -63,7 +63,7 @@ public class Page {
 			if (pageNo == 1) {
 				showPrv = 0;
 			}
-			if(pageNo == totalPage){
+			if (pageNo == totalPage) {
 				showNext = 0;
 			}
 			for (int i = startPage; i <= endPage; i++) {
@@ -137,5 +137,4 @@ public class Page {
 		this.totalSize = totalSize;
 	}
 
-	
 }

@@ -37,8 +37,8 @@
 			<div class="widget-radio">
 				<input id="addUser" class="btn btn-small blue" type="button"
 					value="新增人员" style="margin-bottom: 5px">
-					<input type="radio" name="state" id="all"   onClick="allUser();"/>全部
-					<input type="radio" name="state" id="isForbidden"  onClick="isForbidden();"/>已禁用
+					<input type="radio" name="state" id="all" onClick="allUser();"/>全部
+					<input type="radio" name="state" id="isForbidden" onClick="isForbidden();"/>已禁用
 			</div>
 		</div>
 		<div id="user_add" style="display: none;" align="center">
@@ -52,7 +52,7 @@
 						</div>
 						<div class="field-widget">
 							<input name="user.name" id="username" class="required"
-								type="text" onblur="checkUsername();"/>
+								type="text" placeholder="必须为字母数字下划线" onblur="checkUsername();"/>
 							<div class="validation-advice" id="advice-required-field1"
 								style="display: none;">required field.</div>
 						</div>
@@ -90,61 +90,7 @@
 			</form>
 		</div>
 		</div>
-		<div id="infoEdit" style="display: none" align="center">
-			<div id="passEditContent" style="display: none;">
-				<div class="infoHeader bg_lg">
-					<span id="title">用户添加</span>
-				</div>
-				<br>
-				<div style="height: 200px">
-					<form id="user" name="user" method="post" action="User/add">
-						<div class="row" id="editInfo"
-							style="color: #FFF; font-size: 14px; margin: 60px 0 0 15px;">
-							<div class="control-group" style="height: 100px">
-								<div class="controls" style="height: 150px">
-									<div style="height: 50px; float: left">
-										<div class="main_input_box"
-											style="float: left; margin-left: 90px; margin-top: 0px; height: 30px">
-											<span class="add-on bg_lg"><li class="icon-user"></li></span>
-											<input id="username" name="user.name" type="text"
-												placeholder="用户名" onblur="checkUsername()" /> 
-												<font color="red" id="umsg"></font>
-												<input type="hidden" id="usercheck" value="false">
-										</div>
-										<div style="font-size: 8px; float: left; margin-left: 90px">
-											<a style="color: #28b779; margin-left: 55px">用户名必须为字母数字下划线!</a>
-										</div>
-									</div>
-									<br />
-									<div class="main_input_box"
-										style="float: left; margin-left: 90px">
-										<span class="add-on bg_lg"><li class="icon-key"></li></span>
-										<input id="pass" name="user.password" type="password"
-											placeholder="密码" />
-									</div>
-									<br />
-									<div class="main_input_box"
-										style="float: left; margin-left: 90px">
-										<span class="add-on bg_lg"><li class="icon-key"></li></span>
-										<input id="vfpass" type="password" placeholder="确认密码" onblur="verifyPass()"/> 
-										<font color="red" id="vpass"></font>
-										<input id="passcheck" type="hidden" value="false">
-									</div>
-								</div>
-							</div>
-							<div style="height: 30px; margin-top: 20px">
-								<div style="width: 160px; margin-left: -70px">
-									<input type="button" class="btn btn-success" style="margin: 0px 0 0 0;"
-										id="btn" value="确定" onclick="check(),checkUsername(),verifyPass()"/> 
-									<input type="reset" id="close" class="btn" style="margin: 0px 0 0 40px;"value="取消"  /><br>
-									<br>
-								</div>
-							</div>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
+		
 		<div class="widget-content ">
 		<s:form name="form2" id="form2" method="post">
 			<table class="table table-bordered table-striped with-check">
@@ -194,13 +140,13 @@
 									<option value="1">一级用户</option>
 									<option value="2">二级用户</option>
 									<option value="3">三级用户</option>
-								</select>								
+								</select>
 								<script type="text/javascript">
 									var id = "select"+"<s:property value="id"/>";
-									var role = "<s:property value="role"/>" - 1;
+									var role = "<s:property value="role"/>" - 1; //0->一级；1->二级；2->三级
 									var td = "#role"+"<s:property value="id"/>";
 									var x=document.getElementById(id);
-									x.selectedIndex = role;																						
+									x.selectedIndex = role;//设置初始等级																
 									function t(obj){
 										var id2 = obj.id.substring(6);	
 										var roleid = "role" + id2;
@@ -216,7 +162,7 @@
 											error:function(){
 												alert("修改失败");
 												var x=document.getElementById(id);
-												x.selectedIndex = role;			
+												x.selectedIndex = role;//恢复初始值
 											}
 										});								
 									}
@@ -316,145 +262,121 @@
 	function isForbidden(){
 		location.href="User/list?state=2";
 	}
-		/* $(function() {
-			$("#addUser").click(function() {
-				$("#infoEdit").removeAttr("style");
-				if (this.id == 'addUser') {
-					$("#passEditContent").removeAttr('style');
-				}
-			});
-			$("#close").click(function() {
-				$(".mask").slideUp("slow");
-				$("#infoEdit").attr('style', 'display:none');
-			});
-		}); */
-		var selAll = document.getElementById("selAll");
-		function selectAll() {
-			var obj = document.getElementsByName("checkAll");
-			if (document.getElementById("selAll").checked == false) {
-				for (var i = 0; i < obj.length; i++) {
-					obj[i].checked = false;
-				}
-				document.getElementById("checkselect").value="false";
-			} else {
-				for (var i = 0; i < obj.length; i++) {
-					obj[i].checked = true;
-				}
-				document.getElementById("checkselect").value="true";
+	var selAll = document.getElementById("selAll");
+	function selectAll() {
+		var obj = document.getElementsByName("checkAll");
+		if (document.getElementById("selAll").checked == false) {
+			for (var i = 0; i < obj.length; i++) {
+				obj[i].checked = false;
 			}
-
+			document.getElementById("checkselect").value="false";
+		} else {
+			for (var i = 0; i < obj.length; i++) {
+				obj[i].checked = true;
+			}
+			document.getElementById("checkselect").value="true";
 		}
 
-		//当选中所有的时候，全选按钮会勾上 
-		function setSelectAll() {
-			var obj = document.getElementsByName("checkAll");
-			var count = obj.length;
-			var selectCount = 0;
+	}	
+	//当选中所有的时候，全选按钮会勾上 
+	function setSelectAll() {
+		var obj = document.getElementsByName("checkAll");
+		var count = obj.length;
+		var selectCount = 0;
 
-			for (var i = 0; i < count; i++) {
-				if (obj[i].checked == true) {
-					selectCount++;
-				}
-			}
-			if(selectCount>0){
-				document.getElementById("checkselect").value="true";
-			}else{
-				document.getElementById("checkselect").value="false";
-			}
-			if (count == selectCount) {
-				document.all.selAll.checked = true;
-			} else {
-				document.all.selAll.checked = false;
+		for (var i = 0; i < count; i++) {
+			if (obj[i].checked == true) {
+				selectCount++;
 			}
 		}
-
-		//反选按钮 
-		function inverse() {
-			var checkboxs = document.getElementsByName("checkAll");
-			for (var i = 0; i < checkboxs.length; i++) {
-				var e = checkboxs[i];
-				e.checked = !e.checked;
-				setSelectAll();
-			}
+		if(selectCount>0){
+			document.getElementById("checkselect").value="true";
+		}else{
+			document.getElementById("checkselect").value="false";
 		}
-		function checkUsername() {
-			var username = $("#username").val();
-			var regex = /^[0-9A-Za-z_]{3,15}$/;
-			if (regex.exec(username) == null) {
-				$("#username")[0].className = "required validation-failed";
-				$("#advice-required-field1")[0].innerHTML="格式有误！";
-				$("#advice-required-field1").removeAttr("style");
-				return false;
-			} else {
-				$.ajax({
-					type : "GET",
-					url : "User/checkUserName?username=" + username,
-					success : function(msg) {
-						if (msg == "false") {
-							$("#username")[0].className = "required validation-failed";
-							$("#advice-required-field1")[0].innerHTML="已被使用！";
-							$("#advice-required-field1").removeAttr("style");
-							return false;
-						} else {
-							$("#username")[0].className = "required";
-							$("#advice-required-field1").attr("style","display:none;");
-							return true;
-						}
-					},
-					error : function(msg) {
-					
+		if (count == selectCount) {
+			document.all.selAll.checked = true;
+		} else {
+			document.all.selAll.checked = false;
+		}
+	}
+	//反选按钮 
+	function inverse() {
+		var checkboxs = document.getElementsByName("checkAll");
+		for (var i = 0; i < checkboxs.length; i++) {
+			var e = checkboxs[i];
+			e.checked = !e.checked;
+			setSelectAll();
+		}
+	}
+	function checkUsername() {
+		var username = $("#username").val();
+		var regex = /^[0-9A-Za-z_]{3,15}$/;
+		if (regex.exec(username) == null) {
+			$("#username")[0].className = "required validation-failed";
+			$("#advice-required-field1")[0].innerHTML="格式有误！";
+			$("#advice-required-field1").removeAttr("style");
+			return false;
+		} else {
+			$.ajax({
+				type : "GET",
+				url : "User/checkUserName?username=" + username,
+				success : function(msg) {
+					if (msg == "false") {
+						$("#username")[0].className = "required validation-failed";
+						$("#advice-required-field1")[0].innerHTML="已被使用！";
+						$("#advice-required-field1").removeAttr("style");
+						return false;
+					} else {
+						$("#username")[0].className = "required";
+						$("#advice-required-field1").attr("style","display:none;");
+						return true;
 					}
-				});
-				return true;
-			}
+				},
+				error : function(msg) {
+				}
+			});
+			return true;
 		}
-		function verifyPass() {
-			var pass1, pass2;
-			pass1 = $("#password").val();
-			pass2 = $("#vpassword").val();
-			if(pass1.length == 0){
-				$("#password")[0].className = "required validation-failed";
-				$("#advice-required-field2")[0].innerHTML="不能为空！";
-				$("#advice-required-field2").removeAttr("style");
-				return false;
-			}else{
-				$("#password")[0].className = "required";
-				$("#advice-required-field2").attr("style","display:none;");
-			}
-			if (pass2.length == 0) {
+	}
+	function verifyPass() {
+		var pass1, pass2;
+		pass1 = $("#password").val();
+		pass2 = $("#vpassword").val();
+		if(pass1.length == 0){
+			$("#password")[0].className = "required validation-failed";
+			$("#advice-required-field2")[0].innerHTML="不能为空！";
+			$("#advice-required-field2").removeAttr("style");
+			return false;
+		}else{
+			$("#password")[0].className = "required";
+			$("#advice-required-field2").attr("style","display:none;");
+		}
+		if (pass2.length == 0) {
+			$("#vpassword")[0].className = "required validation-failed";
+			$("#advice-required-field3")[0].innerHTML="确认密码！";
+			$("#advice-required-field3").removeAttr("style");
+			return false;
+		} else {
+			if (pass1 != pass2) {
 				$("#vpassword")[0].className = "required validation-failed";
-				$("#advice-required-field3")[0].innerHTML="确认密码！";
+				$("#advice-required-field3")[0].innerHTML="不一致！";
 				$("#advice-required-field3").removeAttr("style");
 				return false;
 			} else {
-				if (pass1 != pass2) {
-					$("#vpassword")[0].className = "required validation-failed";
-					$("#advice-required-field3")[0].innerHTML="不一致！";
-					$("#advice-required-field3").removeAttr("style");
-					return false;
-				} else {
-					$("#password")[0].className = "required";
-					$("#vpassword")[0].className = "required";
-					$("#advice-required-field2").attr("style","display:none;");
-					$("#advice-required-field3").attr("style","display:none;");
-					return true;
-				}
+				$("#password")[0].className = "required";
+				$("#vpassword")[0].className = "required";
+				$("#advice-required-field2").attr("style","display:none;");
+				$("#advice-required-field3").attr("style","display:none;");
+				return true;
 			}
 		}
-		function check() {
-			var usercheck = $("#usercheck").val();
-			var passcheck = $("#passcheck").val();
-			if(usercheck=="false" || passcheck=="false"){
-				document.getElementById("btn").type = "button";
-			}else{
-				document.getElementById("btn").type = "submit";
-			}
+	}
+	$("#btn").click(function(){
+		if(checkUsername() && verifyPass()){
+			$("#test").submit();
 		}
-		$("#btn").click(function(){
-			if(checkUsername() && verifyPass()){
-				$("#test").submit();
-			}
-		});
+	});	
 	</script>
 </body>
 </html>
