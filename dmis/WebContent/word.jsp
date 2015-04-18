@@ -46,7 +46,7 @@
 		
 		<div id="keyword_add" style="display: none;" align="center">
 		<div id="keyword_form_content" class="keyword_form_content" style="display:none;">
-			<form id="test" action="Keyword/addKeyword.action" method="post"
+			<form id="test" action="Keyword/addKeyword" method="post"
 				enctype="multipart/form-data">
 				<fieldset>
 					<legend>添加  词条</legend>
@@ -85,6 +85,40 @@
 			</form>
 		</div>
 		</div>
+		<div id="keyword_check" style="display: none;" align="center">
+		<div id="keywordcheck_form_content" class="keyword_form_content" style="display:none;">
+			<form>
+				<fieldset>
+					<legend>查看  词条</legend>
+					<div class="form-row">
+						<div class="field-label_keyword">
+							<label for="field1">词条名</label>:
+						</div>
+						<div class="field-widget">
+							<input id="keyword2" class="required" type="text"/>
+						</div>
+					</div>
+					<div class="form-row_keyword">
+						<div class="controls">
+						<textarea id="con2" cols="20" rows="2" class="ckeditor"></textarea>
+						<script type="text/javascript">
+							var ckeditor=CKEDITOR.replace('con2', {
+								uiColor: '#82f5c8'
+							});
+						</script>
+					</div>
+					</div>
+					<div class="form-row">
+						<div class="field-widget-confirm_keyword" style="margin-left: 630px;">
+							<!-- <input id="btn" type="button" class="submit" value="确定" />  -->
+							<input id="cancleFile2" type="button" class="reset" value="关闭" />
+							<!-- <input id="cancleFile" type="button" class="cancle" value="取消" />  -->
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		</div>
 		<div class="widget-content ">
 			<s:form name="form2" id="form2" method="post">
 				<table class="table table-bordered table-striped with-check">
@@ -94,10 +128,11 @@
 								style="margin-bottom: 4px" onclick="selectAll();" /><input
 								type="hidden" id="checkselect" value="false"></th>
 							<th style="width: 30px;">编号</th>
-							<th style="width: 280px;">知识名</th>
-							<th style="width: 200px;">提交时间</th>
-							<th style="width: 100px;">是否通过</th>
-							<th style="width: 150px;">操作</th>
+							<th style="width: 120px;">知识名</th>
+							<th style="width: 340px;">内容</th>
+							<th style="width: 120px;">提交时间</th>
+							<th style="width: 60px;">是否通过</th>
+							<th style="width: 110px;">操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -108,10 +143,10 @@
 									name="checkAll" id="checkAll" value="<s:property value="id"/>"
 									onClick="setSelectAll();" /></td>
 								<td><s:property value="id" /></td>
-								<td class="link_href"><a
-									href="Keyword/hrefsearch?keywordId=<s:property value="id"/>"
-									target="_blank" style="text-decoration: none;"><s:property
-											value="keyword" /></a></td>
+								<td class="link_href">
+									<a style="cursor:hand;text-decoration: none;"onclick="keywordCheck(<s:property value="id"/>)">
+									<s:property value="keyword" /></a></td>
+								<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"><s:property value="content" /></td>
 								<td><s:date name="commitTime" format="yyyy-MM-dd HH:mm" /></td>
 								<s:if test="isPass">
 									<td>通过</td>
@@ -198,9 +233,14 @@
 			slideup();
 			$("#mask").slideUp("fast");
 		});
+		$("#cancleFile2").click(function(){
+			$("#keyword_check").fadeOut("slow");
+			$("#keywordcheck_form_content").fadeOut("slow");
+			$("#mask").slideUp("fast");
+		});
 		function checkKeyword() {
 			var keyword = $("#keyword").val();
-			keyword2 = keyword.replace(/\s+/g, "");
+			keyword = keyword.replace(/\s+/g, "");
 			if (keyword.length == 0) {
 				$("#keyword")[0].className = "required validation-failed";
 				$("#advice-required-field1")[0].innerHTML="不为空！";
@@ -216,8 +256,8 @@
 					$("#keyword")[0].className = "required";
 					$("#advice-required-field1").attr("style","display:none;");
 					return true;
-				}
-			}
+				};
+			};
 		}
 		function checkContent() {
 			var str=ckeditor.document.getBody().getText();
@@ -227,6 +267,23 @@
 				return false;
 			}
 			return true;
+		}
+		function keywordCheck(id){
+			$.ajax({
+				type:'GET',
+				url:"Keyword/checkKeyword?id="+id,
+				success:function(jsonData){
+					var data = eval(jsonData);
+	      			$("#keyword2")[0].value=data[0].title;
+	      			ckeditor.setData(data[0].content);//编辑器内容填充
+				},
+				error:function(){
+					alert("errooor");
+				}
+			});
+			$("#mask").slideDown("fast");
+			$("#keyword_check").fadeIn("slow");
+			$("#keywordcheck_form_content").fadeIn("slow");
 		}
 		$("#btn").click(function(){
 			if(checkKeyword()&&checkContent()){
@@ -249,8 +306,8 @@
 				{
 					radio_oj[i].checked = true; //修改选中状态
 					break; //停止循环
-				}
-			}
+				};
+			};
 		}
 
 		function dele() {
@@ -261,7 +318,7 @@
 				document.getElementById("form2").submit();
 			} else {
 				alert("请选中需要删除的数据！");
-			}
+			};
 		}
 		function pass() {
 			var checkselect = $("#checkselect").val();
@@ -271,7 +328,7 @@
 				document.getElementById("form2").submit();
 			} else {
 				alert("请选中需要通过的数据!");
-			}
+			};
 		}
 		function allPass() {
 			location.href = "Keyword/list?state=2";
@@ -282,7 +339,7 @@
 		function noPass() {
 			location.href = "Keyword/list?state=0";
 		}
-		$(function() {
+		/* $(function() {
 			$("#addWord").click(function() {
 
 				if (this.id == 'addWord') {
@@ -295,19 +352,19 @@
 				$(".mask").slideUp("slow");
 				$("#infoEdit").attr('style', 'display:none');
 			});
-		});
+		}); */
 		var selAll = document.getElementById("selAll");
 		function selectAll() {
 			var obj = document.getElementsByName("checkAll");
 			if (document.getElementById("selAll").checked == false) {
 				for (var i = 0; i < obj.length; i++) {
 					obj[i].checked = false;
-				}
+				};
 			} else {
 				for (var i = 0; i < obj.length; i++) {
 					obj[i].checked = true;
-				}
-			}
+				};
+			};
 		}
 
 		//当选中所有的时候，全选按钮会勾上 
@@ -319,7 +376,7 @@
 			for (var i = 0; i < count; i++) {
 				if (obj[i].checked == true) {
 					selectCount++;
-				}
+				};
 			}
 			if (selectCount > 0) {
 				document.getElementById("checkselect").value = "true";
@@ -330,7 +387,7 @@
 				document.all.selAll.checked = true;
 			} else {
 				document.all.selAll.checked = false;
-			}
+			};
 		}
 
 		//反选按钮 
@@ -340,8 +397,8 @@
 				var e = checkboxs[i];
 				e.checked = !e.checked;
 				setSelectAll();
-			}
-		}
+			};
+		};
 	</script>
 
 </body>

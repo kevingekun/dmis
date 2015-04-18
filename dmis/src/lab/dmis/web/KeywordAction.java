@@ -1,5 +1,6 @@
 package lab.dmis.web;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,7 @@ import lab.common.web.BaseAction;
 import lab.dmis.model.Doc;
 import lab.dmis.model.Keyword;
 import lab.dmis.service.KeywordService;
+import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -134,6 +136,19 @@ public class KeywordAction extends BaseAction {
 		setAttribute("keywordList", keywordList);
 
 		return "searchsuccess";
+	}
+
+	/**
+	 * 通过ajax查看keyword
+	 * 
+	 * @throws IOException
+	 */
+	public void checkKeyword() throws IOException {
+		int id = Integer.parseInt(getParameter("id"));
+		List<Keyword> list = keywordService.findById(id);
+		JSONArray jsonArray = JSONArray.fromObject(list);
+		getResponse().setCharacterEncoding("utf-8");
+		getResponse().getWriter().write(jsonArray.toString());
 	}
 
 	/**

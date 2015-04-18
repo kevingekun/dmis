@@ -10,23 +10,26 @@
 <base href="<%=basePath%>">
 <html>
 <head>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
 <link rel="stylesheet" type="text/css" href="css/dmis.css"/>
 <link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
 <link rel="stylesheet" type="text/css" href="css/uniform.css" />
 <link rel="stylesheet" type="text/css" href="css/select2.css" />
 <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
+<link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 
-<script src="js/jquery.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 <body id="table1">
-	<div class="mask" style="display: none"></div>
+	<div id="mask" class="mask" style="display: none;background-color: rgb(40, 95, 108);"></div>
 	<div class="widget-box">
 		<div class="widget-title">
 			<h5>公告管理</h5>
@@ -35,75 +38,81 @@
 				<input id="addNotice" class="btn btn-small blue" type="button" value="新增公告" style="margin-bottom: 5px">
 			</div>
 		</div>
-		<div id="infoEdit" style="display: none" align="center">
-			<div id="addNoticeContent" style="display: none;">
-				<div class="infoHeader bg_lg">
-					<span id="title">新增公告</span>
-				</div>
-				<form method="post" action="Notice/add">
-					<div class="row" id="editInfo"
-						style="color: #FFF; font-size: 14px; margin: 40px 0 0 15px;">
-						<div class="control-group" style="float: left">
-							<div class="controls">
-								<div style="float: left; width: 480px">
-									<a style="float: left; color: #28b779">标题：</a>
-								</div>
-								<div class="main_input_box" style="float: left">
-									<input type="text" id="tit" name="notice.title"
-										placeholder="标题" onblur="checkTitle()" /> <input type="hidden"
-										id="ti" value="false" /> <font color="red" id="tcheck"></font>
-								</div>
-								<div style="float: left; width: 480px">
-									<a style="float: left; color: #28b779">正文：</a>
-								</div>
-								<div class="main_input_box" style="width: 550px; height: 200px">
-									<textarea name="notice.content" id="con" rows="3" cols="4"
-										style="width: 500px; height: 200px; float: left; margin-left: 0px"
-										placeholder="正文" onblur="checkContent()"></textarea>
-									<input type="hidden" id="co" value="false" /> <font color="red"
-										id="ccheck"
-										style="writing-mode: lr-tb; float: left; width: 15px; margin-top: 40px"></font>
-								</div>
-							</div>
+		<div id="notice_add" style="display: none;" align="center">
+		<div id="notice_form_content" class="notice_form_content" style="display:none;">
+			<form id="test" action="Notice/add" method="post"
+				enctype="multipart/form-data">
+				<fieldset>
+					<legend>新增  公告</legend>
+					<div class="form-row">
+						<div class="field-label_notice">
+							<label for="field1">标题</label>:
 						</div>
-						<input type="button" class="btn btn-success"
-							style="margin: 10px 0 0 0" id="btn" value="确定"
-							onclick="check(),checkTitle(),checkContent()" /> <input
-							type="reset" class="btn " style="margin: 10px 0 0 40px;"
-							id="close" value="取消" /><br>
+						<div class="field-widget">
+							<input name="notice.title" id="notice" class="required"
+								type="text" onblur="checkTitle();"/>
+							<div class="validation-advice" id="advice-required-field1"
+								style="display: none;">required field.</div>
+						</div>
 					</div>
-				</form>
-			</div>
+
+					<div class="form-row_notice">
+						<div class="controls">
+						<textarea id="con" name="notice.content" cols="20" rows="2"
+							class="ckeditor" onblur="checkContent()"></textarea>
+						<script type="text/javascript">
+							var ckeditor=CKEDITOR.replace('con', {
+								uiColor: '#becffb'
+							});
+						</script>
+					</div>
+					</div>
+					<div class="form-row">
+						<div class="field-widget-confirm_notice">
+							<input id="btn" type="button" class="submit" value="确定" /> 
+							<input type="reset" class="reset" value="重置" />
+							<input id="cancleFile" type="button" class="cancle" value="取消" /> 
+						</div>
+					</div>
+				</fieldset>
+			</form>
 		</div>
-		<div id="infoCheck" style="display: none" align="center">
-			<div id="noticeCheck" style="display: none;">
-				<div class="infoHeader bg_lg">
-					<span id="title">查看公告</span>
-				</div>
-				<form>
-					<div class="row" id="editInfo"
-						style="color: #FFF; font-size: 14px; margin: 40px 0 0 15px;">
-						<div class="control-group" style="float: left">
-							<div class="controls">
-								<div style="float: left; width: 480px">
-									<a style="float: left; color: #28b779">标题：</a>
-								</div>
-								<div class="main_input_box" style="float: left">
-									<input type="text" id="tit2" disabled="disabled" name=""/>
-								</div>
-								<div style="float: left; width: 480px">
-									<a style="float: left; color: #28b779">正文：</a>
-								</div>
-								<div class="main_input_box" style="width: 550px; height: 200px">
-									<textarea disabled="disabled" id="con2" rows="3" cols="4"
-										name="" style="width: 500px; height: 200px; float: left; margin-left: 0px"></textarea>
-								</div>
-							</div>
-						</div> 
-						<input type="reset" class="btn" id="closeCheck" value="关闭" /><br>
+		</div>
+		<div id="notice_check" style="display: none;" align="center">
+		<div id="noticecheck_form_content" class="notice_form_content" style="display:none;">
+			<form>
+				<fieldset>
+					<legend>查看  公告</legend>
+					<div class="form-row">
+						<div class="field-label_notice">
+							<label for="field1">标题</label>:
+						</div>
+						<div class="field-widget">
+							<input id="notice2" class="required"
+								type="text"/>
+						</div>
 					</div>
-				</form>
-			</div>
+
+					<div class="form-row_notice">
+						<div class="controls">
+						<textarea id="con2" cols="20" rows="2" class="ckeditor" ></textarea>
+						<script type="text/javascript">
+							var ckeditor=CKEDITOR.replace('con2', {
+								uiColor: '#becffb'
+							});
+						</script>
+					</div>
+					</div>
+					<div class="form-row">
+						<div class="field-widget-confirm_notice" style="margin-left: 630px;">
+							<!-- <input id="btn" type="button" class="submit" value="确定" />  -->
+							<input id="cancleFile2" type="button" class="reset" value="关闭" />
+							<!-- <input id="cancleFile2" type="button" class="cancle" value="关闭" />  -->
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
 		</div>
 		<div class="widget-content ">
 			<s:form name="form2" id="form2" method="post">
@@ -145,9 +154,9 @@
 					style="float: left; margin-top: 30px; margin-left: -15px">
 					<ul>
 						<s:if test="#request.page.showPrv != 0">
-							<li class id="firstPage" data-id="PAGE"><a
+							<li id="firstPage" data-id="PAGE"><a
 								href="Notice/list?pageNo=1">首页</a></li>
-							<li class id="lastPage" data-id="PAGE"><a
+							<li id="lastPage" data-id="PAGE"><a
 								href="Notice/list?pageNo=<s:property value="#request.page.pageNo -1"/>">上一页</a></li>
 						</s:if>
 						<s:else>
@@ -171,9 +180,9 @@
 							</s:else>
 						</s:iterator>
 						<s:if test="#request.page.showNext != 0">
-							<li class id="nextPage" data-id="PAGE"><a
+							<li id="nextPage" data-id="PAGE"><a
 								href="Notice/list?pageNo=<s:property value="#request.page.pageNo +1"/>">下一页</a></li>
-							<li class id="endPage" data-id="PAGE"><a
+							<li id="endPage" data-id="PAGE"><a
 								href="Notice/list?pageNo=<s:property value="#request.page.totalPage"/>">尾页</a></li>
 						</s:if>
 						<s:else>
@@ -191,6 +200,26 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		$("#addNotice").click(function() {
+			$("#mask").slideDown("fast",slidedown);
+		});
+		function slidedown(){
+			$("#notice_add").fadeIn("slow");
+			$("#notice_form_content").fadeIn("slow");
+		}
+		function slideup(){
+			$("#notice_add").fadeOut("slow");
+			$("#notice_form_content").fadeOut("slow");
+		}
+		$("#cancleFile").click(function(){
+			slideup();
+			$("#mask").slideUp("fast");
+		});
+		$("#cancleFile2").click(function(){
+			$("#notice_check").fadeOut("slow");
+			$("#noticecheck_form_content").fadeOut("slow");
+			$("#mask").slideUp("fast");
+		});
 		//删除选中
 		function dele() {
 			var checkselect = $("#checkselect").val();
@@ -200,43 +229,24 @@
 				document.getElementById("form2").submit();
 			}else{
 				alert("请选中所需删除数据！");
-			}
-			
+			};
 		}
-		$(function() {
-			$("#addNotice").click(function() {
-				$("#infoEdit").removeAttr("style");
-				/* $(".mask").slideDown("slow"); */
-				if (this.id == 'addNotice') {
-					$("#addNoticeContent").removeAttr('style');
-				}
-			});
-			$("#close").click(function() {
-				$(".mask").slideUp("slow");
-				$("#infoEdit").attr('style', 'display:none');
-			});
-			$("#closeCheck").click(function() {
-				$(".mask").slideUp("slow");
-				$("#infoCheck").attr('style', 'display:none');
-			});
-		});
 		function noticeCheck(id){
 			$.ajax({
 				type:'GET',
 				url:"Notice/checkNotice?id="+id,
 				success:function(jsonData){
 					var data = eval(jsonData);
-	      			document.getElementById("tit2").value=data[0].title;
-	      			document.getElementById("con2").value=data[0].content;
-
+	      			$("#notice2")[0].value=data[0].title;
+	      			ckeditor.setData(data[0].content);//编辑器内容填充
 				},
 				error:function(){
 					alert("errooor");
 				}
 			});
-			$("#infoCheck").removeAttr("style");
-			$(".mask").slideDown("slow");
-			$("#noticeCheck").removeAttr('style');
+			$("#mask").slideDown("fast");
+			$("#notice_check").fadeIn("slow");
+			$("#noticecheck_form_content").fadeIn("slow");
 		}
 		var selAll = document.getElementById("selAll");
 		function selectAll() {
@@ -251,8 +261,7 @@
 					obj[i].checked = true;
 				}
 				document.getElementById("checkselect").value="true";
-			}
-
+			};
 		}
 		//当选中所有的时候，全选按钮会勾上 
 		function setSelectAll() {
@@ -263,7 +272,7 @@
 			for (var i = 0; i < count; i++) {
 				if (obj[i].checked == true) {
 					selectCount++;
-				}
+				};
 			}
 			if(selectCount>0){
 				document.getElementById("checkselect").value="true";
@@ -274,9 +283,8 @@
 				document.all.selAll.checked = true;
 			} else {
 				document.all.selAll.checked = false;
-			}
+			};
 		}
-
 		//反选按钮 
 		function inverse() {
 			var checkboxs = document.getElementsByName("checkAll");
@@ -284,46 +292,38 @@
 				var e = checkboxs[i];
 				e.checked = !e.checked;
 				setSelectAll();
-			}
+			};
 		}
 		//检查标题是否符合要求  
 		function checkTitle() {
-			var str = $("#tit").val();
-			title = str.replace(/^\s+|\s+$/g, '');
-			if (title.length == 0) {
-				document.getElementById("tcheck").color = "red";
-				document.getElementById("tcheck").innerHTML = "标题不能为空！";
-				$("#ti").val("false");
+			var notice = $("#notice").val();
+			notice = notice.replace(/\s+/g, "");
+			if (notice.length == 0) {
+				$("#notice")[0].className = "required validation-failed";
+				$("#advice-required-field1")[0].innerHTML="不为空！";
+				$("#advice-required-field1").removeAttr("style");
+				return false;
 			} else {
-				document.getElementById("tcheck").color = "green";
-				document.getElementById("tcheck").innerHTML = "标题可用！";
-				$("#ti").val("true");
-			}
+				$("#notice")[0].className = "required";
+				$("#advice-required-field1").attr("style","display:none;");
+				return true;
+			};
 		}
 		//检查正文
 		function checkContent() {
-			var str = $("#con").val();
+			var str=ckeditor.document.getBody().getText();
 			content = str.replace(/^\s+|\s+$/g, '');
 			if (content.length == 0) {
-				document.getElementById("ccheck").color = "red";
-				document.getElementById("ccheck").innerHTML = "请输入正文";
-				$("#co").val("false");
-			} else {
-				document.getElementById("ccheck").color = "green";
-				document.getElementById("ccheck").innerHTML = "请继续";
-				$("#co").val("true");
+				alert("请添公告正文！");
+				return false;
 			}
+			return true;
 		}
-		//总检
-		function check() {
-			var ti = $("#ti").val();
-			var co = $("#co").val();
-			if (ti == "false" || co == "false") {
-				document.getElementById("btn").type = "button";
-			} else {
-				document.getElementById("btn").type = "submit";
+		$("#btn").click(function(){
+			if(checkTitle()&&checkContent()){
+				$("#test").submit();
 			}
-		}
+		});
 	</script>
 </body>
 </html>
