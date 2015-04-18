@@ -943,13 +943,13 @@ form {
 	margin: 0 0 20px
 }
 
-fieldset {
+/* fieldset {
 	padding: 0;
 	margin: 0;
-	border: 0
-}
+	border: 1
+} */
 
-legend {
+/* legend {
 	display: block;
 	width: 100%;
 	padding: 0;
@@ -959,12 +959,12 @@ legend {
 	color: #333;
 	border: 0;
 	border-bottom: 1px solid #e5e5e5
-}
+} */
 
-legend small {
+/* legend small {
 	font-size: 15px;
 	color: #999
-}
+} */
 
 label,input,button,select,textarea {
 	font-size: 14px;
@@ -1641,10 +1641,10 @@ input.search-query {
 	margin-bottom: 10px
 }
 
-legend+.control-group {
+/* legend+.control-group {
 	margin-top: 20px;
 	-webkit-margin-top-collapse: separate
-}
+} */
 
 .form-horizontal .control-group {
 	margin-bottom: 20px;

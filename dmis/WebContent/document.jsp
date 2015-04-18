@@ -36,7 +36,7 @@
 			<div class="widget-radio">
 			
 				<input id="fileEdit1" class="btn btn-small blue" type="button" value="新增文档" style="margin-bottom: 5px"> 
-				<input id="fileEdit11" class="btn btn-small blue" type="button" value="新增文献" style="margin-bottom: 5px">
+				<input id="fileEdit11" class="btn btn-small orange" type="button" value="新增文献" style="margin-bottom: 5px">
 				<input id="fileEdit2" class="btn btn-small orange" type="button" value="弹框文献" style="margin-bottom: 5px">
 				<!-- <input id="fileEdit3" class="btn btn-small blue" type="button" value="弹框文档" style="margin-bottom: 5px"> --> 
 				<input type="radio" name="state" id="all" onClick="allPass();" />全部 

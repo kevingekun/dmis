@@ -130,7 +130,7 @@
 							<label for="field5">时间</label>:
 						</div>
 						<div class="field-widget">
-							<input name="publishedTime" id="time" type="date"
+							<input name="doc.publishedTime" id="time" type="date"
 								class="required validate-email" title="Enter your name" />
 						</div>
 					</div>

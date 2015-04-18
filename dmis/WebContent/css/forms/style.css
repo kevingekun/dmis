@@ -11,6 +11,19 @@ margin:30px auto;
 padding:10px;
 background:url(../../images/forms/form_top_bg.gif) repeat-x top #fff;
 }
+.keyword_form_content{
+width:800px;
+height: 441px;
+margin:30px auto;
+padding:10px;
+background:url(../../images/forms/form_top_bg.gif) repeat-x top #fff;
+}
+#keyword_add {
+	z-index: 90;
+	position: absolute;
+	left: 13%;
+  	top: -10;
+}
 fieldset{
 border:1px #ebebeb solid;
 padding:15px 10px 15px 10px;
@@ -26,11 +39,13 @@ color:#FFFFFF;
 background-color:#50c150;
 padding:2px 5px 2px 5px;
 }
-
-
 .form-row {
 clear: both;
 float:left;
+padding:5px 5px 5px 5px;
+}
+.form-row_keyword {
+clear: both;
 padding:5px 5px 5px 5px;
 }
 .form-row-select {
@@ -40,6 +55,11 @@ padding:10px 5px 5px 5px;
 }
 .field-label {
 width:150px;
+float:left;
+line-height:25px;
+}
+.field-label_keyword {
+width:50px;
 float:left;
 line-height:25px;
 }
@@ -62,6 +82,10 @@ margin-left:150px;
 .field-widget-confirm {
 float:left;
 margin-left:220px;
+}
+.field-widget-confirm_keyword {
+float:left;
+margin-left:240px;
 }
 input.required{
 width:300px;
@@ -121,7 +145,14 @@ padding:2px 5px 2px 5px;
 border:none;
 margin-left:70px;
 }
-
+input.cancle{
+color:#FFFFFF;
+background-color:#b6bbc0;
+cursor:pointer;
+padding:2px 5px 2px 5px;
+border:none;
+margin-left:70px;
+}
 input.validation-failed, textarea.validation-failed, select.validation-failed, input.file-class-failed{
 border: 1px solid #FF9A7F;
 background-color:#FFF2EF;
@@ -150,9 +181,3 @@ background-color: #C8AA00;
 color : #FFF;
 font-weight: bold;
 }
-
-
-
-
-
-
