@@ -1,6 +1,5 @@
 package lab.dmis.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -44,7 +43,7 @@ public class Doc implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public Doc(Type type, User user, String title, String author,String brief,
+	public Doc(Type type, User user, String title, String author, String brief,
 			Timestamp uploadTime, Integer downloadTimes, String docPath,
 			Float version, String journal, String publishedTime,
 			String category, Integer language, String format, Boolean isPass) {
@@ -66,7 +65,7 @@ public class Doc implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Doc(Type type, User user, String title, String author,String brief,
+	public Doc(Type type, User user, String title, String author, String brief,
 			Timestamp uploadTime, Integer downloadTimes, String docPath,
 			Float version, String journal, String publishedTime,
 			String category, Integer language, String format, Boolean isPass,
@@ -96,10 +95,11 @@ public class Doc implements java.io.Serializable {
 	}
 
 	// Property accessors
-	
-	public String getFilename(){
-		String fileName=this.docPath.substring(this.docPath.lastIndexOf("/")+1);
-		
+
+	public String getFilename() {
+		String fileName = this.docPath
+				.substring(this.docPath.lastIndexOf("/") + 1);
+
 		return fileName;
 	}
 
@@ -195,7 +195,7 @@ public class Doc implements java.io.Serializable {
 		return this.publishedTime;
 	}
 
-	public void setPublishedTime(String  publishedTime) {
+	public void setPublishedTime(String publishedTime) {
 		this.publishedTime = publishedTime;
 	}
 
@@ -230,6 +230,7 @@ public class Doc implements java.io.Serializable {
 	public void setIsPass(Boolean isPass) {
 		this.isPass = isPass;
 	}
+
 	public Set getVersionhistories() {
 		return this.versionhistories;
 	}
@@ -285,6 +286,5 @@ public class Doc implements java.io.Serializable {
 	public void setOriginalId(Integer originalId) {
 		this.originalId = originalId;
 	}
-
 
 }

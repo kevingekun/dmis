@@ -43,13 +43,55 @@ public class DocAction extends BaseAction {
 	private int pageContSize = 8;
 	private File uploadFile;// 实际上传文件
 	private String uploadFileFileName;// 上传文件名
-	private String uploadFileContentType;// 文件的内容类型
-	private String uploadFileDocContentType;// 文件的内容类型
-	String docpublishtime;
 	JSONArray jsonArray;
 	Page page = new Page();
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	List<Doc> list = new ArrayList();
+
+	/**
+	 * 统计文档类型
+	 * 
+	 * @throws IOException
+	 */
+	public void categoryCount() throws IOException {
+		List<Integer> list = new ArrayList<Integer>();
+		list = docService.countByCategory();
+		/*
+		 * JsonConfig cfg = new JsonConfig(); cfg.setExcludes(new String[] {
+		 * "docs" }); JSONArray json = JSONArray.fromObject(list, cfg);
+		 */
+		JSONArray json = JSONArray.fromObject(list);
+		getResponse().setCharacterEncoding("utf-8");
+		getResponse().getWriter().write(json.toString());
+	}
+
+	/**
+	 * 统计文档各个等级数量
+	 * 
+	 * @throws IOException
+	 */
+	public void levelCount() throws IOException {
+		List<Integer> list = new ArrayList<Integer>();
+		list = docService.countByLevel();
+		JSONArray json = JSONArray.fromObject(list);
+		getResponse().setCharacterEncoding("utf-8");
+		getResponse().getWriter().write(json.toString());
+	}
+
+	/**
+	 * 统计文档下载量
+	 * 
+	 * @throws IOException
+	 */
+	public void downloadCount() throws IOException {
+		List<Object> list = new ArrayList<Object>();
+		list = docService.countByDownload();
+		System.err.println(list);
+		JSONArray json = JSONArray.fromObject(list);
+		System.err.println(json);
+		getResponse().setCharacterEncoding("utf-8");
+		getResponse().getWriter().write(json.toString());
+	}
 
 	/**
 	 * 获取上传记录
@@ -569,21 +611,4 @@ public class DocAction extends BaseAction {
 	public void setUploadFileFileName(String uploadFileFileName) {
 		this.uploadFileFileName = uploadFileFileName;
 	}
-
-	public String getUploadFileContentType() {
-		return uploadFileContentType;
-	}
-
-	public void setUploadFileContentType(String uploadFileContentType) {
-		this.uploadFileContentType = uploadFileContentType;
-	}
-
-	public String getUploadFileDocContentType() {
-		return uploadFileDocContentType;
-	}
-
-	public void setUploadFileDocContentType(String uploadFileDocContentType) {
-		this.uploadFileDocContentType = uploadFileDocContentType;
-	}
-
 }

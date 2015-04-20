@@ -1,0 +1,13 @@
+.content {
+	height: 400px;
+	width: 800px;
+	margin-left: 100;
+	float: left;
+}
+
+.count_left {
+	height: 30px;
+	width: 60px;
+	margin-top: 180px;
+	float: left;
+}
