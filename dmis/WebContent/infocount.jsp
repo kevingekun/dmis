@@ -22,20 +22,25 @@
 <div class="widget-box">
 	<div class="widget-title">
        <h5>信息统计</h5>
-       <a class="btn btn-small green" style="margin:5px 0 0 3px; " onclick="docCategory()">文档文献</a>
-       <a class="btn btn-small green" style="margin:5px 0 0 3px; " onclick="docLevel()">文档等级</a>
-       <a class="btn btn-small green" style="margin:5px 0 0 3px; " onclick="docDownload_thisYear()">下载量</a>
+       <a id="btn1" class="btn btn-small green" style="margin:5px 0 0 3px;">文档文献</a>
+       <a id="btn2" class="btn btn-small green" style="margin:5px 0 0 3px;"> 文档等级</a>
+       <a id="btn3" class="btn btn-small green" style="margin:5px 0 0 3px;">下载量</a>
 	</div>
 	<div>
 		<div class="widget-content" style="float: left;">
         	<div id="docChart" class="content"></div>
     		<div id="yearChange" class="count_left" style="display:none;">
-    			<a id="yearChangeId"class="btn btn-small green" style="margin:5px 0 0 3px; " onclick="docLevel()">下载量</a>
+    			<a id="yearChangeId" class="btn btn-small green" style="margin:5px 0 0 3px;">下载量</a>
     		</div>
     	</div>
 	</div>
 </div>
+</body>
 <script src="js/echarts/build/dist/echarts-all.js"></script>
 <script src="js/echarts/chart.js"></script>
-</body>
+<script type="text/javascript">
+
+
+</script>
+
 </html>

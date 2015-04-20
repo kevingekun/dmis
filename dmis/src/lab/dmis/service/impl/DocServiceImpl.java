@@ -50,25 +50,31 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	@Override
 	public List<Object> countByDownload() {
 		Calendar now = Calendar.getInstance();
-		int thisYear = now.get(Calendar.YEAR);
-		int lastYear = thisYear - 1;
 		List<Object> list = new ArrayList<Object>();
+		List<String> listThisYear = new ArrayList<String>();
+		List<String> listLastYear = new ArrayList<String>();
+		String thisYear = String.valueOf(now.get(Calendar.YEAR)) + "年";
+		String lastYear = String.valueOf(now.get(Calendar.YEAR) - 1) + "年";
+		listThisYear.add(thisYear);
+		listLastYear.add(lastYear);
 		String sql1 = "select doc.title from Downloadrecoder dr,Doc doc where dr.doc.id = doc.id AND YEAR(dr.downloadTime)="
-				+ thisYear
+				+ now.get(Calendar.YEAR)
 				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC";
 		String sql2 = "select count(dr.doc.id) from Downloadrecoder dr,Doc doc where dr.doc.id = doc.id AND YEAR(dr.downloadTime)="
-				+ thisYear
+				+ now.get(Calendar.YEAR)
 				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC";
 		String sql3 = "select doc.title from Downloadrecoder dr,Doc doc where dr.doc.id = doc.id AND YEAR(dr.downloadTime)="
-				+ lastYear
+				+ (now.get(Calendar.YEAR) - 1)
 				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC";
 		String sql4 = "select count(dr.doc.id) from Downloadrecoder dr,Doc doc where dr.doc.id = doc.id AND YEAR(dr.downloadTime)="
-				+ lastYear
+				+ (now.get(Calendar.YEAR) - 1)
 				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC";
 		list.add(docDao.find(sql1).subList(0, 10));
 		list.add(docDao.find(sql2).subList(0, 10));
 		list.add(docDao.find(sql3).subList(0, 10));
 		list.add(docDao.find(sql4).subList(0, 10));
+		list.add(thisYear);
+		list.add(lastYear);
 
 		return list;
 	}

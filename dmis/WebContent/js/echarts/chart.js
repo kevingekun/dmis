@@ -12,30 +12,54 @@ $.ajax({
 		alert("count_cat error");
 	}
 });
-$.ajax({
-	type:'get',
-	dataType:'json',
-	url:'Doc/levelCount',
-	success:function(jsonData){
-		count_lev = jsonData;
-	},
-	error:function(){
-		alert("count_lev error");
-	}
+$("#btn1").click(function(){
+	$.ajax({
+		type:'get',
+		dataType:'json',
+		url:'Doc/categoryCount',
+		success:function(jsonData){
+			count_cat = jsonData;
+		},
+		error:function(){
+			alert("count_cat error");
+		}
+	});
+	setTimeout(docCategory, 100);
 });
-$.ajax({
-	type:'get',
-	dataType:'json',
-	url:'Doc/downloadCount',
-	success:function(jsonData){
-		count_dld = jsonData;
-		//alert(count_dld);
-	},
-	error:function(){
-		alert("count_dld error");
-	}
+$("#btn2").click(function(){
+	$.ajax({
+		type:'get',
+		dataType:'json',
+		url:'Doc/levelCount',
+		success:function(jsonData){
+			count_lev = jsonData;
+		},
+		error:function(){
+			alert("count_lev error");
+		}
+	});
+	setTimeout(docLevel, 100);
 });
-function docDownload_thisYear(){
+$("#btn3").click(function(){
+	$.ajax({
+		type:'get',
+		dataType:'json',
+		url:'Doc/downloadCount',
+		success:function(jsonData){
+			count_dld = jsonData;
+		},
+		error:function(){
+			alert("count_dld error");
+		}
+	});
+	setTimeout(docDownload, 100);
+});
+
+function docDownload(num){
+	var n = num;
+	if(n==null){
+		n=4;
+	}
 	var dldChart = echarts.init(document.getElementById('docChart'));
 	option = {
 		    title : {
@@ -46,7 +70,7 @@ function docDownload_thisYear(){
 		        trigger: 'axis'
 		    },
 		    legend: {
-		        data:['2015年']
+		        data:['']//2015年
 		    },
 		    toolbox: {
 		        show : true,
@@ -73,7 +97,7 @@ function docDownload_thisYear(){
 		    ],
 		    series : [
 		        {
-		            name:'2015年',
+		            name:'',//2015年
 		            type:'bar',
 		            data:[18203, 23489, 29034, 104970, 131744, 630230]
 		        }
@@ -81,62 +105,25 @@ function docDownload_thisYear(){
 		};
 	option.yAxis[0].data=count_dld[0];
 	option.series[0].data = count_dld[1];
+	option.legend.data[0] = count_dld[n];
+	option.series[0].name = count_dld[n];
 	dldChart.setOption(option);
-	//$("#yearChangeId").onclick=function(){docDownload_lastYear();};
-	$("#yearchange").removeAttr("style");
-}
-function docDownload_lastYear(){
-	var dldChart = echarts.init(document.getElementById('docChart'));
-	option = {
-		    title : {
-		        text: '文档下载量统计',
-		        subtext: 'professional statistical'
-		    },
-		    tooltip : {
-		        trigger: 'axis'
-		    },
-		    legend: {
-		        data:['2014年']
-		    },
-		    toolbox: {
-		        show : true,
-		        feature : {
-		            mark : {show: true},
-		            dataView : {show: true, readOnly: false},
-		            magicType: {show: true, type: ['line', 'bar']},
-		            restore : {show: true},
-		            saveAsImage : {show: true}
-		        }
-		    },
-		    calculable : true,
-		    xAxis : [
-		        {
-		            type : 'value',
-		            boundaryGap : [0, 0.01]
-		        }
-		    ],
-		    yAxis : [
-		        {
-		            type : 'category',
-		            data : ['巴西','印尼','美国','印度','中国','世界人口(万)']
-		        }
-		    ],
-		    series : [
-		        {
-		            name:'2014年',
-		            type:'bar',
-		            data:[18203, 23489, 29034, 104970, 131744, 630230]
-		        }
-		    ]
-		};
-	option.yAxis[1].data=count_dld[2];
-	option.series[1].data = count_dld[3];
-	dldChart.setOption(option);
-	$("#yearChangeId").onClick=function(){docDownload_lastYear()};
-	$("#yearchange").removeAttr("style");
+	if(n==4){
+		$("#yearChangeId").click(function(){
+			docDownload(5);
+		});
+		$("#yearChangeId")[0].innerHTML=count_dld[5]+"排行";
+	}else{
+		$("#yearChangeId").click(function(){
+			docDownload(4);
+		});
+		$("#yearChangeId")[0].innerHTML=count_dld[4]+"排行";
+	}
+	$("#yearChange").removeAttr("style");
 }
 function docLevel(){
-	$("#yearchange").attr("style","display:none;");
+	
+	$("#yearChange").attr("style","display:none;");
 	var levChart = echarts.init(document.getElementById('docChart'));
 	option = {
 		    title : {
@@ -196,7 +183,8 @@ function docLevel(){
 }
 
 function docCategory(){
-	$("#yearchange").attr("style","display:none;");
+	
+	$("#yearChange").attr("style","display:none;");
 	var catChart = echarts.init(document.getElementById('docChart'));
 	var option = {
 			tooltip : {
@@ -221,3 +209,4 @@ function docCategory(){
 	option.series[0].data = count_cat;
 	catChart.setOption(option);
 }
+setTimeout(docCategory, 100);//页面首次加载时显示‘文档类型统计’，延时处理
