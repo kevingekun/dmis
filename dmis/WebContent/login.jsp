@@ -105,9 +105,7 @@ $("#loginCheck").click(function(){
 		url:"/dmis/System/LoginCheck",
 		data:user,
 		success:function(result){
-			if(result == "success"){
-				location.href='/dmis/Doc/getRecentDoc';
-			}else if(result == "admin"){
+			if(result == "admin"){
 				location.href='/dmis/Admin/getAdminIndex';
 			}else 
 				alert("用户名或密码错误，请重新登录！");

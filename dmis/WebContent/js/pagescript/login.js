@@ -158,17 +158,14 @@ $(document).ready(function(){
 	
 	//用户登录处理	
 	$("#loginCheck").click(function(){
-		alertTip("<img src='"+hostPath+"images/loading.gif' width='50px' height='50px'>");
 		var user = $("#loginform").serialize();
 		$.ajax({
 			type:"POST",
 			url:"/dmis/System/LoginCheck",
 			data:user,
 			success:function(result){
-				if(result == "success"){
-					location.href='/dmis/Doc/getRecentDoc';
-				}else if(result == "admin"){
-					location.href='/dmis/page/background/welcome.jsp';
+				if(result == "admin"){
+					location.href='/dmis/Admin/getAdminIndex';
 				}else 
 					alertTip("用户名或密码错误，请重新登录！");
 			}

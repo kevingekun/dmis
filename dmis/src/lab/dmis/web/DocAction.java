@@ -20,8 +20,6 @@ import lab.dmis.service.CommentService;
 import lab.dmis.service.DocService;
 import lab.dmis.service.NoticeService;
 import lab.dmis.service.TypeService;
-import lab.dmis.util.JsonSerialization;
-import lab.dmis.util.Str;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.io.FileUtils;
@@ -47,6 +45,24 @@ public class DocAction extends BaseAction {
 	Page page = new Page();
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	List<Doc> list = new ArrayList();
+
+	/**
+	 * 跳转到添加文档页面
+	 * 
+	 * @return
+	 */
+	public String addDoc() {
+		return "addDoc";
+	}
+
+	/**
+	 * 跳转到添加文献页面
+	 * 
+	 * @return
+	 */
+	public String addLiteratrue() {
+		return "addLiteratrue";
+	}
 
 	/**
 	 * 统计文档类型
@@ -94,30 +110,6 @@ public class DocAction extends BaseAction {
 	}
 
 	/**
-	 * 获取上传记录
-	 * 
-	 * @throws IOException
-	 */
-	public void getUploadRecoder() throws IOException {
-		jsonArray = JSONArray.fromObject(docService.getUploadRecoder(pageNo,
-				pageContSize, (User) getObjFromSession("LOGIN_USER")),
-				JsonSerialization.jsonSer(Str.str));
-		out().print(jsonArray.toString());
-	}
-
-	/**
-	 * 获取最近上传的文档及最新公告
-	 * 
-	 * @return recentDoc
-	 */
-	public String getRecentDoc() {
-		setAttribute("recentDoc", docService.getPage(1, 10,
-				(User) getObjFromSession("LOGIN_USER")));
-		setAttribute("recentNotice", noticeService.getPage(1, 5));
-		return "recentDoc";
-	}
-
-	/**
 	 * 获取所有文档
 	 * 
 	 * @return
@@ -127,17 +119,6 @@ public class DocAction extends BaseAction {
 		setAttribute("page", docService.getPage(pageNo, 5,
 				(User) getObjFromSession("LOGIN_USER")));
 		return "allDoc";
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String getadminDoc() {
-		setAttribute("recentDoc", docService.getPage(1, 10,
-				(User) getObjFromSession("LOGIN_USER")));
-		setAttribute("recentNotice", noticeService.getPage(1, 5));
-		return "adminDoc";
 	}
 
 	/**
@@ -300,22 +281,6 @@ public class DocAction extends BaseAction {
 		} else {
 			return "personalCenter";
 		}
-	}
-
-	/**
-	 * 根据分类查找相关文档
-	 * 
-	 * @return
-	 */
-	public String getDocByType() {
-		setAttribute("typeName", getParameter("typeName"));
-		setAttribute("typeId", getParameter("typeId"));
-		setAttribute("actionName", getActionName());
-		setAttribute(
-				"page",
-				docService.getDocByType(pageNo, 5,
-						Integer.parseInt(getParameter("typeId"))));
-		return "typeDoc";
 	}
 
 	/**

@@ -15,10 +15,6 @@ public interface DocService extends BaseManager<Doc, Integer> {
 
 	public Page getPage(int pageNo, int pageContSize);
 
-	public Page getUploadRecoder(int pageNo, int pageContSize, User user);
-
-	public Page getDocByType(int pageNo, int pageContSize, int typeId);
-
 	public Page getAdvancedSearch(int pageNo, int pageContSize, String typeId,
 			String year, String category, String language, String keyword,
 			User user);

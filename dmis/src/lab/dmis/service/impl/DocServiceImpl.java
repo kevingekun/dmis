@@ -110,24 +110,6 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	}
 
 	/**
-	 * 获取用户上传记录
-	 */
-	public Page getUploadRecoder(int pageNo, int pageContSize, User user) {
-		hql = "from Doc where userId ='" + user.getId() + "'";
-		return docDao.getPage(hql, pageNo, pageContSize);
-	}
-
-	/**
-	 * 根据文章分类搜索相关文档
-	 */
-	public Page getDocByType(int pageNo, int pageContSize, int typeId) {
-		hql = "from Doc doc where doc.type.id = '" + typeId
-				+ "' order by doc.id DESC";
-		return docDao.getPage(hql, pageNo, pageContSize);
-
-	}
-
-	/**
 	 * 高级搜索
 	 */
 	public Page getAdvancedSearch(int pageNo, int pageContSize, String typeId,

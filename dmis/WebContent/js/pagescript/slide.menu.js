@@ -43,21 +43,5 @@ $(function(){
 			
 			// TypeThreeEnd
 			
-			//getTypeStart
-	
-			function getType(menuId,hidemenuId,typeId){
-				var html = "";
-				var href = "";
-				for(var i=0;i<list.length;i++){
-					href = "javascript:void(0)";
-					if(list[i].level == 3) href = "/dmis/Doc/getDocByType?pageNo=1&typeId="+list[i].id+"&typeName="+list[i].name+"";
-					if(typeId == list[i].parentId)
-					html += "<li id="+list[i].id+" data-val='"+menuId+"'><a href='"+href+"'> <span>"+list[i].name+" </span></a>" +
-							"<input style='display:none' value='"+list[i].id+"'></li>";
-
-					$("ul#"+menuId).empty().append(html);
-				}
-				$("#"+hidemenuId).show();
-			}
 	 	});
 	});

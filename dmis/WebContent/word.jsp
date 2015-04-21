@@ -102,7 +102,7 @@
 						<div class="controls">
 						<textarea id="con2" cols="20" rows="2" class="ckeditor"></textarea>
 						<script type="text/javascript">
-							var ckeditor=CKEDITOR.replace('con2', {
+							var ckeditor2=CKEDITOR.replace('con2', {
 								uiColor: '#82f5c8'
 							});
 						</script>
@@ -275,7 +275,7 @@
 				success:function(jsonData){
 					var data = eval(jsonData);
 	      			$("#keyword2")[0].value=data[0].title;
-	      			ckeditor.setData(data[0].content);//编辑器内容填充
+	      			ckeditor2.setData(data[0].content);//编辑器内容填充
 				},
 				error:function(){
 					alert("errooor");

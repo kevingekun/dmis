@@ -68,9 +68,7 @@
 									name="checkAll" id="checkAll" value="<s:property value="id"/>"
 									onClick="setSelectAll();" /></td>
 								<td><s:property value="id" /></td>
-								<%--  <td class="link_href"><a href="Doc/hrefsearch?docId=<s:property value="id"/>" target="_blank"><s:property value="title" /></a></td> --%>
-								<td class="link_href"><a
-									href="Doc/reading?id=<s:property value="id"/>" 
+								<td class="link_href"><a href="Doc/reading?id=<s:property value="id"/>" 
 								   target="_blank" style="text-decoration: none;"><s:property
 											value="title" /></a></td>
 								<td><s:property value="format" /></td>
@@ -237,12 +235,12 @@
 
 		$("#fileEdit1").click(
 			function(){
-				location.href="addDoc.jsp";
+				location.href="Doc/addDoc";
 			}		
 		);
 		$("#fileEdit2").click(
 			function(){
-				location.href="addLiteratrue.jsp";
+				location.href="Doc/addLiteratrue";
 			}		
 		);
 	</script>

@@ -10,10 +10,10 @@
 <html>
 
 <frameset  rows="12%,88%" border="0"  bordercolor="#2E3740">
-	<frame  src="top.jsp" noresize="noresize" scrolling="no"/>
+	<frame  src="System/top" noresize="noresize" scrolling="no"/>
 	<frameset cols="16.8%,83.2%" >
-		<frame src="menu.jsp" noresize="noresize" scrolling="no"/>
-		<frame src="content.jsp" name="admin_menu"  noresize="noresize " scrolling="auto"></frame>
+		<frame src="System/menu" noresize="noresize" scrolling="no"/>
+		<frame src="Doc/list?state=2" name="admin_menu"  noresize="noresize " scrolling="auto"></frame>
 	</frameset>
 </frameset><noframes></noframes>
 

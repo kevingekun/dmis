@@ -99,6 +99,14 @@ public class SystemAction extends BaseAction {
 		out().print(message);
 	}
 
+	public String menu() {
+		return "menu";
+	}
+
+	public String top() {
+		return "top";
+	}
+
 	public InputStream getInputStream() {
 		return inputStream;
 	}
