@@ -38,7 +38,7 @@ public class DocAction extends BaseAction {
 	private CommentService commentService;
 	private Doc doc;
 	private int pageNo = 1;
-	private int pageContSize = 8;
+	private int pageContSize = 4;
 	private File uploadFile;// 实际上传文件
 	private String uploadFileFileName;// 上传文件名
 	JSONArray jsonArray;
@@ -357,15 +357,22 @@ public class DocAction extends BaseAction {
 	 * @return
 	 */
 	public String delete() {
+		int state = Integer.parseInt(getParameter("state"));
 		int id = Integer.parseInt(getParameter("id"));
+		boolean isPass = false;
 		docService.deleteDocById(id);
-		int totalpage = docService.getPage(pageNo, pageContSize).getTotalPage();
+		if (state == 1) {
+			isPass = true;
+		}
+		int totalpage = docService.getPage(pageNo, pageContSize, isPass)
+				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		getRequest().setAttribute("pageNo", pageNo);
-		return "delete_success";
+		setAttribute("page", docService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	/**
@@ -374,15 +381,22 @@ public class DocAction extends BaseAction {
 	 * @return
 	 */
 	public String deleteCheck() {
+		int state = Integer.parseInt(getParameter("state"));
 		String[] ids = getRequest().getParameterValues("checkAll");
 		docService.deleteByIds(ids);
-		int totalpage = docService.getPage(pageNo, pageContSize).getTotalPage();
+		boolean isPass = false;
+		if (state == 1) {
+			isPass = true;
+		}
+		int totalpage = docService.getPage(pageNo, pageContSize, isPass)
+				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		getRequest().setAttribute("pageNo", pageNo);
-		return "delete_success";
+		setAttribute("page", docService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	/**
@@ -485,21 +499,31 @@ public class DocAction extends BaseAction {
 	 * 
 	 * @return
 	 */
+	/*
+	 * public String passDoc() { // int state =
+	 * Integer.parseInt(getParameter("state")); // System.err.println(state);
+	 * List<Doc> d = docService.findById(Integer.parseInt(getParameter("id")));
+	 * doc = d.get(0); doc.setIsPass(true); docService.passDoc(doc); int
+	 * totalpage = docService.getPage(pageNo, pageContSize).getTotalPage();
+	 * pageNo = Integer.parseInt(getParameter("pageNo")); if (totalpage <
+	 * pageNo) { pageNo = pageNo - 1; } setAttribute("pageNo", pageNo); //
+	 * setAttribute("state", state); return "pass_success"; }
+	 */
 	public String passDoc() {
-		// int state = Integer.parseInt(getParameter("state"));
-		// System.err.println(state);
+		int state = Integer.parseInt(getParameter("state"));
 		List<Doc> d = docService.findById(Integer.parseInt(getParameter("id")));
 		doc = d.get(0);
 		doc.setIsPass(true);
 		docService.passDoc(doc);
-		int totalpage = docService.getPage(pageNo, pageContSize).getTotalPage();
+		int totalpage = docService.getPage(pageNo, pageContSize, false)
+				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		setAttribute("pageNo", pageNo);
-		// setAttribute("state", state);
-		return "pass_success";
+		setAttribute("page", docService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	/**
@@ -508,6 +532,7 @@ public class DocAction extends BaseAction {
 	 * @return
 	 */
 	public String passCheck() {
+		int state = Integer.parseInt(getParameter("state"));
 		String[] ids = getRequest().getParameterValues("checkAll");
 		for (int i = 0; i < ids.length; i++) {
 			int id = Integer.parseInt(ids[i]);
@@ -516,13 +541,15 @@ public class DocAction extends BaseAction {
 			doc.setIsPass(true);
 			docService.passDoc(doc);
 		}
-		int totalpage = docService.getPage(pageNo, pageContSize).getTotalPage();
+		int totalpage = docService.getPage(pageNo, pageContSize, false)
+				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		getRequest().setAttribute("pageNo", pageNo);
-		return "pass_success";
+		setAttribute("page", docService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	/**

@@ -165,23 +165,30 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String delete() {
+		int state = Integer.parseInt(getParameter("state"));
 		String[] ids = new String[pageContSize];
 		String id = getParameter("id");
+		boolean isF = false;
+		if (state == 2) {
+			isF = true;
+		}
 		if (id != null) {
 			ids[0] = id;
 		} else {
 			ids = getRequest().getParameterValues("checkAll");
 		}
 		userService.deleteByIds(ids);
-		int totalpage = userService.getPage(pageNo, pageContSize)
+
+		int totalpage = userService.getPage(pageNo, pageContSize, isF)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		System.out.println(pageNo);
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		getRequest().setAttribute("pageNo", pageNo);
-		return "listUser";
+		setAttribute("page", userService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	/**
@@ -190,17 +197,34 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String forbidden() {
-		List<User> u = userService.findById(Integer
-				.parseInt(getParameter("id")));
+		int state = Integer.parseInt(getParameter("state"));
+		int id = Integer.parseInt(getParameter("id"));
+		boolean isF = false;
+		int totalpage = 0;
+		List<User> u = userService.findById(id);
+		System.err.println(id);
 		user = u.get(0);
 		if (user.getIsForbidden() == true) {
 			user.setIsForbidden(false);
+			isF = true;
 		} else {
 			user.setIsForbidden(true);
 		}
 		userService.changeState(user);
-		getRequest().setAttribute("pageNo", getParameter("pageNo"));
-		return "listUser";
+		if (state == 1) {
+			totalpage = userService.getPage(pageNo, pageContSize)
+					.getTotalPage();
+		} else {
+			totalpage = userService.getPage(pageNo, pageContSize, isF)
+					.getTotalPage();
+		}
+		pageNo = Integer.parseInt(getParameter("pageNo"));
+		if (totalpage < pageNo) {
+			pageNo = pageNo - 1;
+		}
+		setAttribute("page", userService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	/**

@@ -167,20 +167,22 @@
 		}
 
 		function dele() {
+			var state = $("#checkRadio").val();
 			var checkselect = $("#checkselect").val();
 			if (checkselect == "true") {
 				var pageNo = $("#dqPageNo").val();
-				form2.action = "Doc/deleteCheck?pageNo=" + pageNo;
+				form2.action = "Doc/deleteCheck?pageNo=" + pageNo+"&state="+state;
 				document.getElementById("form2").submit();
 			} else {
 				alert("请选中所需删除数据！");
 			}
 		}
 		function pass() {
+			var state = $("#checkRadio").val();
 			var checkselect = $("#checkselect").val();
 			if (checkselect == "true") {
 				var pageNo = $("#dqPageNo").val();
-				form2.action = "Doc/passCheck?pageNo=" + pageNo;
+				form2.action = "Doc/passCheck?pageNo=" + pageNo+"&state="+state;
 				document.getElementById("form2").submit();
 			} else {
 				alert("请选中所需要通过的数据！");
@@ -197,6 +199,7 @@
 				for (var i = 0; i < obj.length; i++) {
 					obj[i].checked = true;
 				}
+				$("#checkselect")[0].value="true";
 			}
 		}
 

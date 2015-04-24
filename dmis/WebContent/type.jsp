@@ -109,7 +109,7 @@
                   <td><s:property value="name"/></td>
                   <td><s:property value="level"/></td>
                   <td><s:property value="parentId"/></td>
-                  	<td><a class="btn btn-mini gray" href="Type/delete.action?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a>
+                  	<td><a class="btn btn-mini gray" href="Type/delete.action?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">删除</a>
                   </td>                  
                 </tr>
                 </s:iterator>
@@ -245,10 +245,11 @@
 	}
 	//批量删除
 	function dele() {
+		var state = $("#checkRadio").val();
 		var checkselect = $("#checkselect").val();
 		if (checkselect == "true") {
 			var pageNo = $("#dqPageNo").val();
-			form2.action = "Type/delete_check?pageNo=" + pageNo;
+			form2.action = "Type/delete_check?pageNo=" + pageNo+"&state="+state;
 			document.getElementById("form2").submit();
 		} else {
 			alert("请选中需要删除的数据！");
@@ -277,6 +278,7 @@
 			for (var i = 0; i < obj.length; i++) {
 				obj[i].checked = true;
 			}
+			$("#checkselect")[0].value="true";
 		}
 	}
 	//当选中所有的时候，全选按钮会勾上 

@@ -18,6 +18,8 @@ public interface UserService extends BaseManager<User, Integer> {
 
 	public Page getPage(int state, int pageNo, int pageContSize);
 
+	public Page getPage(int pageNo, int pageContSize, boolean isForbidden);
+
 	public void deleteById(int id);
 
 	public void deleteByIds(String[] ids);

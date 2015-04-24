@@ -129,11 +129,11 @@
 								<td>未禁用</td>
 							</s:else>
 							<td>
-								<a class="btn btn-mini gray" href="User/delete2?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a>
+								<a class="btn btn-mini gray" href="User/delete2?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">删除</a>
 								<s:if test="isForbidden">
-									<a class="btn btn-mini green" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">启用</a>
+									<a class="btn btn-mini green" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">启用</a>
 								</s:if> <s:else>
-									<a class="btn btn-mini orange" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">禁用</a>
+									<a class="btn btn-mini orange" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">禁用</a>
 								</s:else>
 								<input type="hidden" value="<s:property value="id"/>" />							
 								<select id="select<s:property value="id"/>" onchange="t(this)" style="height:20px;width:75px;font-size:12px;padding:0 0;margin-bottom:0.9">															
@@ -223,6 +223,13 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	$(function(){
+		var state = $('#checkRadio').val();
+		if(state == 1)
+			$('#all').attr("checked","checked");
+		if(state == 2)
+			$('#isForbidden').attr("checked","checked");
+	});
 	$("#addUser").click(function() {
 		$("#mask").slideDown("fast",slidedown);
 	});
@@ -239,23 +246,16 @@
 		$("#mask").slideUp("fast");
 	});
 	function dele(){
+		var state = $("#checkRadio").val();
 		var cs = $("#checkselect").val();
 		if(cs=="true"){
 			var pageNo = $("#dqPageNo").val();
-			form2.action="User/delete?pageNo="+pageNo;
+			form2.action="User/delete?pageNo="+pageNo+"&state="+state;
 			document.getElementById("form2").submit();
 		}else{
 			alert("请选中所需删除数据！");
 		}
 	}
-	
-	$(function(){
-		var state = $('#checkRadio').val();
-		if(state == 1)
-			$('#all').attr("checked","checked");
-		if(state == 2)
-			$('#isForbidden').attr("checked","checked");
-	});
 	function allUser(){
 		location.href="User/list?state=1";
 	}
@@ -276,7 +276,6 @@
 			}
 			document.getElementById("checkselect").value="true";
 		}
-
 	}	
 	//当选中所有的时候，全选按钮会勾上 
 	function setSelectAll() {

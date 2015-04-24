@@ -69,16 +69,23 @@ public class KeywordAction extends BaseAction {
 	 * @return
 	 */
 	public String delete() {
+		int state = Integer.parseInt(getParameter("state"));
 		int id = Integer.parseInt(getParameter("id"));
+		boolean isPass = false;
 		keywordService.deleteKeywordById(id);
-		int totalpage = keywordService.getPage(pageNo, pageContSize)
+		if (state == 1) {
+			isPass = true;
+		}
+		int totalpage = keywordService.getPage(pageNo, pageContSize, isPass)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		getRequest().setAttribute("pageNo", pageNo);
-		return "delete_success";
+		setAttribute("page",
+				keywordService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	/**
@@ -87,16 +94,23 @@ public class KeywordAction extends BaseAction {
 	 * @return
 	 */
 	public String deleteCheck() {
+		int state = Integer.parseInt(getParameter("state"));
 		String[] ids = getRequest().getParameterValues("checkAll");
 		keywordService.deleteByIds(ids);
-		int totalpage = keywordService.getPage(pageNo, pageContSize)
+		boolean isPass = false;
+		if (state == 1) {
+			isPass = true;
+		}
+		int totalpage = keywordService.getPage(pageNo, pageContSize, isPass)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		getRequest().setAttribute("pageNo", pageNo);
-		return "delete_success";
+		setAttribute("page",
+				keywordService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	/**
@@ -170,22 +184,24 @@ public class KeywordAction extends BaseAction {
 	 * @return
 	 */
 	public String passKeyword() {
+		int state = Integer.parseInt(getParameter("state"));
 		List<Keyword> k = keywordService.findById(Integer
 				.parseInt(getParameter("id")));
 		keyword = k.get(0);
 		keyword.setIsPass(true);
 		keyword.setPassTime(new Timestamp(new Date().getTime()));
 		keywordService.passKeyword(keyword);
-		int totalpage = keywordService.getPage(pageNo, pageContSize)
+
+		int totalpage = keywordService.getPage(pageNo, pageContSize, false)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		getRequest().setAttribute("state", getParameter("state"));
-		System.out.println(getParameter("state"));
-		getRequest().setAttribute("pageNo", pageNo);
-		return "pass_success";
+		setAttribute("page",
+				keywordService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	/**
@@ -194,6 +210,7 @@ public class KeywordAction extends BaseAction {
 	 * @return
 	 */
 	public String passCheck() {
+		int state = Integer.parseInt(getParameter("state"));
 		String[] ids = getRequest().getParameterValues("checkAll");
 		for (int i = 0; i < ids.length; i++) {
 			int id = Integer.parseInt(ids[i]);
@@ -203,14 +220,16 @@ public class KeywordAction extends BaseAction {
 			keyword.setPassTime(new Timestamp(new Date().getTime()));
 			keywordService.passKeyword(keyword);
 		}
-		int totalpage = keywordService.getPage(pageNo, pageContSize)
+		int totalpage = keywordService.getPage(pageNo, pageContSize, false)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		getRequest().setAttribute("pageNo", pageNo);
-		return "pass_success";
+		setAttribute("page",
+				keywordService.getPage(state, pageNo, pageContSize));
+		setAttribute("state", state);
+		return "list";
 	}
 
 	public KeywordService getKeywordService() {

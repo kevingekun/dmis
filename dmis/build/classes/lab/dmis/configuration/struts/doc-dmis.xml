@@ -23,12 +23,10 @@
 			<result name="personalCenter">/personalCenter.jsp</result>
 			<result name="upload_success" type="redirect">/Doc/listAll?pageNo=${#request.pageNo}</result>
 			<result name="list">../document.jsp</result>
-			<result name="delete_success" type="redirect">/Doc/listAll?pageNo=${#request.pageNo}</result>
 			<result name="success">/showDoc.jsp</result>
 			<result name="addDoc">../addDoc.jsp</result>
 			<result name="addLiteratrue">../addLiteratrue.jsp</result>
 		
-			<result name="pass_success" type="redirect">/Doc/listAll?pageNo=${#request.pageNo}</result>
 			<result name="reUploadDoc" type="redirect">/Comment/listByhaveHandled?haveHandled=1</result>
 		</action>
 	</package>

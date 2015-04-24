@@ -124,9 +124,9 @@
 				<table class="table table-bordered table-striped with-check">
 					<thead>
 						<tr>
-							<th style="width: 20px;"><input type="checkbox" id="selAll"
-								style="margin-bottom: 4px" onclick="selectAll();" /><input
-								type="hidden" id="checkselect" value="false"></th>
+							<th style="width: 20px;">
+							<input type="checkbox" id="selAll" style="margin-bottom: 4px" onclick="selectAll();" />
+							<input type="hidden" id="checkselect" value="false"></th>
 							<th style="width: 30px;">编号</th>
 							<th style="width: 120px;">知识名</th>
 							<th style="width: 340px;">内容</th>
@@ -155,7 +155,7 @@
 									<td>未通过</td>
 								</s:else>
 								<td><a class="btn btn-mini gray"
-									href="Keyword/delete?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a>
+									href="Keyword/delete?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">删除</a>
 									<s:if test="!isPass">
 										<a class="btn btn-mini green"
 											href="Keyword/passKeyword?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">通过</a>
@@ -311,20 +311,22 @@
 		}
 
 		function dele() {
+			var state = $("#checkRadio").val();
 			var checkselect = $("#checkselect").val();
 			if (checkselect == "true") {
 				var pageNo = $("#dqPageNo").val();
-				form2.action = "Keyword/deleteCheck?pageNo=" + pageNo;
+				form2.action = "Keyword/deleteCheck?pageNo=" + pageNo+"&state="+state;
 				document.getElementById("form2").submit();
 			} else {
 				alert("请选中需要删除的数据！");
 			};
 		}
 		function pass() {
+			var state = $("#checkRadio").val();
 			var checkselect = $("#checkselect").val();
 			if (checkselect == "true") {
 				var pageNo = $("#dqPageNo").val();
-				form2.action = "Keyword/passCheck?pageNo=" + pageNo;
+				form2.action = "Keyword/passCheck?pageNo=" + pageNo+"&state="+state;
 				document.getElementById("form2").submit();
 			} else {
 				alert("请选中需要通过的数据!");
@@ -350,6 +352,7 @@
 				for (var i = 0; i < obj.length; i++) {
 					obj[i].checked = true;
 				};
+				$("#checkselect")[0].value="true";
 			};
 		}
 

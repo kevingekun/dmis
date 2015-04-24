@@ -21,7 +21,7 @@ $("#btn1").click(function(){
 			count_cat = jsonData;
 		},
 		error:function(){
-			alert("count_cat error");
+			alert("暂无数据...");
 		}
 	});
 	setTimeout(docCategory, 100);
@@ -35,7 +35,7 @@ $("#btn2").click(function(){
 			count_lev = jsonData;
 		},
 		error:function(){
-			alert("count_lev error");
+			alert("暂无数据...");
 		}
 	});
 	setTimeout(docLevel, 100);
@@ -49,7 +49,7 @@ $("#btn3").click(function(){
 			count_dld = jsonData;
 		},
 		error:function(){
-			alert("count_dld error");
+			alert("暂无数据...");
 		}
 	});
 	setTimeout(docDownload, 100);
@@ -103,8 +103,8 @@ function docDownload(num){
 		        }
 		    ]
 		};
-	option.yAxis[0].data=count_dld[0];
-	option.series[0].data = count_dld[1];
+	option.yAxis[0].data=count_dld[0+(n-4)*2];
+	option.series[0].data = count_dld[1+(n-4)*2];
 	option.legend.data[0] = count_dld[n];
 	option.series[0].name = count_dld[n];
 	dldChart.setOption(option);

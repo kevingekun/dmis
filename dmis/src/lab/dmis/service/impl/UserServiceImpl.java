@@ -77,6 +77,11 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 		}
 	}
 
+	public Page getPage(int pageNo, int pageContSize, boolean isForbidden) {
+		String hql = "from User u where u.isForbidden=1  order by u.id DESC";
+		return userDao.getPage(hql, pageNo, pageContSize);
+	}
+
 	/**
 	 * 删除用户
 	 */

@@ -15,6 +15,8 @@ public interface DocService extends BaseManager<Doc, Integer> {
 
 	public Page getPage(int pageNo, int pageContSize);
 
+	public Page getPage(int pageNo, int pageContSize, boolean isPass);
+
 	public Page getAdvancedSearch(int pageNo, int pageContSize, String typeId,
 			String year, String category, String language, String keyword,
 			User user);

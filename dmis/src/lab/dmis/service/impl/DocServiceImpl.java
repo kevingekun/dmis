@@ -87,6 +87,15 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 		return docDao.getPage(hql, pageNo, pageContSize);
 	}
 
+	public Page getPage(int pageNo, int pageContSize, boolean isPass) {
+		int pass = 0;
+		if (isPass == true) {
+			pass = 1;
+		}
+		hql = "from Doc doc where doc.isPass=" + pass + " order by doc.id DESC";
+		return docDao.getPage(hql, pageNo, pageContSize);
+	}
+
 	/**
 	 * 根据等级获取用所有文档
 	 */
