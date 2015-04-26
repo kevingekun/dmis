@@ -136,7 +136,7 @@
 
 			<div id="upPageBar">
 				<div class="pagination alternate"
-					style="float: left; margin-top: 30px; margin-left: -15px">
+					style="float: left; margin-top: 20px;">
 					<ul>
 						<s:if test="#request.page.showPrv != 0">
 							<li class id="firstPage" data-id="PAGE"><a

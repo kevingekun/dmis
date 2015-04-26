@@ -132,6 +132,7 @@ public class DocAction extends BaseAction {
 	public String reUploadDoc() throws IOException {
 		Comment comment = commentService.findById(Integer
 				.parseInt(getParameter("commentId")));
+		System.err.println(comment);
 		comment.setHaveHandled(3);
 		Doc d = docService.findById(doc.getId()).get(0);
 
