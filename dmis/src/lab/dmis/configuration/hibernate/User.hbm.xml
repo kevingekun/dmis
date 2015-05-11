@@ -47,12 +47,7 @@
             </key>
             <one-to-many class="lab.dmis.model.Searchhistory" />
         </set>
-        <set name="favoriteses" inverse="true" >
-            <key>
-                <column name="userId" not-null="true" />
-            </key>
-            <one-to-many class="lab.dmis.model.Favorites" />
-        </set>
+        
         <set name="downloadrecoders" inverse="true" >
             <key>
                 <column name="userId" not-null="true" />
@@ -71,11 +66,6 @@
             </key>
             <one-to-many class="lab.dmis.model.Comment" />
         </set>
-        <set name="personalfolders" inverse="true" >
-            <key>
-                <column name="userId" not-null="true" />
-            </key>
-            <one-to-many class="lab.dmis.model.Personalfolder" />
-        </set>
+        
     </class>
 </hibernate-mapping>

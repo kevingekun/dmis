@@ -69,12 +69,7 @@
             </key>
             <one-to-many class="lab.dmis.model.Versionhistory" />
         </set>
-        <set name="favoriteses" inverse="true" >
-            <key>
-                <column name="docId" not-null="true" />
-            </key>
-            <one-to-many class="lab.dmis.model.Favorites" />
-        </set>
+        
         <set name="downloadrecoders" inverse="true" >
             <key>
                 <column name="docId" not-null="true" />

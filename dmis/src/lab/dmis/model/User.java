@@ -29,7 +29,6 @@ public class User implements java.io.Serializable {
 	private Set downloadrecoders = new HashSet(0);
 	private Set docs = new HashSet(0);
 	private Set comments = new HashSet(0);
-	private Set personalfolders = new HashSet(0);
 
 	// Constructors
 
@@ -60,7 +59,7 @@ public class User implements java.io.Serializable {
 			String qq, Boolean isForbidden, Integer role, Integer level,
 			String question, String answer, String newPassword, String verfi,
 			Set searchhistories, Set favoriteses, Set downloadrecoders,
-			Set docs, Set comments, Set personalfolders) {
+			Set docs, Set comments) {
 		this.name = name;
 		this.password = password;
 		this.phone = phone;
@@ -78,7 +77,6 @@ public class User implements java.io.Serializable {
 		this.downloadrecoders = downloadrecoders;
 		this.docs = docs;
 		this.comments = comments;
-		this.personalfolders = personalfolders;
 	}
 
 	// Property accessors
@@ -225,14 +223,6 @@ public class User implements java.io.Serializable {
 
 	public void setComments(Set comments) {
 		this.comments = comments;
-	}
-
-	public Set getPersonalfolders() {
-		return this.personalfolders;
-	}
-
-	public void setPersonalfolders(Set personalfolders) {
-		this.personalfolders = personalfolders;
 	}
 
 }
