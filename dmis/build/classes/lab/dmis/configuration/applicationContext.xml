@@ -47,15 +47,9 @@
 <!-- 配置事务通知 -->    
 <tx:advice id="txAdvice" transaction-manager="transactionManager">    
   <tx:attributes>    
-    <!-- <tx:method name="save*" propagation="REQUIRED" read-only="false"/>  
-    <tx:method name="create*" propagation="REQUIRED" read-only="false"/>  
-    <tx:method name="delete" propagation="REQUIRED" read-only="false"/>    
-    <tx:method name="find*" propagation="REQUIRED" read-only="true"/>  
-    <tx:method name="list*" propagation="REQUIRED" read-only="true"/>  
-    <tx:method name="get*" propagation="REQUIRED" read-only="true"/>     -->
     <tx:method name="*" propagation="REQUIRED" read-only="false"/> 
   </tx:attributes>    
-</tx:advice>    
+</tx:advice>  
 <!--添加事务-->       
 <aop:config>    
   <!--切入点-->    

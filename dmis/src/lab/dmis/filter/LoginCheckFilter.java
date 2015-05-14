@@ -42,20 +42,6 @@ public class LoginCheckFilter implements Filter {
 		} else {
 			httprespons.sendRedirect(loginUrl);
 		}
-
-		// if (httprequest.getRequestURI().indexOf("System/Login") != -1) {
-		// chain.doFilter(request, response);
-		// } else {
-		// if ((httprequest.getRequestURI().indexOf("menu") != -1)
-		// || (httprequest.getRequestURI().indexOf("top") != -1)
-		// || (httprequest.getRequestURI().indexOf("content") != -1)) {
-		// chain.doFilter(request, response);
-		// } else if (httprequest.getRequestURI().indexOf(".jsp") != -1)
-		// httprespons.sendRedirect(loginUrl);
-		// else
-		// chain.doFilter(request, response);
-		// }
-
 	}
 
 	@Override

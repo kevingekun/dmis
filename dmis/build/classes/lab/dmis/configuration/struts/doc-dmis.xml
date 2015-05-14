@@ -15,8 +15,6 @@
 		</interceptor-ref>
 	
 		<interceptor-ref name="defaultStack"></interceptor-ref>
-		
-
 			<result name="reading">/reading.jsp</result>
 			<result name="allDoc" >/searchResult.jsp</result>
 			<result name="advancedDoc" >/searchResult.jsp</result>

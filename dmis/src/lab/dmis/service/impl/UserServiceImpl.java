@@ -29,6 +29,17 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	}
 
 	/**
+	 * 根据邮箱找回密码
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> forgotCheck(User user) {
+		String hql = "from User user where user.name ='" + user.getName()
+				+ "' and user.email = '" + user.getEmail() + "'";
+		return userDao.find(hql);
+	}
+
+	/**
 	 * 验证用户名是否存在已经验证码是否正确
 	 */
 	@SuppressWarnings("unchecked")

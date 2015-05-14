@@ -50,17 +50,17 @@
 	<div id="login-inner">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
-			<th>Username</th>
-			<td><input type="text" class="login-inp" name="user.name" placeholder="Username"/></td>
+			<th>Username:</th>
+			<td><input type="text" class="login-inp" name="user.name" placeholder="username"/></td>
 		</tr>
 		<tr>
-			<th>Password</th>
-			<td><input type="password" name="user.password" placeholder="Password" class="login-inp" /></td>
+			<th>Password:</th>
+			<td><input type="password" name="user.password" placeholder="password" class="login-inp" /></td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<th></th>
 			<td valign="top"><input type="checkbox" class="checkbox-size" id="login-check" /><label for="login-check">Remember me</label></td>
-		</tr>
+		</tr> -->
 		<tr>
 			<th></th>
 			<td><input type="button" class="submit-login" id="loginCheck"/></td>
@@ -70,35 +70,53 @@
 	</form>
  	<!--  end login-inner -->
 	<div class="clear"></div>
-	<a href="" class="forgot-pwd">Forgot Password?</a>
+	<a href="" class="forgot-pwd">忘记密码?</a>
  </div>
  <!--  end loginbox -->
  
 	<!--  start forgotbox ................................................................................... -->
 	<div id="forgotbox">
-		<div id="forgotbox-text">Please send us your email and we'll reset your password.</div>
+		<div id="forgotbox-text">请输入您的用户名及邮箱，我们会将新密码发到您的邮箱中.</div>
 		<!--  start forgot-inner -->
+		<form id="forgotform">
 		<div id="forgot-inner">
 		<table border="0" cellpadding="0" cellspacing="0">
 		<tr>
+			<th>User Name:</th>
+			<td><input type="text" name="user.name" placeholder="username" class="login-inp" /></td>
+		</tr>
+		<tr>
 			<th>Email address:</th>
-			<td><input type="text" value=""   class="login-inp" /></td>
+			<td><input type="text" name="user.email" placeholder="email" class="login-inp" /></td>
 		</tr>
 		<tr>
 			<th> </th>
-			<td><input type="button" class="submit-login"  /></td>
+			<td><input type="button" class="submit-login" id="forgotCheck"/></td>
 		</tr>
 		</table>
 		</div>
+		</form>
 		<!--  end forgot-inner -->
 		<div class="clear"></div>
-		<a href="" class="back-login">Back to login</a>
+		<a href="" class="back-login">返回登录页面</a>
 	</div>
 	<!--  end forgotbox -->
 
 </div>
  <script type="text/javascript">
+document.onkeydown = function(event_e){    
+   if(window.event)    
+    event_e = window.event;    
+    var int_keycode = event_e.charCode||event_e.keyCode;    
+    if(int_keycode ==13){   
+    	submit();
+    }  
+}; 
 $("#loginCheck").click(function(){
+	submit();
+});
+	 
+function submit(){
 	var user = $("#loginform").serialize();
 	$.ajax({
 		type:"POST",
@@ -109,6 +127,21 @@ $("#loginCheck").click(function(){
 				location.href='/dmis/Admin/getAdminIndex';
 			}else 
 				alert("用户名或密码错误，请重新登录！");
+		}
+});
+};
+$("#forgotCheck").click(function(){
+	var user = $("#forgotform").serialize();
+	$.ajax({
+		type:"POST",
+		url:"/dmis/System/UpdatePasswordBySendMail",
+		data:user,
+		success:function(result){
+			if(result == "success"){
+				alert("请查看您的邮箱！");
+				location.href='/dmis';
+			}else 
+				alert("用户名或邮箱错误，请重新输入！");
 		}
 	});
 });

@@ -2,9 +2,9 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-	
+	<!-- 国际化配置 -->
 	<constant  name="struts.i18n.encoding" value="UTF-8" />
-	
+	<!-- 引入各个模块的不同子配置文件 -->
 	<include file="lab/dmis/configuration/struts/*-dmis.xml"></include>
 	
 </struts>

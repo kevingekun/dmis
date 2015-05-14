@@ -20,16 +20,8 @@
 			<div id="menu" style="z-index: 22;">
 				<div id="topMenu">
 					<ul>
-						<!-- <li><a href="#" LANGUAGE="javascript" onClick="href='backgroundCenter.jsp';target='_blank';">个人主页</a></li> -->
-						<!-- <li><a href="#" LANGUAGE="javascript" onClick="href='adminIndex.jsp';target='_blank';">首页</a></li> -->
-						<!-- <li><a href="#" LANGUAGE="javascript"
-							onClick="href='/dmis/Doc/getadminDoc';target='_blank';">首页</a></li> -->
-							<!-- <li><a LANGUAGE="javascript";target='_blank';">首页</a></li>
-						<li><a href="#" LANGUAGE="javascript"
-							onClick="if (confirm('确认要离开本系统?')){href='/dmis/User/LoginOut';target='_top';}else {href='page/background/top.jsp';target='_self';}">信息</a></li>
-							<li><a LANGUAGE="javascript";target='_top';}else {href='page/background/top.jsp';target='_self';}">信息</a></li> -->
-						<li><a title="退出" href="#" LANGUAGE="javascript"
-							onClick="if (confirm('确认要离开本系统?')){href='/dmis/User/LoginOut';target='_top';}else {href='page/background/top.jsp';target='_self';}">退出</a>
+						<li><a title="退出" href="#"
+							onClick="if (confirm('确认要离开本系统?')){href='/dmis/User/LoginOut';target='_top';}else {href='System/top';target='_self';}">退出</a>
 						</li>
 						<li
 							style="padding: 8px 15px 5px 15px; border-left: 1px #2e363f solid;">&nbsp;</li>

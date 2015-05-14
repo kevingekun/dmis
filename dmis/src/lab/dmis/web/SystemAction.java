@@ -4,6 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import javax.mail.Address;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import lab.common.web.BaseAction;
 import lab.dmis.model.User;
@@ -97,6 +105,55 @@ public class SystemAction extends BaseAction {
 		} else
 			message = "field";
 		out().print(message);
+	}
+
+	/**
+	 * 通过邮件找回密码
+	 * 
+	 * @throws MessagingException
+	 * @throws IOException
+	 */
+
+	public void UpdatePasswordBySendMail() throws Exception {
+		List<User> list = userService.forgotCheck(user);
+		if (list.size() != 0) {
+			Properties props = new Properties();
+			props.put("mail.smtp.host", "smtp.163.com");
+			props.put("mail.smtp.auth", "true");
+			// 基本的邮件会话
+			Session session = Session.getInstance(props);
+			// 构造信息体
+			MimeMessage message = new MimeMessage(session);
+			// 发件地址
+			Address address = new InternetAddress("kevingekun@163.com");
+			message.setFrom(address);
+			// 收件地址
+			Address toAddress = new InternetAddress("1021813835@qq.com");
+			message.setRecipient(MimeMessage.RecipientType.TO, toAddress);
+
+			String subject = "DIMS 密码找回";
+			// 主题
+			message.setSubject(subject);
+			String text = "您的新密码为：";
+			int password = (int) ((Math.random() * 9 + 1) * 100000);
+			// 正文
+			message.setText(text + password);
+			list.get(0).setPassword(String.valueOf(password));
+			userService.update(list.get(0));
+
+			message.saveChanges();
+			session.setDebug(true);// 控制台输出
+			Transport transport = session.getTransport("smtp");
+			transport.connect("smtp.163.com", "kevingekun@163.com",
+					"klbqqlly1234");
+			// 发送
+			transport.sendMessage(message, message.getAllRecipients());
+			transport.close();
+
+			out().print("success");
+		} else {
+			out().print("failed");
+		}
 	}
 
 	public String menu() {

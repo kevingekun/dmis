@@ -10,6 +10,8 @@ public interface UserService extends BaseManager<User, Integer> {
 
 	public List<User> loginCheck(User user);
 
+	public List<User> forgotCheck(User user);
+
 	public List<User> NameAndVerfiCheck(User user);
 
 	public void PasswordUpdate(User user);
