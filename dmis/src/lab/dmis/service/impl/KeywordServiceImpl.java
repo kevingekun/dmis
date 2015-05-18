@@ -126,7 +126,10 @@ public class KeywordServiceImpl extends BaseManagerImpl<Keyword, Integer>
 	public List<Keyword> findById(int id) {
 		String hql = "from Keyword where id='" + id + "'";
 		return keywordDao.find(hql);
+	}
 
+	public Keyword findByName(String keywordName) {
+		return keywordDao.findByName(keywordName);
 	}
 
 	public void deleteByIds(String[] ids) {

@@ -209,4 +209,4 @@ function docCategory(){
 	option.series[0].data = count_cat;
 	catChart.setOption(option);
 }
-setTimeout(docCategory, 100);//页面首次加载时显示‘文档类型统计’，延时处理
+setTimeout(docCategory, 500);//页面首次加载时显示‘文档类型统计’，延时处理

@@ -26,14 +26,13 @@
        <a id="btn2" class="btn btn-small green" style="margin:5px 0 0 3px;"> 文档等级</a>
        <a id="btn3" class="btn btn-small green" style="margin:5px 0 0 3px;">下载量</a>
 	</div>
-	<div>
 		<div id="isEmpty" class="widget-content" style="float: left;">
         	<div id="docChart" class="content"></div>
     		<div id="yearChange" class="count_left" style="display:none;">
     			<a id="yearChangeId" class="btn btn-small green" style="margin:5px 0 0 3px;">下载量</a>
     		</div>
     	</div>
-	</div>
+	
 </div>
 </body>
 <script src="js/echarts/build/dist/echarts-all.js"></script>

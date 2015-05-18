@@ -12,7 +12,6 @@
 <head>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
-<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
 <link rel="stylesheet" type="text/css" href="css/dmis.css"/>

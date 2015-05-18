@@ -11,6 +11,9 @@ import java.util.Set;
 import lab.common.web.BaseAction;
 import lab.dmis.model.Doc;
 import lab.dmis.model.Keyword;
+import lab.dmis.model.Keyworddoc;
+import lab.dmis.service.DocService;
+import lab.dmis.service.KeywordDocService;
 import lab.dmis.service.KeywordService;
 import net.sf.json.JSONArray;
 
@@ -21,9 +24,14 @@ public class KeywordAction extends BaseAction {
 
 	@Autowired
 	private KeywordService keywordService;
+	@Autowired
+	private DocService docService;
+	@Autowired
+	private KeywordDocService keywordDocService;
+	private Doc doc;
 	private Keyword keyword;
 	private int pageNo = 1;
-	private int pageContSize = 3;
+	private int pageContSize = 8;
 
 	/**
 	 * list keyword
@@ -172,9 +180,26 @@ public class KeywordAction extends BaseAction {
 	 */
 	public String addKeyword() {
 		keyword.setCommitTime(new Timestamp(new Date().getTime()));
-		String data = getParameter("keyword.content");
-		System.out.println(data);
+		// String data = getParameter("keyword.content");
+		// System.out.println(data);
 		keywordService.addKeyword(keyword);
+
+		String id = getParameter("docid");
+		// System.err.println("docid:" + id);
+		if (!id.equals("0")) {
+			// System.err.println("kkk:" + id);
+			int docid = Integer.parseInt(id);
+			doc = docService.findById(docid).get(0);
+			// System.err.println(doc);
+			int keywordid = keywordService.findByName(keyword.getKeyword())
+					.getId();
+			keyword = keywordService.findById(keywordid).get(0);
+			// System.err.println(keyword);
+			Keyworddoc keyworddoc = new Keyworddoc();
+			keyworddoc.setKeyword(keyword);
+			keyworddoc.setDoc(doc);
+			keywordDocService.addKeywordDoc(keyworddoc);
+		}
 		return "save_success";
 	}
 
@@ -267,4 +292,5 @@ public class KeywordAction extends BaseAction {
 	public void setKeyword(Keyword keyword) {
 		this.keyword = keyword;
 	}
+
 }

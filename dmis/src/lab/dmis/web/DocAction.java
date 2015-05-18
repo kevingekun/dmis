@@ -38,7 +38,7 @@ public class DocAction extends BaseAction {
 	private CommentService commentService;
 	private Doc doc;
 	private int pageNo = 1;
-	private int pageContSize = 4;
+	private int pageContSize = 8;
 	private File uploadFile;// 实际上传文件
 	private String uploadFileFileName;// 上传文件名
 	JSONArray jsonArray;
@@ -491,6 +491,17 @@ public class DocAction extends BaseAction {
 		} else {
 			setAttribute("type", "xls");
 			return "success";
+		}
+
+	}
+
+	public void searchByid() throws IOException {
+		int id = Integer.parseInt(getParameter("id"));
+		List<Doc> list = docService.findById(id);
+		if (list.size() != 0) {
+			out().print("success");
+		} else {
+			out().print("faild");
 		}
 
 	}

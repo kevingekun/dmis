@@ -10,16 +10,17 @@
 <base href="<%=basePath%>">
 <html>
 <head>
-<link href="css/bg/yetou.css" rel="stylesheet" type="text/css" />
-<link href="css/dmis.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/matrix-style.css" />
-<link rel="stylesheet" href="css/matrix-media.css" />
-<link rel="stylesheet" href="css/uniform.css" />
-<link rel="stylesheet" href="css/select2.css" />
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link href="css/matrix-style.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
+<link rel="stylesheet" type="text/css" href="css/dmis.css"/>
+<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
+<link rel="stylesheet" type="text/css" href="css/uniform.css" />
+<link rel="stylesheet" type="text/css" href="css/select2.css" />
+<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 
 </head>
 <body id="table1">
@@ -65,14 +66,12 @@
 								<td><s:property value="content" /></td>
 								<td><s:property value="numOfApplications" /></td>
 								<td><s:if test="%{haveHandled != 1 && haveHandled != 3}">
-										<button type="button" class="btn btn-mini"
-											onclick="process(<s:property value="id"/>,1)">同意</button>
+										<a class="btn btn-mini green" onclick="process(<s:property value="id"/>,1)">同意</a>
 									</s:if> <s:if test="%{haveHandled == 1}">
-										<a href="#myModal" role="button" class="btn btn-mini"
+										<a href="#myModal" class="btn btn-mini green"
 											data-toggle="modal" onclick='javascript:$("#curVersion").html(<s:property value="doc.version" />);$("#docId").val(<s:property value="doc.id" />);$("#commentId").val(<s:property value="id" />)'>重传</a>
 									</s:if> <s:if test="%{haveHandled == 0 || haveHandled == 1}">
-										<button type="button" class="btn btn-mini"
-											onclick="process(<s:property value="id"/>,2)">拒绝</button>
+										<a class="btn btn-mini gray" onclick="process(<s:property value="id"/>,2)">拒绝</a>
 									</s:if></td>
 							</tr>
 						</s:iterator>

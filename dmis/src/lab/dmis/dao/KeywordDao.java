@@ -7,8 +7,12 @@ import lab.dmis.model.Keyword;
 
 public interface KeywordDao extends BaseDAO<Keyword, Integer> {
 
-	public Keyword QueryEqualName(Keyword keyWord);   //查找跟关键字完全匹配的对象
-	public List<Keyword> QueryLikeName(Keyword keyWord);    //查找含有关键字的所有结果
-	public Keyword QueryById(Keyword keyWord);   //根据Id查找对象
-	
+	public Keyword QueryEqualName(Keyword keyWord); // 查找跟关键字完全匹配的对象
+
+	public List<Keyword> QueryLikeName(Keyword keyWord); // 查找含有关键字的所有结果
+
+	public Keyword QueryById(Keyword keyWord); // 根据Id查找对象
+
+	public Keyword findByName(String keyword); // 根据Id查找对象
+
 }

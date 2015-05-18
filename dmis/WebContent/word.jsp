@@ -61,6 +61,18 @@
 								style="display: none;">required field.</div>
 						</div>
 					</div>
+					<div class="form-row">
+						<div class="field-label_keyword">
+							<label for="field1">关联文档ID</label>:
+						</div>
+						<div class="field-widget">
+							<input name="docid" id="keyworddocid" value="0" class="required"
+								type="text" onblur="checkdocid();"/>
+							<div class="validation-advice" id="advice-required-field2"
+								style="display: none;">required field.</div>
+						</div>
+					</div>
+					
 
 					<div class="form-row_keyword">
 						<div class="controls">
@@ -240,8 +252,8 @@
 		});
 		function checkKeyword() {
 			var keyword = $("#keyword").val();
-			keyword = keyword.replace(/\s+/g, "");
-			if (keyword.length == 0) {
+			keyword2 = keyword.replace(/\s+/g, "");
+			if (keyword2.length == 0) {
 				$("#keyword")[0].className = "required validation-failed";
 				$("#advice-required-field1")[0].innerHTML="不为空！";
 				$("#advice-required-field1").removeAttr("style");
@@ -258,6 +270,42 @@
 					return true;
 				};
 			};
+		}
+		function checkdocid(){
+			var id = $("#keyworddocid").val();
+			if(id!=null){
+				var reg=new RegExp("[1-9]+");
+				if(!reg.test(id)){
+					$("#keyworddocid")[0].className = "required validation-failed";
+					$("#advice-required-field2")[0].innerHTML="数字id！";
+					$("#advice-required-field2").removeAttr("style");
+					return false;
+				}else{
+					$.ajax({
+						type:'GET',
+						url:"Doc/searchByid?id="+id,
+						success:function(result){
+							if(result == "success"){
+								$("#keyworddocid")[0].className = "required";
+								$("#advice-required-field2").attr("style","display:none;");
+								return true;
+							}else {
+								$("#keyworddocid")[0].className = "required validation-failed";
+								$("#advice-required-field2")[0].innerHTML="id不存在！";
+								$("#advice-required-field2").removeAttr("style");
+								return false;
+							};
+						},
+						error:function(){
+							alert("errooor");
+							return false;
+						}
+					});
+				}
+			}else{
+				return true;
+			}
+			
 		}
 		function checkContent() {
 			var str=ckeditor.document.getBody().getText();

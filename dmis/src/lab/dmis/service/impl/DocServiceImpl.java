@@ -59,20 +59,24 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 		listLastYear.add(lastYear);
 		String sql1 = "select doc.title from Downloadrecoder dr,Doc doc where dr.doc.id = doc.id AND YEAR(dr.downloadTime)="
 				+ now.get(Calendar.YEAR)
-				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC";
+				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC limit 10";
 		String sql2 = "select count(dr.doc.id) from Downloadrecoder dr,Doc doc where dr.doc.id = doc.id AND YEAR(dr.downloadTime)="
 				+ now.get(Calendar.YEAR)
-				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC";
+				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC limit 10";
 		String sql3 = "select doc.title from Downloadrecoder dr,Doc doc where dr.doc.id = doc.id AND YEAR(dr.downloadTime)="
 				+ (now.get(Calendar.YEAR) - 1)
-				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC";
+				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC limit 10";
 		String sql4 = "select count(dr.doc.id) from Downloadrecoder dr,Doc doc where dr.doc.id = doc.id AND YEAR(dr.downloadTime)="
 				+ (now.get(Calendar.YEAR) - 1)
-				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC";
-		list.add(docDao.find(sql1).subList(0, 10));
-		list.add(docDao.find(sql2).subList(0, 10));
-		list.add(docDao.find(sql3).subList(0, 10));
-		list.add(docDao.find(sql4).subList(0, 10));
+				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC limit 10";
+		try {
+			list.add(docDao.find(sql1));
+			list.add(docDao.find(sql2));
+			list.add(docDao.find(sql3));
+			list.add(docDao.find(sql4));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		list.add(thisYear);
 		list.add(lastYear);
 

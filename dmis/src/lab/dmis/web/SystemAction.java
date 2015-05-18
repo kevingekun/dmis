@@ -116,7 +116,7 @@ public class SystemAction extends BaseAction {
 
 	public void UpdatePasswordBySendMail() throws Exception {
 		List<User> list = userService.forgotCheck(user);
-		if (list.size() != 0) {
+		if (list.size() != 0 && list.get(0).getEmail() != null) {
 			Properties props = new Properties();
 			props.put("mail.smtp.host", "smtp.163.com");
 			props.put("mail.smtp.auth", "true");
@@ -128,7 +128,7 @@ public class SystemAction extends BaseAction {
 			Address address = new InternetAddress("kevingekun@163.com");
 			message.setFrom(address);
 			// 收件地址
-			Address toAddress = new InternetAddress("1021813835@qq.com");
+			Address toAddress = new InternetAddress(list.get(0).getEmail());
 			message.setRecipient(MimeMessage.RecipientType.TO, toAddress);
 
 			String subject = "DIMS 密码找回";
@@ -136,8 +136,9 @@ public class SystemAction extends BaseAction {
 			message.setSubject(subject);
 			String text = "您的新密码为：";
 			int password = (int) ((Math.random() * 9 + 1) * 100000);
+			String end = "请尽快登录系统修改密码！";
 			// 正文
-			message.setText(text + password);
+			message.setText(text + password + end);
 			list.get(0).setPassword(String.valueOf(password));
 			userService.update(list.get(0));
 
