@@ -2,64 +2,57 @@ package lab.dmis.model;
 
 import java.sql.Timestamp;
 
-/**
- * Notice entity. @author MyEclipse Persistence Tools
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
+@Entity
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class Notice implements java.io.Serializable {
 
-	// Fields
+	private static final long serialVersionUID = 1L;
 
-	private Integer id;
-	private String title;
 	private String content;
+	private Integer id;
 	private Timestamp time;
+	private String title;
 
-	// Constructors
-
-	/** default constructor */
-	public Notice() {
+	@Column(nullable = false)
+	public String getContent() {
+		return this.content;
 	}
 
-	/** full constructor */
-	public Notice(String title, String content, Timestamp time) {
-		this.title = title;
-		this.content = content;
-		this.time = time;
-	}
-
-	// Property accessors
-
+	@Id
+	@GeneratedValue
 	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	@Column(nullable = false)
+	public Timestamp getTime() {
+		return this.time;
 	}
 
+	@Column(nullable = false)
 	public String getTitle() {
 		return this.title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getContent() {
-		return this.content;
 	}
 
 	public void setContent(String content) {
 		this.content = content;
 	}
 
-	public Timestamp getTime() {
-		return this.time;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setTime(Timestamp time) {
 		this.time = time;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 }

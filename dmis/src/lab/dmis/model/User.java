@@ -3,157 +3,173 @@ package lab.dmis.model;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * User entity. @author MyEclipse Persistence Tools
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
+@Entity
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class User implements java.io.Serializable {
 
-	// Fields
+	private static final long serialVersionUID = 1L;
 
+	private String answer;
+	private Set<Comment> comments = new HashSet<Comment>();
+	private Set<Doc> docs = new HashSet<Doc>();
+	private Set<Downloadrecoder> downloadrecoders = new HashSet<Downloadrecoder>();
+	private String email;
 	private Integer id;
+	private Boolean isForbidden;
+	private Integer level;
 	private String name;
+	private String newPassword;
 	private String password;
 	private String phone;
-	private String email;
 	private String qq;
-	private Boolean isForbidden;
-	private Integer role;
-	private Integer level;
 	private String question;
-	private String answer;
+	private Integer role;
 	private String verfi;
-	private String newPassword;
-	private Set downloadrecoders = new HashSet(0);
-	private Set docs = new HashSet(0);
-	private Set comments = new HashSet(0);
 
-	public Integer getId() {
-		return this.id;
+	public String getAnswer() {
+		return this.answer;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	@OneToMany(mappedBy = "user")
+	public Set<Comment> getComments() {
+		return this.comments;
 	}
 
-	public String getName() {
-		return name;
+	@OneToMany(mappedBy = "user")
+	public Set<Doc> getDocs() {
+		return this.docs;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPhone() {
-		return this.phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
+	@OneToMany
+	@JoinColumn(name = "userId")
+	public Set<Downloadrecoder> getDownloadrecoders() {
+		return this.downloadrecoders;
 	}
 
 	public String getEmail() {
 		return this.email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getQq() {
-		return this.qq;
-	}
-
-	public void setQq(String qq) {
-		this.qq = qq;
+	@Id
+	@GeneratedValue
+	public Integer getId() {
+		return this.id;
 	}
 
 	public Boolean getIsForbidden() {
 		return this.isForbidden;
 	}
 
-	public void setIsForbidden(Boolean isForbidden) {
-		this.isForbidden = isForbidden;
-	}
-
-	public Integer getRole() {
-		return this.role;
-	}
-
-	public void setRole(Integer role) {
-		this.role = role;
-	}
-
 	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(Integer level) {
-		this.level = level;
+	@Column(nullable = false)
+	public String getName() {
+		return name;
+	}
+
+	@Transient
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	@Column(nullable = false)
+	public String getPassword() {
+		return this.password;
+	}
+
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public String getQq() {
+		return this.qq;
 	}
 
 	public String getQuestion() {
 		return this.question;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public Integer getRole() {
+		return this.role;
 	}
 
-	public String getAnswer() {
-		return this.answer;
+	@Transient
+	public String getVerfi() {
+		return verfi;
 	}
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
 
-	public String getVerfi() {
-		return verfi;
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
 	}
 
-	public void setVerfi(String verfi) {
-		this.verfi = verfi;
+	public void setDocs(Set<Doc> docs) {
+		this.docs = docs;
 	}
 
-	public String getNewPassword() {
-		return newPassword;
+	public void setDownloadrecoders(Set<Downloadrecoder> downloadrecoders) {
+		this.downloadrecoders = downloadrecoders;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setIsForbidden(Boolean isForbidden) {
+		this.isForbidden = isForbidden;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
 	}
 
-	public Set getDownloadrecoders() {
-		return this.downloadrecoders;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public void setDownloadrecoders(Set downloadrecoders) {
-		this.downloadrecoders = downloadrecoders;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
-	public Set getDocs() {
-		return this.docs;
+	public void setQq(String qq) {
+		this.qq = qq;
 	}
 
-	public void setDocs(Set docs) {
-		this.docs = docs;
+	public void setQuestion(String question) {
+		this.question = question;
 	}
 
-	public Set getComments() {
-		return this.comments;
+	public void setRole(Integer role) {
+		this.role = role;
 	}
 
-	public void setComments(Set comments) {
-		this.comments = comments;
+	public void setVerfi(String verfi) {
+		this.verfi = verfi;
 	}
 
 }

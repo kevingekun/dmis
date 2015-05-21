@@ -2,64 +2,61 @@ package lab.dmis.model;
 
 import java.sql.Timestamp;
 
-/**
- * Downloadrecoder entity. @author MyEclipse Persistence Tools
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+@Entity
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class Downloadrecoder implements java.io.Serializable {
 
-	// Fields
+	private static final long serialVersionUID = 1L;
 
-	private Integer id;
 	private Doc doc;
-	private User user;
 	private Timestamp downloadTime;
+	private Integer id;
+	private User user;
 
-	// Constructors
-
-	/** default constructor */
-	public Downloadrecoder() {
+	@ManyToOne
+	@JoinColumn(name = "docId")
+	public Doc getDoc() {
+		return this.doc;
 	}
 
-	/** full constructor */
-	public Downloadrecoder(Doc doc, User user, Timestamp downloadTime) {
-		this.doc = doc;
-		this.user = user;
-		this.downloadTime = downloadTime;
+	@Column(nullable = false)
+	public Timestamp getDownloadTime() {
+		return this.downloadTime;
 	}
 
-	// Property accessors
-
+	@Id
+	@GeneratedValue
 	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Doc getDoc() {
-		return this.doc;
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	public User getUser() {
+		return this.user;
 	}
 
 	public void setDoc(Doc doc) {
 		this.doc = doc;
 	}
 
-	public User getUser() {
-		return this.user;
+	public void setDownloadTime(Timestamp downloadTime) {
+		this.downloadTime = downloadTime;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public Timestamp getDownloadTime() {
-		return this.downloadTime;
-	}
-
-	public void setDownloadTime(Timestamp downloadTime) {
-		this.downloadTime = downloadTime;
 	}
 
 }

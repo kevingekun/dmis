@@ -4,105 +4,86 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Keyword entity. @author MyEclipse Persistence Tools
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
+@Entity
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class Keyword implements java.io.Serializable {
 
-	// Fields
+	private static final long serialVersionUID = 1L;
 
-	private Integer id;
-	private String keyword;
-	private String content;
-	private Boolean isPass;
 	private Timestamp commitTime;
+	private String content;
+	private Set<Doc> docs = new HashSet<Doc>();
+	private Integer id;
+	private Boolean isPass;
+	private String keyword;
 	private Timestamp passTime;
-	private Set keyworddocs = new HashSet(0);
 
-	// Constructors
-
-	/** default constructor */
-	public Keyword() {
+	@Column(nullable = false)
+	public Timestamp getCommitTime() {
+		return this.commitTime;
 	}
 
-	/** minimal constructor */
-	public Keyword(String keyword, String content, Boolean isPass,
-			Timestamp commitTime, Timestamp passTime) {
-		this.keyword = keyword;
-		this.content = content;
-		this.isPass = isPass;
-		this.commitTime = commitTime;
-		this.passTime = passTime;
-	}
-
-	/** full constructor */
-	public Keyword(String keyword, String content, Boolean isPass,
-			Timestamp commitTime, Timestamp passTime, Set keyworddocs) {
-		this.keyword = keyword;
-		this.content = content;
-		this.isPass = isPass;
-		this.commitTime = commitTime;
-		this.passTime = passTime;
-		this.keyworddocs = keyworddocs;
-	}
-
-	// Property accessors
-
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getKeyword() {
-		return this.keyword;
-	}
-
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
-	}
-
+	@Column(nullable = false)
 	public String getContent() {
 		return this.content;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	@ManyToMany(mappedBy = "keywords")
+	public Set<Doc> getDocs() {
+		return docs;
+	}
+
+	@Id
+	@GeneratedValue
+	public Integer getId() {
+		return this.id;
 	}
 
 	public Boolean getIsPass() {
 		return this.isPass;
 	}
 
-	public void setIsPass(Boolean isPass) {
-		this.isPass = isPass;
-	}
-
-	public Timestamp getCommitTime() {
-		return this.commitTime;
-	}
-
-	public void setCommitTime(Timestamp commitTime) {
-		this.commitTime = commitTime;
+	@Column(nullable = false)
+	public String getKeyword() {
+		return this.keyword;
 	}
 
 	public Timestamp getPassTime() {
 		return this.passTime;
 	}
 
+	public void setCommitTime(Timestamp commitTime) {
+		this.commitTime = commitTime;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setDocs(Set<Doc> docs) {
+		this.docs = docs;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setIsPass(Boolean isPass) {
+		this.isPass = isPass;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
 	public void setPassTime(Timestamp passTime) {
 		this.passTime = passTime;
-	}
-
-	public Set getKeyworddocs() {
-		return this.keyworddocs;
-	}
-
-	public void setKeyworddocs(Set keyworddocs) {
-		this.keyworddocs = keyworddocs;
 	}
 
 }

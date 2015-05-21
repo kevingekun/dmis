@@ -4,209 +4,232 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Doc entity. @author MyEclipse Persistence Tools
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+@Entity
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class Doc implements java.io.Serializable {
 
-	// Fields
+	private static final long serialVersionUID = 1L;
 
-	private Integer id;
-	private Type type;
-	private User user;
-	private String title;
 	private String author;
 	private String brief;
-	private Timestamp uploadTime;
-	private Integer downloadTimes;
-	private String docPath;
-	private Float version;
-	private String journal;
-	private String publishedTime;
 	private String category;
-	private Integer language;
+	private Set<Comment> comments = new HashSet<Comment>();
+	private String docPath;
+	private Set<Downloadrecoder> downloadrecoders = new HashSet<Downloadrecoder>();
+	private Integer downloadTimes;
 	private String format;
+	private Integer id;
 	private Boolean isPass;
+	private String journal;
+	private Set<Keyword> keywords = new HashSet<Keyword>();
+	private Integer language;
 	private Integer level;
 	private Integer originalId;
-	private Set downloadrecoders = new HashSet(0);
-	private Set keyworddocs = new HashSet(0);
-	private Set comments = new HashSet(0);
+	private String publishedTime;
+	private String title;
+	private Type type;
+	private Timestamp uploadTime;
+	private User user;
+	private Float version;
 
-	public String getFilename() {
-		String fileName = this.docPath
-				.substring(this.docPath.lastIndexOf("/") + 1);
-
-		return fileName;
-	}
-
-	public Integer getId() {
-		return this.id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Type getType() {
-		return this.type;
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-	}
-
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public String getTitle() {
-		return this.title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	/*
+	 * public String getFilename() { String fileName = this.docPath
+	 * .substring(this.docPath.lastIndexOf("/") + 1);
+	 * 
+	 * return fileName; }
+	 */
 
 	public String getAuthor() {
 		return this.author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
 	}
 
 	public String getBrief() {
 		return brief;
 	}
 
-	public void setBrief(String brief) {
-		this.brief = brief;
+	public String getCategory() {
+		return this.category;
 	}
 
-	public Timestamp getUploadTime() {
-		return this.uploadTime;
+	@OneToMany(mappedBy = "doc")
+	public Set<Comment> getComments() {
+		return this.comments;
 	}
 
-	public void setUploadTime(Timestamp uploadTime) {
-		this.uploadTime = uploadTime;
+	@Column(nullable = false)
+	public String getDocPath() {
+		return this.docPath;
+	}
+
+	@OneToMany(mappedBy = "doc")
+	public Set<Downloadrecoder> getDownloadrecoders() {
+		return this.downloadrecoders;
 	}
 
 	public Integer getDownloadTimes() {
 		return this.downloadTimes;
 	}
 
-	public void setDownloadTimes(Integer downloadTimes) {
-		this.downloadTimes = downloadTimes;
-	}
-
-	public String getDocPath() {
-		return this.docPath;
-	}
-
-	public void setDocPath(String docPath) {
-		this.docPath = docPath;
-	}
-
-	public Float getVersion() {
-		return this.version;
-	}
-
-	public void setVersion(Float version) {
-		this.version = version;
-	}
-
-	public String getJournal() {
-		return this.journal;
-	}
-
-	public void setJournal(String journal) {
-		this.journal = journal;
-	}
-
-	public String getPublishedTime() {
-		return this.publishedTime;
-	}
-
-	public void setPublishedTime(String publishedTime) {
-		this.publishedTime = publishedTime;
-	}
-
-	public String getCategory() {
-		return this.category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
-
-	public Integer getLanguage() {
-		return this.language;
-	}
-
-	public void setLanguage(Integer language) {
-		this.language = language;
-	}
-
+	@Column(nullable = false)
 	public String getFormat() {
 		return this.format;
 	}
 
-	public void setFormat(String format) {
-		this.format = format;
+	@Id
+	@GeneratedValue
+	public Integer getId() {
+		return this.id;
 	}
 
 	public Boolean getIsPass() {
 		return this.isPass;
 	}
 
-	public void setIsPass(Boolean isPass) {
-		this.isPass = isPass;
+	public String getJournal() {
+		return this.journal;
 	}
 
-	public Set getDownloadrecoders() {
-		return this.downloadrecoders;
+	@ManyToMany
+	@JoinTable(name = "keyworddoc", joinColumns = { @JoinColumn(name = "docId") }, inverseJoinColumns = { @JoinColumn(name = "keywordId") })
+	public Set<Keyword> getKeywords() {
+		return keywords;
 	}
 
-	public void setDownloadrecoders(Set downloadrecoders) {
-		this.downloadrecoders = downloadrecoders;
-	}
-
-	public Set getKeyworddocs() {
-		return this.keyworddocs;
-	}
-
-	public void setKeyworddocs(Set keyworddocs) {
-		this.keyworddocs = keyworddocs;
-	}
-
-	public Set getComments() {
-		return this.comments;
-	}
-
-	public void setComments(Set comments) {
-		this.comments = comments;
+	@Column(nullable = false)
+	public Integer getLanguage() {
+		return this.language;
 	}
 
 	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
 	public Integer getOriginalId() {
 		return originalId;
 	}
 
+	public String getPublishedTime() {
+		return this.publishedTime;
+	}
+
+	@Column(nullable = false)
+	public String getTitle() {
+		return this.title;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "typeId")
+	public Type getType() {
+		return this.type;
+	}
+
+	@Column(nullable = false)
+	public Timestamp getUploadTime() {
+		return this.uploadTime;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	public User getUser() {
+		return this.user;
+	}
+
+	public Float getVersion() {
+		return this.version;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public void setBrief(String brief) {
+		this.brief = brief;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public void setComments(Set<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public void setDocPath(String docPath) {
+		this.docPath = docPath;
+	}
+
+	public void setDownloadrecoders(Set<Downloadrecoder> downloadrecoders) {
+		this.downloadrecoders = downloadrecoders;
+	}
+
+	public void setDownloadTimes(Integer downloadTimes) {
+		this.downloadTimes = downloadTimes;
+	}
+
+	public void setFormat(String format) {
+		this.format = format;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setIsPass(Boolean isPass) {
+		this.isPass = isPass;
+	}
+
+	public void setJournal(String journal) {
+		this.journal = journal;
+	}
+
+	public void setKeywords(Set<Keyword> keywords) {
+		this.keywords = keywords;
+	}
+
+	public void setLanguage(Integer language) {
+		this.language = language;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
 	public void setOriginalId(Integer originalId) {
 		this.originalId = originalId;
+	}
+
+	public void setPublishedTime(String publishedTime) {
+		this.publishedTime = publishedTime;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public void setUploadTime(Timestamp uploadTime) {
+		this.uploadTime = uploadTime;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setVersion(Float version) {
+		this.version = version;
 	}
 
 }

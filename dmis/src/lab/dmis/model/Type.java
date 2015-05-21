@@ -3,81 +3,68 @@ package lab.dmis.model;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Type entity. @author MyEclipse Persistence Tools
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@Entity
+@org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class Type implements java.io.Serializable {
 
-	// Fields
+	private static final long serialVersionUID = 1L;
 
+	private Set<Doc> docs = new HashSet<Doc>();
 	private Integer id;
-	private String name;
 	private Integer level;
+	private String name;
 	private Integer parentId;
-	private Set docs = new HashSet(0);
 
-	// Constructors
-
-	/** default constructor */
-	public Type() {
+	@OneToMany(mappedBy = "type")
+	public Set<Doc> getDocs() {
+		return this.docs;
 	}
 
-	/** minimal constructor */
-	public Type(String name, Integer level, Integer parentId) {
-		this.name = name;
-		this.level = level;
-		this.parentId = parentId;
-	}
-
-	/** full constructor */
-	public Type(String name, Integer level, Integer parentId, Set docs) {
-		this.name = name;
-		this.level = level;
-		this.parentId = parentId;
-		this.docs = docs;
-	}
-
-	// Property accessors
-
+	@Id
+	@GeneratedValue
 	public Integer getId() {
 		return this.id;
+	}
+
+	@Column(nullable = false)
+	public Integer getLevel() {
+		return this.level;
+	}
+
+	@Column(nullable = false)
+	public String getName() {
+		return this.name;
+	}
+
+	@Column(nullable = false)
+	public Integer getParentId() {
+		return this.parentId;
+	}
+
+	public void setDocs(Set<Doc> docs) {
+		this.docs = docs;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getName() {
-		return this.name;
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public Integer getLevel() {
-		return this.level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
-	public Integer getParentId() {
-		return this.parentId;
-	}
-
 	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
-	}
-
-	public Set getDocs() {
-		return this.docs;
-	}
-
-	public void setDocs(Set docs) {
-		this.docs = docs;
 	}
 
 }

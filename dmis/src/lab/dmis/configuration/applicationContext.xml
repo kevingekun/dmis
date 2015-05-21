@@ -22,12 +22,23 @@
 	</bean>
 
 	<!-- 配置sessionFactory -->
-	<bean id="sessionFactory"
+	<!-- <bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"
-		p:dataSource-ref="dataSource">
-		<property name="mappingLocations">
+		p:dataSource-ref="dataSource"> -->
+	<bean id="sessionFactory"
+       class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+       p:dataSource-ref="dataSource">
+		<!-- <property name="mappingLocations"> -->
+		<property name="annotatedClasses">
 			<list>
-				<value>classpath:lab/dmis/configuration/hibernate/*.hbm.xml</value>
+				<!-- <value>classpath:lab/dmis/configuration/hibernate/*.hbm.xml</value> -->
+				<value>lab.dmis.model.Comment</value>
+				<value>lab.dmis.model.Doc</value>
+				<value>lab.dmis.model.Downloadrecoder</value>
+				<value>lab.dmis.model.Keyword</value>
+				<value>lab.dmis.model.Notice</value>
+				<value>lab.dmis.model.Type</value>
+				<value>lab.dmis.model.User</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
