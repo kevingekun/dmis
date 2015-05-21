@@ -63,13 +63,6 @@
             <column name="originalId" not-null="false"/>
         </property>
         
-        <set name="versionhistories" inverse="true" >
-            <key>
-                <column name="docId" not-null="true" />
-            </key>
-            <one-to-many class="lab.dmis.model.Versionhistory" />
-        </set>
-        
         <set name="downloadrecoders" inverse="true" >
             <key>
                 <column name="docId" not-null="true" />

@@ -41,13 +41,6 @@
         <property name="answer" type="java.lang.String">
             <column name="answer" not-null="false" />
         </property>
-        <set name="searchhistories" inverse="true" >
-            <key>
-                <column name="userId" not-null="true" />
-            </key>
-            <one-to-many class="lab.dmis.model.Searchhistory" />
-        </set>
-        
         <set name="downloadrecoders" inverse="true" >
             <key>
                 <column name="userId" not-null="true" />

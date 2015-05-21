@@ -30,71 +30,9 @@ public class Doc implements java.io.Serializable {
 	private Boolean isPass;
 	private Integer level;
 	private Integer originalId;
-	private Set versionhistories = new HashSet(0);
-	private Set favoriteses = new HashSet(0);
 	private Set downloadrecoders = new HashSet(0);
 	private Set keyworddocs = new HashSet(0);
 	private Set comments = new HashSet(0);
-
-	// Constructors
-
-	/** default constructor */
-	public Doc() {
-	}
-
-	/** minimal constructor */
-	public Doc(Type type, User user, String title, String author, String brief,
-			Timestamp uploadTime, Integer downloadTimes, String docPath,
-			Float version, String journal, String publishedTime,
-			String category, Integer language, String format, Boolean isPass) {
-		this.type = type;
-		this.user = user;
-		this.title = title;
-		this.author = author;
-		this.brief = brief;
-		this.uploadTime = uploadTime;
-		this.downloadTimes = downloadTimes;
-		this.docPath = docPath;
-		this.version = version;
-		this.journal = journal;
-		this.publishedTime = publishedTime;
-		this.category = category;
-		this.language = language;
-		this.format = format;
-		this.isPass = isPass;
-	}
-
-	/** full constructor */
-	public Doc(Type type, User user, String title, String author, String brief,
-			Timestamp uploadTime, Integer downloadTimes, String docPath,
-			Float version, String journal, String publishedTime,
-			String category, Integer language, String format, Boolean isPass,
-			Integer level, Set versionhistories, Set favoriteses,
-			Set downloadrecoders, Set keyworddocs, Set comments) {
-		this.type = type;
-		this.user = user;
-		this.title = title;
-		this.author = author;
-		this.brief = brief;
-		this.uploadTime = uploadTime;
-		this.downloadTimes = downloadTimes;
-		this.docPath = docPath;
-		this.version = version;
-		this.journal = journal;
-		this.publishedTime = publishedTime;
-		this.category = category;
-		this.language = language;
-		this.format = format;
-		this.isPass = isPass;
-		this.setLevel(level);
-		this.versionhistories = versionhistories;
-		this.favoriteses = favoriteses;
-		this.downloadrecoders = downloadrecoders;
-		this.keyworddocs = keyworddocs;
-		this.comments = comments;
-	}
-
-	// Property accessors
 
 	public String getFilename() {
 		String fileName = this.docPath
@@ -229,22 +167,6 @@ public class Doc implements java.io.Serializable {
 
 	public void setIsPass(Boolean isPass) {
 		this.isPass = isPass;
-	}
-
-	public Set getVersionhistories() {
-		return this.versionhistories;
-	}
-
-	public void setVersionhistories(Set versionhistories) {
-		this.versionhistories = versionhistories;
-	}
-
-	public Set getFavoriteses() {
-		return this.favoriteses;
-	}
-
-	public void setFavoriteses(Set favoriteses) {
-		this.favoriteses = favoriteses;
 	}
 
 	public Set getDownloadrecoders() {

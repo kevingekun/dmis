@@ -24,62 +24,9 @@ public class User implements java.io.Serializable {
 	private String answer;
 	private String verfi;
 	private String newPassword;
-	private Set searchhistories = new HashSet(0);
-	private Set favoriteses = new HashSet(0);
 	private Set downloadrecoders = new HashSet(0);
 	private Set docs = new HashSet(0);
 	private Set comments = new HashSet(0);
-
-	// Constructors
-
-	/** default constructor */
-	public User() {
-	}
-
-	/** minimal constructor */
-	public User(String name, String password, String phone, String email,
-			String qq, Boolean isForbidden, Integer role, Integer level,
-			String question, String answer, String newPassword, String verfi) {
-		this.name = name;
-		this.password = password;
-		this.phone = phone;
-		this.email = email;
-		this.qq = qq;
-		this.isForbidden = isForbidden;
-		this.role = role;
-		this.level = level;
-		this.question = question;
-		this.answer = answer;
-		this.newPassword = newPassword;
-		this.verfi = verfi;
-	}
-
-	/** full constructor */
-	public User(String name, String password, String phone, String email,
-			String qq, Boolean isForbidden, Integer role, Integer level,
-			String question, String answer, String newPassword, String verfi,
-			Set searchhistories, Set favoriteses, Set downloadrecoders,
-			Set docs, Set comments) {
-		this.name = name;
-		this.password = password;
-		this.phone = phone;
-		this.email = email;
-		this.qq = qq;
-		this.isForbidden = isForbidden;
-		this.role = role;
-		this.level = level;
-		this.question = question;
-		this.answer = answer;
-		this.newPassword = newPassword;
-		this.verfi = verfi;
-		this.searchhistories = searchhistories;
-		this.favoriteses = favoriteses;
-		this.downloadrecoders = downloadrecoders;
-		this.docs = docs;
-		this.comments = comments;
-	}
-
-	// Property accessors
 
 	public Integer getId() {
 		return this.id;
@@ -183,22 +130,6 @@ public class User implements java.io.Serializable {
 
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
-	}
-
-	public Set getSearchhistories() {
-		return this.searchhistories;
-	}
-
-	public void setSearchhistories(Set searchhistories) {
-		this.searchhistories = searchhistories;
-	}
-
-	public Set getFavoriteses() {
-		return this.favoriteses;
-	}
-
-	public void setFavoriteses(Set favoriteses) {
-		this.favoriteses = favoriteses;
 	}
 
 	public Set getDownloadrecoders() {
