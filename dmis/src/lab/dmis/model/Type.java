@@ -1,13 +1,9 @@
 package lab.dmis.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
@@ -15,16 +11,10 @@ public class Type implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Set<Doc> docs = new HashSet<Doc>();
 	private Integer id;
 	private Integer level;
 	private String name;
 	private Integer parentId;
-
-	@OneToMany(mappedBy = "type")
-	public Set<Doc> getDocs() {
-		return this.docs;
-	}
 
 	@Id
 	@GeneratedValue
@@ -45,10 +35,6 @@ public class Type implements java.io.Serializable {
 	@Column(nullable = false)
 	public Integer getParentId() {
 		return this.parentId;
-	}
-
-	public void setDocs(Set<Doc> docs) {
-		this.docs = docs;
 	}
 
 	public void setId(Integer id) {

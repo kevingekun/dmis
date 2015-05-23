@@ -29,6 +29,6 @@ public interface KeywordService extends BaseManager<Keyword, Integer> {
 
 	public void deleteByIds(String[] ids);// 批量删除
 
-	public Keyword findByName(String keywordName);// 根据Name查找
+	public List<Keyword> findByName(String keywordName);// 根据Name查找
 
 }

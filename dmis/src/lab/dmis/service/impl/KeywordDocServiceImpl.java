@@ -1,5 +1,7 @@
 package lab.dmis.service.impl;
 
+import java.util.List;
+
 import lab.common.service.impl.BaseManagerImpl;
 import lab.dmis.dao.KeywordDocDao;
 import lab.dmis.model.Keyworddoc;
@@ -19,4 +21,13 @@ public class KeywordDocServiceImpl extends BaseManagerImpl<Keyworddoc, Integer>
 	public void addKeywordDoc(Keyworddoc keyworddoc) {
 		keywordDocDao.save(keyworddoc);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Keyworddoc> findByKidDid(int kid, int did) {
+		String hql = "from Keyworddoc kd where kd.keyword=" + kid
+				+ " and kd.doc=" + did;
+		return keywordDocDao.find(hql);
+	}
+
 }

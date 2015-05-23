@@ -19,15 +19,15 @@
 <link rel="stylesheet" type="text/css" href="css/uniform.css" />
 <link rel="stylesheet" type="text/css" href="css/select2.css" />
 <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
+<link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 
 <script src="js/jquery.min.js" type="text/javascript"></script>
 </head>
 <body id="table1">
 	<input type="text" id="checkRadio" value="${state}"
 		style='display: none' />
-	<div class="mask" id="mask" style="display: none"></div>
+	<div id="mask" class="mask" style="display: none;background-color: rgb(40, 95, 108);"></div>
 	<div class="widget-box">
 		<div class="widget-title">
 			<h5>文档管理</h5>
@@ -42,8 +42,35 @@
 				<input type="radio" name="state" id="noPass" onClick="noPass();" />待审核
 			</div>
 		</div>
-		<!-- 文件上传表单开始 -->
-		<!-- 文件上传表单结束 -->
+		<!-- 绑定开始 -->
+		<div id="keyword_doc" style="display: none;" align="center">
+		<div id="keyword_doc_form_content" class="keyword_doc_form_content" style="display:none;">
+			<form id="test_keyword_doc">
+				<fieldset>
+					<legend>关联词条</legend>
+					<div class="form-row">
+						<div class="field-label_keyword_doc">
+							<label for="field1">词条名称：</label>:
+						</div>
+						<div class="field-widget">
+							<input name="keyword" id="keyword" class="required"
+								type="text" onblur="checkKeyword();"/>
+							<div class="validation-advice" id="advice-required-field2"
+								style="display: none;">required field.</div>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="field-widget-confirm_keyword_doc">
+							<input id="btn_keyword_doc" type="button" class="submit" value="确定" /> 
+							<input id="cancleFile_keyword_doc" type="button" class="cancle_keyword_doc" value="取消" /> 
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		</div>
+		<!-- 绑定结束 -->
 		<div class="widget-content ">
 			<s:form name="form2" id="form2" method="post">
 				<table class="table table-bordered table-striped with-check">
@@ -57,8 +84,8 @@
 							<th style="width: 100px;">类型</th>
 							<th style="width: 100px;">上传人</th>
 							<th style="width: 100px;">上传时间</th>
-							<th style="width: 100px;">是否通过</th>
-							<th style="width: 100px;">操作</th>
+							<th style="width: 70px;">是否通过</th>
+							<th style="width: 130px;">操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -83,6 +110,7 @@
 								<td><a class="btn btn-mini gray" id="updateDoc"
 								      href="Doc/delete?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">
 								                     删除</a> 
+								    <input name="<s:property value="id"/>" value="关联词条" type="button" class="btn btn-mini blue" onclick="bindKeywordClick(<s:property value="id"/>)"/>
 								<s:if test="!isPass">
 									<a class="btn btn-mini green"
 									  href="Doc/passDoc.action?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">
@@ -147,6 +175,76 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+		var docId;
+		var keywordId;
+		var value_keyword=false;
+		function bindKeywordClick(did){
+			docId = did;
+			$("#mask").slideDown("fast");
+			$("#keyword_doc").fadeIn("slow");
+			$("#keyword_doc_form_content").fadeIn("slow");
+		}
+		$("#cancleFile_keyword_doc").click(function(){
+			cancleFile_keyword_doc();
+		});
+		function cancleFile_keyword_doc(){
+			$("#keyword_doc").fadeOut("slow");
+			$("#keyword_doc_form_content").fadeOut("slow");
+			$("#mask").slideUp("fast");
+		}
+		function checkKeyword(){
+			var keyword = $("#keyword").val();
+			if(!keyword){
+				$("#keyword")[0].className = "required validation-failed";
+				$("#advice-required-field2")[0].innerHTML="不为空！";
+				$("#advice-required-field2").removeAttr("style");
+				return false;
+			}else{
+				$.ajax({
+					type:'GET',
+					async : false,
+					url:"Keyword/checkKeywordByName?k="+keyword,
+					success:function(result){
+						if(result == "noKeyword"){
+							$("#keyword")[0].className = "required validation-failed";
+							$("#advice-required-field2")[0].innerHTML="不存在！";
+							$("#advice-required-field2").removeAttr("style");
+							value_keyword = false;
+						}else{
+							$("#keyword")[0].className = "required";
+							$("#advice-required-field2").attr("style","display:none;");
+							keywordId = result;
+							value_keyword = true;
+						}
+					},
+					error:function(){
+						alert("errooor");
+						value_keyword = false;
+					}
+				});
+				return value_keyword;
+			}
+		}
+		$("#btn_keyword_doc").click(function(){
+			if(checkKeyword()){
+				$.ajax({
+					type:"post",
+					async : false,
+					url:"Keyword/bindDoc?keywordid="+keywordId+"&docid="+docId,
+					success:function(result){
+						if(result=="success"){
+							alert("绑定成功！");
+							cancleFile_keyword_doc();
+						}if(result=="repeat"){
+							alert("重复绑定！");
+						}
+					},
+					error:function(){
+						alert("出错啦，抢修中。。。。");
+					}
+				});
+			}
+		});
 		$(function() {
 			var state = $('#checkRadio').val();
 			if (state == 2)

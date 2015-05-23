@@ -128,8 +128,10 @@ public class KeywordServiceImpl extends BaseManagerImpl<Keyword, Integer>
 		return keywordDao.find(hql);
 	}
 
-	public Keyword findByName(String keywordName) {
-		return keywordDao.findByName(keywordName);
+	@SuppressWarnings("unchecked")
+	public List<Keyword> findByName(String keywordName) {
+		String hql = "from Keyword k where k.keyword=" + keywordName;
+		return keywordDao.find(hql);
 	}
 
 	public void deleteByIds(String[] ids) {

@@ -1,18 +1,13 @@
 package lab.dmis.model;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
@@ -23,15 +18,16 @@ public class Doc implements java.io.Serializable {
 	private String author;
 	private String brief;
 	private String category;
-	private Set<Comment> comments = new HashSet<Comment>();
+	// private Set<Comment> comments = new HashSet<Comment>();
 	private String docPath;
-	private Set<Downloadrecoder> downloadrecoders = new HashSet<Downloadrecoder>();
+	// private Set<Downloadrecoder> downloadrecoders = new
+	// HashSet<Downloadrecoder>();
 	private Integer downloadTimes;
 	private String format;
 	private Integer id;
 	private Boolean isPass;
 	private String journal;
-	private Set<Keyword> keywords = new HashSet<Keyword>();
+	// private Set<Keyworddoc> kds = new HashSet<Keyworddoc>();
 	private Integer language;
 	private Integer level;
 	private Integer originalId;
@@ -41,13 +37,6 @@ public class Doc implements java.io.Serializable {
 	private Timestamp uploadTime;
 	private User user;
 	private Float version;
-
-	/*
-	 * public String getFilename() { String fileName = this.docPath
-	 * .substring(this.docPath.lastIndexOf("/") + 1);
-	 * 
-	 * return fileName; }
-	 */
 
 	public String getAuthor() {
 		return this.author;
@@ -61,20 +50,27 @@ public class Doc implements java.io.Serializable {
 		return this.category;
 	}
 
-	@OneToMany(mappedBy = "doc")
-	public Set<Comment> getComments() {
-		return this.comments;
-	}
+	/*
+	 * @OneToMany(mappedBy = "doc") public Set<Comment> getComments() { return
+	 * this.comments; }
+	 */
+
+	/*
+	 * public String getFilename() { String fileName = this.docPath
+	 * .substring(this.docPath.lastIndexOf("/") + 1);
+	 * 
+	 * return fileName; }
+	 */
 
 	@Column(nullable = false)
 	public String getDocPath() {
 		return this.docPath;
 	}
 
-	@OneToMany(mappedBy = "doc")
-	public Set<Downloadrecoder> getDownloadrecoders() {
-		return this.downloadrecoders;
-	}
+	/*
+	 * @OneToMany(mappedBy = "doc") public Set<Downloadrecoder>
+	 * getDownloadrecoders() { return this.downloadrecoders; }
+	 */
 
 	public Integer getDownloadTimes() {
 		return this.downloadTimes;
@@ -99,11 +95,10 @@ public class Doc implements java.io.Serializable {
 		return this.journal;
 	}
 
-	@ManyToMany
-	@JoinTable(name = "keyworddoc", joinColumns = { @JoinColumn(name = "docId") }, inverseJoinColumns = { @JoinColumn(name = "keywordId") })
-	public Set<Keyword> getKeywords() {
-		return keywords;
-	}
+	/*
+	 * @OneToMany(mappedBy = "doc") public Set<Keyworddoc> getKds() { return
+	 * kds; }
+	 */
 
 	@Column(nullable = false)
 	public Integer getLanguage() {
@@ -160,17 +155,19 @@ public class Doc implements java.io.Serializable {
 		this.category = category;
 	}
 
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
-	}
+	/*
+	 * public void setComments(Set<Comment> comments) { this.comments =
+	 * comments; }
+	 */
 
 	public void setDocPath(String docPath) {
 		this.docPath = docPath;
 	}
 
-	public void setDownloadrecoders(Set<Downloadrecoder> downloadrecoders) {
-		this.downloadrecoders = downloadrecoders;
-	}
+	/*
+	 * public void setDownloadrecoders(Set<Downloadrecoder> downloadrecoders) {
+	 * this.downloadrecoders = downloadrecoders; }
+	 */
 
 	public void setDownloadTimes(Integer downloadTimes) {
 		this.downloadTimes = downloadTimes;
@@ -192,9 +189,9 @@ public class Doc implements java.io.Serializable {
 		this.journal = journal;
 	}
 
-	public void setKeywords(Set<Keyword> keywords) {
-		this.keywords = keywords;
-	}
+	/*
+	 * public void setKds(Set<Keyworddoc> kds) { this.kds = kds; }
+	 */
 
 	public void setLanguage(Integer language) {
 		this.language = language;

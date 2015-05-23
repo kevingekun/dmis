@@ -15,8 +15,15 @@
 
 .keyword_form_content {
 	width: 800px;
-	height: 485px;
+	height: 442px;
 	margin: 10px auto;
+	padding: 10px;
+	background: url(../../images/forms/form_top_bg.gif) repeat-x top #fff;
+}
+.keyword_doc_form_content {
+	width: 400px;
+	height: 130px;
+	margin: 100px auto;
 	padding: 10px;
 	background: url(../../images/forms/form_top_bg.gif) repeat-x top #fff;
 }
@@ -45,6 +52,12 @@
 	z-index: 90;
 	position: absolute;
 	left: 13%;
+	top: -10;
+}
+#keyword_doc {
+	z-index: 90;
+	position: absolute;
+	left: 33%;
 	top: -10;
 }
 #notice_add {
@@ -126,6 +139,12 @@ legend.optional {
 	float: left;
 	line-height: 25px;
 }
+.field-label_keyword_doc {
+	width: 76px;
+	float: left;
+	margin-left:10px;
+	line-height: 25px;
+}
 .field-label_notice {
 	width: 50px;
 	float: left;
@@ -170,6 +189,10 @@ label.left {
 	float: left;
 	margin-left: 240px;
 }
+.field-widget-confirm_keyword_doc {
+	float: left;
+	margin-left: 250px;
+}
 .field-widget-confirm_notice {
 	float: left;
 	margin-left: 240px;
@@ -184,9 +207,17 @@ label.left {
 	margin-left: 75px;
 	margin-top: 20px;
 }
-input.required {
-	width: 300px;
+#keyworddocid{
+	width: 50px;
 	height: 22px;
+}
+#keyword{
+	width: 150px;
+	height: 22px;
+}
+input.required {
+	/* width: 300px;
+	height: 22px; */
 	border: 1px solid #95E0EF;
 	background-color: #f3fcfe;
 	border-left-width: 2px;
@@ -255,6 +286,15 @@ input.cancle {
 	padding: 2px 5px 2px 5px;
 	border: none;
 	margin-left: 70px;
+}
+
+input.cancle_keyword_doc {
+	color: #FFFFFF;
+	background-color: #b6bbc0;
+	cursor: pointer;
+	padding: 2px 5px 2px 5px;
+	border: none;
+	margin-left: 10px;
 }
 
 input.validation-failed,textarea.validation-failed,select.validation-failed,input.file-class-failed

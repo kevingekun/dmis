@@ -39,7 +39,7 @@ public class KeywordDaoImpl extends BaseDAOImpl<Keyword, Integer> implements
 
 	@Override
 	public Keyword findByName(String keyword) {
-		String hql = "from Keyword where keyword=? order by commitTime desc";
+		String hql = "from Keyword where keyword=?";
 		List<Keyword> list = find(hql, keyword);
 		return list.get(0);
 

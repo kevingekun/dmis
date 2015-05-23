@@ -61,19 +61,6 @@
 								style="display: none;">required field.</div>
 						</div>
 					</div>
-					<div class="form-row">
-						<div class="field-label_keyword">
-							<label for="field1">关联文档ID</label>:
-						</div>
-						<div class="field-widget">
-							<input name="docid" id="keyworddocid" value="0" class="required"
-								type="text" onblur="checkdocid();"/>
-							<div class="validation-advice" id="advice-required-field2"
-								style="display: none;">required field.</div>
-						</div>
-					</div>
-					
-
 					<div class="form-row_keyword">
 						<div class="controls">
 						<textarea id="con" name="keyword.content" cols="20" rows="2"
@@ -91,6 +78,33 @@
 							<input id="btn" type="button" class="submit" value="确定" /> 
 							<input type="reset" class="reset" value="重置" />
 							<input id="cancleFile" type="button" class="cancle" value="取消" /> 
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		</div>
+		<div id="keyword_doc" style="display: none;" align="center">
+		<div id="keyword_doc_form_content" class="keyword_doc_form_content" style="display:none;">
+			<form id="test_keyword_doc">
+				<fieldset>
+					<legend>关联文档</legend>
+					<div class="form-row">
+						<div class="field-label_keyword_doc">
+							<label for="field1">关联文档ID</label>:
+						</div>
+						<div class="field-widget">
+							<input name="docid" id="keyworddocid" class="required"
+								type="text" onblur="checkdocid();"/>
+							<div class="validation-advice" id="advice-required-field2"
+								style="display: none;">required field.</div>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="field-widget-confirm_keyword_doc">
+							<input id="btn_keyword_doc" type="button" class="submit" value="确定" /> 
+							<input id="cancleFile_keyword_doc" type="button" class="cancle_keyword_doc" value="取消" /> 
 						</div>
 					</div>
 				</fieldset>
@@ -141,10 +155,10 @@
 							<input type="hidden" id="checkselect" value="false"></th>
 							<th style="width: 30px;">编号</th>
 							<th style="width: 120px;">知识名</th>
-							<th style="width: 340px;">内容</th>
-							<th style="width: 120px;">提交时间</th>
+							<th style="width: 300px;">内容</th>
+							<th style="width: 100px;">提交时间</th>
 							<th style="width: 60px;">是否通过</th>
-							<th style="width: 110px;">操作</th>
+							<th style="width: 160px;">操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -168,6 +182,7 @@
 								</s:else>
 								<td><a class="btn btn-mini gray"
 									href="Keyword/delete?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">删除</a>
+									<input name="<s:property value="id"/>" value="关联文档" type="button" class="btn btn-mini orange" onclick="bindDocClick(<s:property value="id"/>)"/>
 									<s:if test="!isPass">
 										<a class="btn btn-mini green"
 											href="Keyword/passKeyword?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">通过</a>
@@ -230,9 +245,24 @@
 		</div>
 	</div>
 	<script type="text/javascript">
+	var value_keyword = false;
+	var value_docid = false;
+	var keywordId;
 		$("#addkeyword").click(function() {
 			$("#mask").slideDown("fast",slidedown);
 		});
+		/* $("#bindDoc").click(function() {
+			keywordId = $("#bindDoc")[0].name;
+			$("#mask").slideDown("fast");
+			$("#keyword_doc").fadeIn("slow");
+			$("#keyword_doc_form_content").fadeIn("slow");
+		}); */
+		function bindDocClick(kid){
+			keywordId = kid;
+			$("#mask").slideDown("fast");
+			$("#keyword_doc").fadeIn("slow");
+			$("#keyword_doc_form_content").fadeIn("slow");
+		}
 		function slidedown(){
 			$("#keyword_add").fadeIn("slow");
 			$("#keyword_form_content").fadeIn("slow");
@@ -250,8 +280,17 @@
 			$("#keywordcheck_form_content").fadeOut("slow");
 			$("#mask").slideUp("fast");
 		});
+		$("#cancleFile_keyword_doc").click(function(){
+			cancleFile_keyword_doc();
+		});
+		function cancleFile_keyword_doc(){
+			$("#keyword_doc").fadeOut("slow");
+			$("#keyword_doc_form_content").fadeOut("slow");
+			$("#mask").slideUp("fast");
+		}
 		function checkKeyword() {
 			var keyword = $("#keyword").val();
+			var k = keyword;
 			keyword2 = keyword.replace(/\s+/g, "");
 			if (keyword2.length == 0) {
 				$("#keyword")[0].className = "required validation-failed";
@@ -265,47 +304,63 @@
 					$("#advice-required-field1").removeAttr("style");
 					return false;
 				} else {
-					$("#keyword")[0].className = "required";
-					$("#advice-required-field1").attr("style","display:none;");
-					return true;
+					$.ajax({
+						type:'GET',
+						url:"Keyword/checkKeywordByName?k="+k,
+						async : false,
+						success:function(result){
+							if(result == "false"){
+								$("#keyword")[0].className = "required validation-failed";
+								$("#advice-required-field1")[0].innerHTML="已存在！";
+								$("#advice-required-field1").removeAttr("style");
+								value_keyword = false;
+							}else if(result == "true"){
+								$("#keyword")[0].className = "required";
+								$("#advice-required-field1").attr("style","display:none;");
+								value_keyword = true;
+							}
+						},
+						error:function(){
+							alert("嗯，出了点问题，程序猿正在抢修...");
+							value_keyword = false;
+						}
+					});
+					return value_keyword;
 				};
 			};
 		}
 		function checkdocid(){
 			var id = $("#keyworddocid").val();
-			if(id!=null){
-				var reg=new RegExp("[1-9]+");
-				if(!reg.test(id)){
-					$("#keyworddocid")[0].className = "required validation-failed";
-					$("#advice-required-field2")[0].innerHTML="数字id！";
-					$("#advice-required-field2").removeAttr("style");
-					return false;
-				}else{
-					$.ajax({
-						type:'GET',
-						url:"Doc/searchByid?id="+id,
-						success:function(result){
-							if(result == "success"){
-								$("#keyworddocid")[0].className = "required";
-								$("#advice-required-field2").attr("style","display:none;");
-								return true;
-							}else {
-								$("#keyworddocid")[0].className = "required validation-failed";
-								$("#advice-required-field2")[0].innerHTML="id不存在！";
-								$("#advice-required-field2").removeAttr("style");
-								return false;
-							};
-						},
-						error:function(){
-							alert("errooor");
-							return false;
-						}
-					});
-				}
+			var reg=new RegExp("[1-9]+");
+			if(!reg.test(id)){
+				$("#keyworddocid")[0].className = "required validation-failed";
+				$("#advice-required-field2")[0].innerHTML="数字id！";
+				$("#advice-required-field2").removeAttr("style");
+				return false;
 			}else{
-				return true;
+				$.ajax({
+					type:'GET',
+					async : false,
+					url:"Doc/searchByid?id="+id,
+					success:function(result){
+						if(result == "success"){
+							$("#keyworddocid")[0].className = "required";
+							$("#advice-required-field2").attr("style","display:none;");
+							value_docid = true;
+						}else {
+							$("#keyworddocid")[0].className = "required validation-failed";
+							$("#advice-required-field2")[0].innerHTML="id不存在！";
+							$("#advice-required-field2").removeAttr("style");
+							value_docid = false;
+						};
+					},
+					error:function(){
+						alert("errooor");
+						value_docid = false;
+					}
+				});
+				return value_docid;
 			}
-			
 		}
 		function checkContent() {
 			var str=ckeditor.document.getBody().getText();
@@ -322,7 +377,7 @@
 				url:"Keyword/checkKeyword?id="+id,
 				success:function(jsonData){
 					var data = eval(jsonData);
-	      			$("#keyword2")[0].value=data[0].title;
+	      			$("#keyword2")[0].value=data[0].keyword;
 	      			ckeditor2.setData(data[0].content);//编辑器内容填充
 				},
 				error:function(){
@@ -336,6 +391,27 @@
 		$("#btn").click(function(){
 			if(checkKeyword()&&checkContent()){
 				$("#test").submit();
+			}
+		});
+		$("#btn_keyword_doc").click(function(){
+			if(checkdocid()){
+				var docId = $("#keyworddocid").val();
+				$.ajax({
+					type:"post",
+					async : false,
+					url:"Keyword/bindDoc?keywordid="+keywordId+"&docid="+docId,
+					success:function(result){
+						if(result=="success"){
+							alert("绑定成功！");
+							cancleFile_keyword_doc();
+						}if(result=="repeat"){
+							alert("重复绑定！");
+						}
+					},
+					error:function(){
+						alert("出错啦，抢修中。。。。");
+					}
+				});
 			}
 		});
 		$(function() {

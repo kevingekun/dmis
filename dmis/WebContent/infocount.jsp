@@ -37,9 +37,4 @@
 </body>
 <script src="js/echarts/build/dist/echarts-all.js"></script>
 <script src="js/echarts/chart.js"></script>
-<script type="text/javascript">
-
-
-</script>
-
 </html>

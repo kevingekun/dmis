@@ -1,14 +1,9 @@
 package lab.dmis.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 @Entity
@@ -18,9 +13,10 @@ public class User implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String answer;
-	private Set<Comment> comments = new HashSet<Comment>();
-	private Set<Doc> docs = new HashSet<Doc>();
-	private Set<Downloadrecoder> downloadrecoders = new HashSet<Downloadrecoder>();
+	// private Set<Comment> comments = new HashSet<Comment>();
+	// private Set<Doc> docs = new HashSet<Doc>();
+	// private Set<Downloadrecoder> downloadrecoders = new
+	// HashSet<Downloadrecoder>();
 	private String email;
 	private Integer id;
 	private Boolean isForbidden;
@@ -38,21 +34,18 @@ public class User implements java.io.Serializable {
 		return this.answer;
 	}
 
-	@OneToMany(mappedBy = "user")
-	public Set<Comment> getComments() {
-		return this.comments;
-	}
-
-	@OneToMany(mappedBy = "user")
-	public Set<Doc> getDocs() {
-		return this.docs;
-	}
-
-	@OneToMany
-	@JoinColumn(name = "userId")
-	public Set<Downloadrecoder> getDownloadrecoders() {
-		return this.downloadrecoders;
-	}
+	/*
+	 * @OneToMany(mappedBy = "user") public Set<Comment> getComments() { return
+	 * this.comments; }
+	 * 
+	 * @OneToMany(mappedBy = "user") public Set<Doc> getDocs() { return
+	 * this.docs; }
+	 * 
+	 * @OneToMany
+	 * 
+	 * @JoinColumn(name = "userId") public Set<Downloadrecoder>
+	 * getDownloadrecoders() { return this.downloadrecoders; }
+	 */
 
 	public String getEmail() {
 		return this.email;
@@ -112,17 +105,15 @@ public class User implements java.io.Serializable {
 		this.answer = answer;
 	}
 
-	public void setComments(Set<Comment> comments) {
-		this.comments = comments;
-	}
-
-	public void setDocs(Set<Doc> docs) {
-		this.docs = docs;
-	}
-
-	public void setDownloadrecoders(Set<Downloadrecoder> downloadrecoders) {
-		this.downloadrecoders = downloadrecoders;
-	}
+	/*
+	 * public void setComments(Set<Comment> comments) { this.comments =
+	 * comments; }
+	 * 
+	 * public void setDocs(Set<Doc> docs) { this.docs = docs; }
+	 * 
+	 * public void setDownloadrecoders(Set<Downloadrecoder> downloadrecoders) {
+	 * this.downloadrecoders = downloadrecoders; }
+	 */
 
 	public void setEmail(String email) {
 		this.email = email;

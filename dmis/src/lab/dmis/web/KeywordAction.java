@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import lab.common.web.BaseAction;
 import lab.dmis.model.Doc;
@@ -28,7 +26,6 @@ public class KeywordAction extends BaseAction {
 	private DocService docService;
 	@Autowired
 	private KeywordDocService keywordDocService;
-	private Doc doc;
 	private Keyword keyword;
 	private int pageNo = 1;
 	private int pageContSize = 8;
@@ -150,7 +147,7 @@ public class KeywordAction extends BaseAction {
 		keyWord.setId(keywordId);
 		Keyword temp = new Keyword();
 		List<Keyword> keywordList = new ArrayList<Keyword>();
-		Set docList = new HashSet<Doc>();
+		// Set<Doc> docList = new HashSet<Doc>();
 		temp = keywordService.QueryById(keyWord);
 		keywordList = keywordService.QueryLikeName(temp);
 
@@ -174,33 +171,57 @@ public class KeywordAction extends BaseAction {
 	}
 
 	/**
+	 * 检查词条名是否存在
+	 * 
+	 * @throws IOException
+	 */
+	public void checkKeywordByName() throws IOException {
+		String name = getParameter("k");
+		List<Keyword> list = keywordService.findByName(name);
+		if (list.size() == 0) {
+			out().print("noKeyword");
+		} else {
+			out().print(list.get(0).getId());
+		}
+	}
+
+	/**
 	 * addkeyword
 	 * 
 	 * @return
 	 */
 	public String addKeyword() {
 		keyword.setCommitTime(new Timestamp(new Date().getTime()));
-		// String data = getParameter("keyword.content");
-		// System.out.println(data);
-		keywordService.addKeyword(keyword);
-
-		String id = getParameter("docid");
-		// System.err.println("docid:" + id);
-		if (!id.equals("0")) {
-			// System.err.println("kkk:" + id);
-			int docid = Integer.parseInt(id);
-			doc = docService.findById(docid).get(0);
-			// System.err.println(doc);
-			int keywordid = keywordService.findByName(keyword.getKeyword())
-					.getId();
-			keyword = keywordService.findById(keywordid).get(0);
-			// System.err.println(keyword);
-			Keyworddoc keyworddoc = new Keyworddoc();
-			keyworddoc.setKeyword(keyword);
-			keyworddoc.setDoc(doc);
-			keywordDocService.addKeywordDoc(keyworddoc);
+		if (keywordService.findByName(keyword.getKeyword()).size() == 0) {
+			keywordService.addKeyword(keyword);
+			return "save_success";
+		} else {
+			return "error";
 		}
-		return "save_success";
+
+	}
+
+	/**
+	 * 绑定文档
+	 * 
+	 * @throws IOException
+	 */
+	public void bindDoc() throws IOException {
+		int docId = Integer.parseInt(getParameter("docid"));
+		int keywordId = Integer.parseInt(getParameter("keywordid"));
+		if (keywordDocService.findByKidDid(keywordId, docId).size() == 0) {
+			Keyworddoc kd = new Keyworddoc();
+			Doc d = new Doc();
+			d.setId(docId);
+			Keyword k = new Keyword();
+			k.setId(keywordId);
+			kd.setDoc(d);
+			kd.setKeyword(k);
+			keywordDocService.addKeywordDoc(kd);
+			out().print("success");
+		} else {
+			out().print("repeat");
+		}
 	}
 
 	/**

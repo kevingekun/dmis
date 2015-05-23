@@ -1,14 +1,11 @@
 package lab.dmis.model;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
@@ -18,9 +15,9 @@ public class Keyword implements java.io.Serializable {
 
 	private Timestamp commitTime;
 	private String content;
-	private Set<Doc> docs = new HashSet<Doc>();
 	private Integer id;
 	private Boolean isPass;
+	// private Set<Keyworddoc> kds = new HashSet<Keyworddoc>();
 	private String keyword;
 	private Timestamp passTime;
 
@@ -34,11 +31,6 @@ public class Keyword implements java.io.Serializable {
 		return this.content;
 	}
 
-	@ManyToMany(mappedBy = "keywords")
-	public Set<Doc> getDocs() {
-		return docs;
-	}
-
 	@Id
 	@GeneratedValue
 	public Integer getId() {
@@ -48,6 +40,11 @@ public class Keyword implements java.io.Serializable {
 	public Boolean getIsPass() {
 		return this.isPass;
 	}
+
+	/*
+	 * @OneToMany(mappedBy = "keyword") public Set<Keyworddoc> getKds() { return
+	 * kds; }
+	 */
 
 	@Column(nullable = false)
 	public String getKeyword() {
@@ -66,10 +63,6 @@ public class Keyword implements java.io.Serializable {
 		this.content = content;
 	}
 
-	public void setDocs(Set<Doc> docs) {
-		this.docs = docs;
-	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -77,6 +70,10 @@ public class Keyword implements java.io.Serializable {
 	public void setIsPass(Boolean isPass) {
 		this.isPass = isPass;
 	}
+
+	/*
+	 * public void setKds(Set<Keyworddoc> kds) { this.kds = kds; }
+	 */
 
 	public void setKeyword(String keyword) {
 		this.keyword = keyword;
