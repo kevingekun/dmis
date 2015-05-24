@@ -21,9 +21,11 @@
 <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
+<link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 
 </head>
 <body id="table1">
+	<div id="mask" class="mask" style="display: none;background-color: rgb(40, 95, 108);"></div>
 	<input type="text" id="checkRadio" value="${state}"
 		style='display: none' />
 	<div class="mask" style="display: none"></div>
@@ -31,16 +33,43 @@
 		<div class="widget-title">
 			<h5>评论管理(根据用户评论管理文献)</h5>
 			<div class="widget-radio">
-
-				<input type="radio" name="state" id="listByhaveHandled3"
-					onClick="listByhaveHandled3();" />已重传 <input type="radio"
-					name="state" id="listByhaveHandled0"
-					onClick="listByhaveHandled0();" />待审核 <input type="radio"
-					name="state" id="listByhaveHandled1"
-					onClick="listByhaveHandled1();" />已同意 <input type="radio"
-					name="state" id="listByhaveHandled2"
+				<input type="radio" name="state" id="listByhaveHandled0"
+					onClick="listByhaveHandled0();" />待审核 
+				<input type="radio" name="state" id="listByhaveHandled1"
+					onClick="listByhaveHandled1();" />已同意 
+				<input type="radio" name="state" id="listByhaveHandled2"
 					onClick="listByhaveHandled2();" />已拒绝
 			</div>
+		</div>
+		<div id="comment_check" style="display: none;" align="center">
+		<div id="commentcheck_form_content" class="comment_form_content" style="display:none;">
+			<form>
+				<fieldset>
+					<legend>查看  评论</legend>
+					<div class="form-row">
+						<div class="field-label_comment">
+							<label for="field1">文章标题</label>:
+						</div>
+						<div class="field-widget">
+							<input id="docTitle" class="required" type="text"/>
+						</div>
+					</div>
+					<div class="form-row_comment">
+						<div class="field-label_comment">
+							<label for="field1">评论内容</label>:
+						</div>
+						<div class="controls">
+						<textarea id="comment_textarea" cols="20" rows="2"></textarea>
+					</div>
+					</div>
+					<div class="form-row">
+						<div class="field-widget-confirm_comment" style="margin-left: 167px;">
+							<input id="cancle" type="button" class="reset" value="关闭" />
+						</div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
 		</div>
 		<div class="widget-content nopadding">
 			<s:form name="form2" id="form2" method="post">
@@ -50,7 +79,7 @@
 							<th style="width: 30px;">编号</th>
 							<th style="width: 130px;">评论的文章</th>
 							<th style="width: 300px;">评论内容</th>
-							<th style="width: 50px;">申请修改次数</th>
+							<th style="width: 80px;">发表评论的用户</th>
 							<th style="width: 80px;">操作</th>
 
 						</tr>
@@ -61,16 +90,16 @@
 							<tr id='<s:property value="id" />'>
 								<td><s:property value="id" /></td>
 								<td><a
-									href='Doc/hrefsearch?docId=<s:property value="doc.id" />'><s:property
+									href='Doc/reading?id=<s:property value="doc.id" />'><s:property
 											value="doc.title" /></a></td>
-								<td><s:property value="content" /></td>
-								<td><s:property value="numOfApplications" /></td>
+								<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+									<a style="cursor:hand;text-decoration:none;" onclick="commentCheck(<s:property value="id"/>)">
+									<s:property value="content" /></a></td>
+								<td><s:property value="user.name" /></td>
 								<td><s:if test="%{haveHandled != 1 && haveHandled != 3}">
 										<a class="btn btn-mini green" onclick="process(<s:property value="id"/>,1)">同意</a>
-									</s:if> <s:if test="%{haveHandled == 1}">
-										<a href="#myModal" class="btn btn-mini green"
-											data-toggle="modal" onclick='javascript:$("#curVersion").html(<s:property value="doc.version" />);$("#docId").val(<s:property value="doc.id" />);$("#commentId").val(<s:property value="id" />)'>重传</a>
-									</s:if> <s:if test="%{haveHandled == 0 || haveHandled == 1}">
+									</s:if>
+									<s:if test="%{haveHandled == 0 || haveHandled == 1}">
 										<a class="btn btn-mini gray" onclick="process(<s:property value="id"/>,2)">拒绝</a>
 									</s:if></td>
 							</tr>
@@ -194,14 +223,30 @@
 				$('#listByhaveHandled1').attr("checked", "checked");
 			} else if (state == 2) {
 				$('#listByhaveHandled2').attr("checked", "checked");
-			} else {
-				$('#listByhaveHandled3').attr("checked", "checked");
 			}
 		});
-
-		function listByhaveHandled3() {
-			location.href = "Comment/listByhaveHandled?haveHandled=3";
+		function commentCheck(id){
+			$.ajax({
+				type:'GET',
+				url:"Comment/checkComment?id="+id,
+				success:function(jsonData){
+					var data = eval(jsonData);
+	      			$("#docTitle")[0].value=data[0].doc.title;
+	      			$("#comment_textarea")[0].value=data[0].content;
+				},
+				error:function(){
+					alert("errooor");
+				}
+			});
+			$("#mask").slideDown("fast");
+			$("#comment_check").fadeIn("slow");
+			$("#commentcheck_form_content").fadeIn("slow");
 		}
+		$("#cancle").click(function(){
+			$("#comment_check").fadeOut("slow");
+			$("#commentcheck_form_content").fadeOut("slow");
+			$("#mask").slideUp("fast");
+		});
 		function listByhaveHandled0() {
 			location.href = "Comment/listByhaveHandled?haveHandled=0";
 		}
@@ -215,7 +260,7 @@
 		//同意或拒绝处理
 		function process(commentId,haveHandled){
 			$.get("Comment/alterHaveHandled?haveHandled=" + haveHandled +"&commentId="+commentId, function(data){
-				if(data.tip=="success"){
+				if(data=="success"){
 					$("tr").remove("#" + commentId);
 				}else{
 					alert("失败");

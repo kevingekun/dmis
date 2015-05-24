@@ -19,10 +19,8 @@ public class Comment implements java.io.Serializable {
 	private Doc doc;
 	private Integer haveHandled;
 	private Integer id;
-	private Integer numOfApplications;
 	private Timestamp time;
 	private User user;
-	private String usersOfApplications;
 
 	/*
 	 * public String getDate() { DateFormat sdf = new
@@ -54,10 +52,6 @@ public class Comment implements java.io.Serializable {
 		return this.id;
 	}
 
-	public Integer getNumOfApplications() {
-		return numOfApplications;
-	}
-
 	@Column(nullable = false)
 	public Timestamp getTime() {
 		return this.time;
@@ -67,10 +61,6 @@ public class Comment implements java.io.Serializable {
 	@JoinColumn(name = "userId")
 	public User getUser() {
 		return this.user;
-	}
-
-	public String getUsersOfApplications() {
-		return usersOfApplications;
 	}
 
 	public void setContent(String content) {
@@ -89,20 +79,12 @@ public class Comment implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public void setNumOfApplications(Integer numOfApplications) {
-		this.numOfApplications = numOfApplications;
-	}
-
 	public void setTime(Timestamp time) {
 		this.time = time;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public void setUsersOfApplications(String usersOfApplications) {
-		this.usersOfApplications = usersOfApplications;
 	}
 
 }

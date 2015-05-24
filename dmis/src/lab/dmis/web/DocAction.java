@@ -12,7 +12,6 @@ import java.util.List;
 import lab.common.model.Page;
 import lab.common.util.Common;
 import lab.common.web.BaseAction;
-import lab.dmis.model.Comment;
 import lab.dmis.model.Doc;
 import lab.dmis.model.Type;
 import lab.dmis.model.User;
@@ -128,57 +127,6 @@ public class DocAction extends BaseAction {
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-	// 根据评论修改后重新上传文件
-	public String reUploadDoc() throws IOException {
-		Comment comment = commentService.findById(Integer
-				.parseInt(getParameter("commentId")));
-		System.err.println(comment);
-		comment.setHaveHandled(3);
-		Doc d = docService.findById(doc.getId()).get(0);
-
-		Doc docSave = new Doc();
-		docSave.setVersion(doc.getVersion());
-		docSave.setLanguage(doc.getLanguage());
-		docSave.setUploadTime(Common.getTimestampTime(0));
-
-		String realpath = ServletActionContext.getServletContext().getRealPath(
-				"/doc");
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-		String time = formatter.format(date);
-
-		String uploadfilename = d.getUser().getId() + "-" + time + "-"
-				+ uploadFileFileName;
-		if (d.getVersion() == 1.0f) {
-			docSave.setOriginalId(d.getId());
-		} else {
-			docSave.setOriginalId(d.getOriginalId());
-		}
-
-		if (uploadFile != null) {
-			File savefile = new File(new File(realpath), uploadfilename);// 创建一个
-																			// File实例，表示指定路径指定名称的文件
-			if (!savefile.getParentFile().exists())
-				savefile.getParentFile().mkdirs();
-			FileUtils.copyFile(uploadFile, savefile);// 文件上传至targetDirectory
-		}
-		docSave.setDocPath("doc/" + uploadfilename);
-		docSave.setTitle(d.getTitle());
-		docSave.setAuthor(d.getAuthor());
-		docSave.setBrief(d.getBrief());
-		docSave.setJournal(d.getJournal());
-		docSave.setPublishedTime(d.getPublishedTime());
-		docSave.setPublishedTime(d.getPublishedTime());
-		docSave.setCategory(d.getCategory());
-		docSave.setFormat(d.getFormat());
-		docSave.setIsPass(d.getIsPass());
-		docSave.setLevel(d.getLevel());
-		docSave.setUser(d.getUser());
-		docSave.setType(d.getType());
-		docService.uploaddocument(docSave);
-
-		return "reUploadDoc";
-	}
 
 	public String uploadDoc() throws IOException, ParseException {
 		doc.setUploadTime(Common.getTimestampTime(0));
@@ -235,17 +183,18 @@ public class DocAction extends BaseAction {
 	 */
 	public String uploadDocDoc() throws IOException, ParseException {
 		doc.setUploadTime(Common.getTimestampTime(0));
-		String caString = getParameter("category");
-		System.out.println(caString);
-		if (getParameter("category").equals("分类文档")) {
-			String threeTypeName = getParameter("typeThree");// 获得三级类的值
+		System.err.println(doc.getCategory());
+		System.err.println(doc.getTypeName());
+		if (doc.getCategory().equals("1")) {
+			String threeTypeName = doc.getTypeName();// 获得三级类的值
+			System.err.println(threeTypeName);
 			Type threetype = new Type();
 			threetype = typeService.getByName(threeTypeName).get(0);// 根据三级类输入
 																	// 的名字搜索Type实体
 			doc.setType(threetype);
 			System.out.println(threetype);
 		} else {
-			doc.setCategory(getParameter("category"));
+			doc.setCategory(doc.getCategory());
 		}
 		System.out.println(doc.getLanguage());
 		User uu = (User) getSession().getAttribute("LOGIN_USER");
@@ -280,7 +229,7 @@ public class DocAction extends BaseAction {
 		if (doc.getLevel() != null) {
 			return "upload_success";
 		} else {
-			return "personalCenter";
+			return "error";
 		}
 	}
 
@@ -451,49 +400,6 @@ public class DocAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String hrefsearch() {
-		int docId = Integer.parseInt(getParameter("docId"));
-		Doc doc = new Doc();
-		Doc temp = new Doc();
-		List<Doc> docList = new ArrayList<Doc>();
-		doc.setId(docId);
-		temp = docService.QueryById(doc);
-
-		docList = docService.QueryLikeTitle(temp);
-		List<Doc> docByVersionList;
-		if (temp.getOriginalId() == null) {
-			docByVersionList = docService.findAllByOriginalId(docId);
-			docByVersionList.add(temp);
-		} else {
-			docByVersionList = docService.findAllByOriginalId(temp
-					.getOriginalId());
-			doc.setId(temp.getOriginalId());
-			docByVersionList.add(docService.QueryById(doc));
-		}
-		setAttribute("docByVersionList", docByVersionList);
-		setAttribute("doc", temp);
-
-		setAttribute("doclist", docList);
-
-		getSession().setAttribute("doc", temp);
-		if (temp.getDocPath().endsWith(".doc")
-				|| temp.getDocPath().endsWith(".docx")) {
-			setAttribute("type", "doc");
-			return "success";
-		} else if (temp.getDocPath().endsWith(".pdf")) {
-			setAttribute("type", "pdf");
-			return "success";
-
-		} else if (temp.getDocPath().endsWith(".ppt")
-				|| temp.getDocPath().endsWith(".pptx")) {
-			setAttribute("type", "ppt");
-			return "success";
-		} else {
-			setAttribute("type", "xls");
-			return "success";
-		}
-
-	}
 
 	public void searchByid() throws IOException {
 		int id = Integer.parseInt(getParameter("id"));

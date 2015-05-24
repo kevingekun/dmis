@@ -58,17 +58,20 @@ public class TypeAction extends BaseAction {
 		Type type = new Type();
 		if (sid != -1) {
 			type.setName(typename);
-			type.setParentId(sid);
+			type.setParent(findById(sid));
+			// type.setParentId(sid);
 			type.setLevel(3);
 			typeService.addType(type);
 		} else if (fid != -1) {
 			type.setName(typename);
-			type.setParentId(fid);
+			type.setParent(findById(fid));
+			// type.setParentId(fid);
 			type.setLevel(2);
 			typeService.addType(type);
 		} else {
 			type.setName(typename);
-			type.setParentId(0);
+			type.setParent(findById(0));
+			// type.setParentId(0);
 			type.setLevel(1);
 			typeService.addType(type);
 		}
@@ -122,13 +125,18 @@ public class TypeAction extends BaseAction {
 
 	public void listaByParentId() throws IOException {
 		int parentid = Integer.parseInt(getParameter("parentid"));
-		List<Type> listTwo = typeService.secondType(parentid);
-		JsonConfig cfg = new JsonConfig();
-		cfg.setExcludes(new String[] { "docs" });
-		JSONArray json = JSONArray.fromObject(listTwo, cfg);
-		// JSONArray json = JSONArray.fromObject();
-		getResponse().setCharacterEncoding("utf-8");
-		getResponse().getWriter().write(json.toString());
+		try {
+			List<Type> listTwo = typeService.secondType(parentid);
+			JsonConfig cfg = new JsonConfig();
+			cfg.setExcludes(new String[] { "docs" });
+			JSONArray json = JSONArray.fromObject(listTwo, cfg);
+			// JSONArray json = JSONArray.fromObject();
+			getResponse().setCharacterEncoding("utf-8");
+			getResponse().getWriter().write(json.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void listaaByParentId() throws IOException {
@@ -147,6 +155,23 @@ public class TypeAction extends BaseAction {
 		JSONArray json = JSONArray.fromObject(typeService.secondType(parentid));
 		getResponse().setCharacterEncoding("utf-8");
 		getResponse().getWriter().write(json.toString());
+	}
+
+	public Type findById(int id) {
+		return typeService.findById(id);
+	}
+
+	public void findByName() throws IOException {
+
+		String typeName = java.net.URLDecoder.decode(getParameter("typeName"),
+				"UTF-8");
+		// System.err.println(typeName);
+		List<Type> list = typeService.getByName(typeName);
+		if (list.size() == 0) {
+			out().print("true");
+		} else {
+			out().print("false");
+		}
 	}
 
 	/**

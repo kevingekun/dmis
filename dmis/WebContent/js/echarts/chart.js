@@ -38,7 +38,7 @@ $("#btn2").click(function(){
 			alert("暂无数据...");
 		}
 	});
-	setTimeout(docLevel, 100);
+	setTimeout(docLevel, 200);
 });
 $("#btn3").click(function(){
 	$.ajax({
@@ -52,7 +52,7 @@ $("#btn3").click(function(){
 			alert("暂无数据...");
 		}
 	});
-	setTimeout(docDownload, 300);
+	setTimeout(docDownload, 500);
 });
 
 function docDownload(num){

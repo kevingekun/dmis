@@ -304,20 +304,21 @@
 					$("#advice-required-field1").removeAttr("style");
 					return false;
 				} else {
+					k = encodeURI(encodeURI(k));
 					$.ajax({
 						type:'GET',
 						url:"Keyword/checkKeywordByName?k="+k,
 						async : false,
 						success:function(result){
-							if(result == "false"){
+							if(result == "noKeyword"){
+								$("#keyword")[0].className = "required";
+								$("#advice-required-field1").attr("style","display:none;");
+								value_keyword = true;
+							}else{
 								$("#keyword")[0].className = "required validation-failed";
 								$("#advice-required-field1")[0].innerHTML="已存在！";
 								$("#advice-required-field1").removeAttr("style");
 								value_keyword = false;
-							}else if(result == "true"){
-								$("#keyword")[0].className = "required";
-								$("#advice-required-field1").attr("style","display:none;");
-								value_keyword = true;
 							}
 						},
 						error:function(){

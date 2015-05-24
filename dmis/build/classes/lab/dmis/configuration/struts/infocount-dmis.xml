@@ -5,8 +5,6 @@
 	<package name="INFO" namespace="/Info" extends="struts-default" >
 		<action name="*" class="lab.dmis.web.InfoCountAction" method="{1}">
 			<result name="success">/infocount.jsp</result>
-			<!-- <result name="delete_success" type="redirect">/Type/listAll?pageNo=${#request.pageNo}</result>
-			<result name="listAll" type="redirect">/Type/listAll</result> -->
 		</action> 
 	</package>
 </struts>

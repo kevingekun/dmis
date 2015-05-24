@@ -107,7 +107,7 @@
 						<th style="width: 150px">邮箱</th>
 						<th style="width: 100px">QQ</th>
 						<th style="width: 100px">用户状态</th>
-						<th>操作</th>
+						<th style="width: 180px">操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -135,12 +135,14 @@
 								</s:if> <s:else>
 									<a class="btn btn-mini orange" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">禁用</a>
 								</s:else>
-								<input type="hidden" value="<s:property value="id"/>" />							
-								<select id="select<s:property value="id"/>" onchange="t(this)" style="height:20px;width:75px;font-size:12px;padding:0 0;margin-bottom:0.9">															
-									<option value="1">一级用户</option>
-									<option value="2">二级用户</option>
-									<option value="3">三级用户</option>
-								</select>
+								<input type="hidden" value="<s:property value="id"/>" />		
+								<s:if test="role!=0">
+									<select id="select<s:property value="id"/>" onchange="t(this)" style="height:20px;width:75px;font-size:12px;padding:0 0;margin-bottom:0.9">															
+										<option value="1">一级用户</option>
+										<option value="2">二级用户</option>
+										<option value="3">三级用户</option>
+									</select>
+								</s:if>					
 								<script type="text/javascript">
 									var id = "select"+"<s:property value="id"/>";
 									var role = "<s:property value="role"/>" - 1; //0->一级；1->二级；2->三级

@@ -22,6 +22,8 @@ public interface TypeService extends BaseManager<Type, Integer> {
 
 	public void deleteTypeById(int id);
 
+	public Type findById(int id);
+
 	public void deleteByIds(String[] ids);// 批量删除
 
 	public List<Type> getType();

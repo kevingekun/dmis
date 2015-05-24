@@ -40,9 +40,9 @@
 							<label for="field2">文档类别</label>:
 						</div>
 						<div class="field-widget">
-							<select id="category" name="category" class="validate-selection">
-								<option value="-1">其他</option>
-								<option value="1">分类文档</option>
+							<select id="category" name="doc.category" class="validate-selection">
+								<option>其他</option>
+								<option>分类文档</option>
 							</select> 
 							<select id="language" name="doc.language" class="validate-selection"
 								onchange="categoryCheck('language','level')"><!-- languageCheck(this) -->
@@ -65,17 +65,17 @@
 
 						<div class="field-widget2" id="docType" style="display: none;">
 							<input type="hidden" id="fIdDoc" value="-1" /> 
-							<select id="typeOneDoc" name="doc.typeOne" class="validate-selection"
+							<select id="typeOneDoc" name="typeOne" class="validate-selection"
 								onchange="selectOne(this,'typeTwoDoc','typeThreeDoc');typeCheck();"><!-- validate-selection validation-failed -->
 								<option value="-1">一级分类</option>
 							</select> 
 							<input type="hidden" id="sIdDoc" value="-1" /> 
-							<select id="typeTwoDoc" name="doc.typeTwo" class="validate-selection"
+							<select id="typeTwoDoc" name="typeTwo" class="validate-selection"
 								onchange="selectTwo(this,'typeThreeDoc');typeCheck();">
 								<option value="-1">二级分类</option>
 							</select> 
 							<input type="hidden" id="tIdDoc" value="-1" />
-							<select id="typeThreeDoc" name="typeThree" class="validate-selection"
+							<select id="typeThreeDoc" name="doc.typeName" class="validate-selection"
 							onchange="typeCheck();">
 								<option value="-1">三级分类</option>
 							</select>

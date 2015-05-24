@@ -108,7 +108,7 @@
                   <td><s:property value="id"/></td>
                   <td><s:property value="name"/></td>
                   <td><s:property value="level"/></td>
-                  <td><s:property value="parentId"/></td>
+                  <td><s:property value="parent.id"/></td>
                   	<td><a class="btn btn-mini gray" href="Type/delete.action?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">删除</a>
                   </td>                  
                 </tr>
@@ -170,6 +170,7 @@
 <script type="text/javascript">
 	var fid = -1;//全局变量用来存一级类id
 	var sid = -1;//全局变量用来存二级类id
+	var check_type = false;
 	$("#addType").click(function() {
 		$("#mask").slideDown("fast", slidedown);
 	});
@@ -321,9 +322,29 @@
 			$("#advice-required-field1").removeAttr("style");
 			return false;
 		} else {
-			$("#typ")[0].className = "required";
-			$("#advice-required-field1").attr("style", "display:none;");
-			return true;
+			typ = encodeURI(encodeURI(typ));
+			$.ajax({
+				type:'get',
+				async : false,
+				url:"Type/findByName?typeName="+typ,
+				success:function(data){
+					if(data=="true"){
+						$("#typ")[0].className = "required";
+						$("#advice-required-field1").attr("style", "display:none;");
+						check_type = true;
+					}else if(data=="false"){
+						$("#typ")[0].className = "required validation-failed";
+						$("#advice-required-field1")[0].innerHTML = "重复！";
+						$("#advice-required-field1").removeAttr("style");
+						check_type = false;
+					}
+				},
+				error:function(){
+					alert("sorry....");
+					check_type = false;
+				}
+			});
+			return check_type;
 		}
 	}
 	function check() {

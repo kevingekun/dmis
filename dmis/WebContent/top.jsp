@@ -27,17 +27,10 @@
 							style="padding: 8px 15px 5px 15px; border-left: 1px #2e363f solid;">&nbsp;</li>
 					</ul>
 				</div>
-				<div class="search_top">
-					<form id="searchBox" name="labs-search" method="post" action="#">
-						<input type="text" placeholder="Search here..." class="textfield"
-							name="term" />
-						<button title="search" type="button" id="submit">搜索</button>
-					</form>
-				</div>
 			</div>
 			<div id="show_top" style="z-index: 33;">
-				<div
-					style="color: #666; font-size: 12px; font-family: 'Open Sans', sans-serif; margin: 0 auto; padding: 7px 0 7px 15px;">后台管理</div>
+				<div style="color: #666; font-size: 12px; font-family: 'Open Sans', sans-serif; 
+					margin: 0 auto; padding: 7px 0 7px 15px;">后台管理</div>
 			</div>
 		</div>
 	</div>

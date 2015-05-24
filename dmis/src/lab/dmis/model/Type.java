@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
@@ -11,10 +13,16 @@ public class Type implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	// private Set<Type> childrens = new HashSet<Type>();
 	private Integer id;
 	private Integer level;
 	private String name;
-	private Integer parentId;
+	private Type parent;
+
+	/*
+	 * @OneToMany(mappedBy = "parent") public Set<Type> getChildrens() { return
+	 * childrens; }
+	 */
 
 	@Id
 	@GeneratedValue
@@ -32,14 +40,25 @@ public class Type implements java.io.Serializable {
 		return this.name;
 	}
 
-	@Column(nullable = false)
-	public Integer getParentId() {
-		return this.parentId;
+	@ManyToOne
+	@JoinColumn(name = "parentId")
+	public Type getParent() {
+		return parent;
 	}
+
+	/*
+	 * public void setChildrens(Set<Type> childrens) { this.childrens =
+	 * childrens; }
+	 */
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
+	/*
+	 * @Column(nullable = false) public Integer getParentId() { return
+	 * this.parentId; }
+	 */
 
 	public void setLevel(Integer level) {
 		this.level = level;
@@ -49,8 +68,12 @@ public class Type implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
+	public void setParent(Type parent) {
+		this.parent = parent;
 	}
+
+	/*
+	 * public void setParentId(Integer parentId) { this.parentId = parentId; }
+	 */
 
 }

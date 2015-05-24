@@ -18,7 +18,7 @@
 			<result name="reading">/reading.jsp</result>
 			<result name="allDoc" >/searchResult.jsp</result>
 			<result name="advancedDoc" >/searchResult.jsp</result>
-			<result name="personalCenter">/personalCenter.jsp</result>
+			<result name="error">/error.jsp</result>
 			<result name="upload_success" type="redirect">/Doc/listAll?pageNo=${#request.pageNo}</result>
 			<result name="list">../document.jsp</result>
 			<result name="success">/showDoc.jsp</result>

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
@@ -30,10 +31,10 @@ public class Doc implements java.io.Serializable {
 	// private Set<Keyworddoc> kds = new HashSet<Keyworddoc>();
 	private Integer language;
 	private Integer level;
-	private Integer originalId;
 	private String publishedTime;
 	private String title;
 	private Type type;
+	private String typeName;
 	private Timestamp uploadTime;
 	private User user;
 	private Float version;
@@ -50,27 +51,10 @@ public class Doc implements java.io.Serializable {
 		return this.category;
 	}
 
-	/*
-	 * @OneToMany(mappedBy = "doc") public Set<Comment> getComments() { return
-	 * this.comments; }
-	 */
-
-	/*
-	 * public String getFilename() { String fileName = this.docPath
-	 * .substring(this.docPath.lastIndexOf("/") + 1);
-	 * 
-	 * return fileName; }
-	 */
-
 	@Column(nullable = false)
 	public String getDocPath() {
 		return this.docPath;
 	}
-
-	/*
-	 * @OneToMany(mappedBy = "doc") public Set<Downloadrecoder>
-	 * getDownloadrecoders() { return this.downloadrecoders; }
-	 */
 
 	public Integer getDownloadTimes() {
 		return this.downloadTimes;
@@ -87,18 +71,30 @@ public class Doc implements java.io.Serializable {
 		return this.id;
 	}
 
+	/*
+	 * @OneToMany(mappedBy = "doc") public Set<Comment> getComments() { return
+	 * this.comments; }
+	 */
+
+	/*
+	 * public String getFilename() { String fileName = this.docPath
+	 * .substring(this.docPath.lastIndexOf("/") + 1);
+	 * 
+	 * return fileName; }
+	 */
+
 	public Boolean getIsPass() {
 		return this.isPass;
 	}
 
+	/*
+	 * @OneToMany(mappedBy = "doc") public Set<Downloadrecoder>
+	 * getDownloadrecoders() { return this.downloadrecoders; }
+	 */
+
 	public String getJournal() {
 		return this.journal;
 	}
-
-	/*
-	 * @OneToMany(mappedBy = "doc") public Set<Keyworddoc> getKds() { return
-	 * kds; }
-	 */
 
 	@Column(nullable = false)
 	public Integer getLanguage() {
@@ -109,13 +105,14 @@ public class Doc implements java.io.Serializable {
 		return level;
 	}
 
-	public Integer getOriginalId() {
-		return originalId;
-	}
-
 	public String getPublishedTime() {
 		return this.publishedTime;
 	}
+
+	/*
+	 * @OneToMany(mappedBy = "doc") public Set<Keyworddoc> getKds() { return
+	 * kds; }
+	 */
 
 	@Column(nullable = false)
 	public String getTitle() {
@@ -126,6 +123,11 @@ public class Doc implements java.io.Serializable {
 	@JoinColumn(name = "typeId")
 	public Type getType() {
 		return this.type;
+	}
+
+	@Transient
+	public String getTypeName() {
+		return typeName;
 	}
 
 	@Column(nullable = false)
@@ -155,27 +157,27 @@ public class Doc implements java.io.Serializable {
 		this.category = category;
 	}
 
+	public void setDocPath(String docPath) {
+		this.docPath = docPath;
+	}
+
+	public void setDownloadTimes(Integer downloadTimes) {
+		this.downloadTimes = downloadTimes;
+	}
+
 	/*
 	 * public void setComments(Set<Comment> comments) { this.comments =
 	 * comments; }
 	 */
 
-	public void setDocPath(String docPath) {
-		this.docPath = docPath;
+	public void setFormat(String format) {
+		this.format = format;
 	}
 
 	/*
 	 * public void setDownloadrecoders(Set<Downloadrecoder> downloadrecoders) {
 	 * this.downloadrecoders = downloadrecoders; }
 	 */
-
-	public void setDownloadTimes(Integer downloadTimes) {
-		this.downloadTimes = downloadTimes;
-	}
-
-	public void setFormat(String format) {
-		this.format = format;
-	}
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -189,10 +191,6 @@ public class Doc implements java.io.Serializable {
 		this.journal = journal;
 	}
 
-	/*
-	 * public void setKds(Set<Keyworddoc> kds) { this.kds = kds; }
-	 */
-
 	public void setLanguage(Integer language) {
 		this.language = language;
 	}
@@ -201,9 +199,9 @@ public class Doc implements java.io.Serializable {
 		this.level = level;
 	}
 
-	public void setOriginalId(Integer originalId) {
-		this.originalId = originalId;
-	}
+	/*
+	 * public void setKds(Set<Keyworddoc> kds) { this.kds = kds; }
+	 */
 
 	public void setPublishedTime(String publishedTime) {
 		this.publishedTime = publishedTime;
@@ -215,6 +213,10 @@ public class Doc implements java.io.Serializable {
 
 	public void setType(Type type) {
 		this.type = type;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
 	}
 
 	public void setUploadTime(Timestamp uploadTime) {

@@ -176,7 +176,8 @@ public class KeywordAction extends BaseAction {
 	 * @throws IOException
 	 */
 	public void checkKeywordByName() throws IOException {
-		String name = getParameter("k");
+		String name = java.net.URLDecoder.decode(getParameter("k"), "UTF-8");
+		// System.err.println(name);
 		List<Keyword> list = keywordService.findByName(name);
 		if (list.size() == 0) {
 			out().print("noKeyword");

@@ -200,6 +200,7 @@
 				$("#advice-required-field2").removeAttr("style");
 				return false;
 			}else{
+				var keyword = encodeURI(encodeURI(keyword));
 				$.ajax({
 					type:'GET',
 					async : false,

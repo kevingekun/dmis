@@ -34,6 +34,13 @@
 	padding: 10px;
 	background: url(../../images/forms/form_top_bg.gif) repeat-x top #fff;
 }
+.comment_form_content {
+	width: 510px;
+	height: 240px;
+	margin: 30px auto;
+	padding: 10px;
+	background: url(../../images/forms/form_top_bg.gif) repeat-x top #fff;
+}
 .user_form_content {
 	width: 487px;
 	/* height: 341px; */
@@ -72,6 +79,17 @@
 	left: 13%;
 	top: -10;
 }
+#comment_check {
+	z-index: 90;
+	position: absolute;
+	left: 25%;
+}
+#comment_textarea{
+	height:100px;
+	width:400px;
+	float:left
+}
+
 #keyword_check {
 	z-index: 90;
 	position: absolute;
@@ -122,6 +140,10 @@ legend.optional {
 	clear: both;
 	padding: 5px 5px 5px 5px;
 }
+.form-row_comment {
+	clear: both;
+	padding: 5px 5px 5px 5px;
+}
 .form-row-select {
 	clear: both;
 	float: left;
@@ -147,6 +169,16 @@ legend.optional {
 }
 .field-label_notice {
 	width: 50px;
+	float: left;
+	line-height: 25px;
+}
+.field-label_comment {
+	width: 70px;
+	float: left;
+	line-height: 25px;
+}
+.field-label_comment {
+	width: 70px;
 	float: left;
 	line-height: 25px;
 }

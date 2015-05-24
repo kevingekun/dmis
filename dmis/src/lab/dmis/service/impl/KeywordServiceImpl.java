@@ -130,7 +130,7 @@ public class KeywordServiceImpl extends BaseManagerImpl<Keyword, Integer>
 
 	@SuppressWarnings("unchecked")
 	public List<Keyword> findByName(String keywordName) {
-		String hql = "from Keyword k where k.keyword=" + keywordName;
+		String hql = "from Keyword k where k.keyword='" + keywordName + "'";
 		return keywordDao.find(hql);
 	}
 
