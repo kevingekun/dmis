@@ -35,7 +35,7 @@ public class Type implements java.io.Serializable {
 		return this.level;
 	}
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	public String getName() {
 		return this.name;
 	}
