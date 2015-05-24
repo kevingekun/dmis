@@ -12,7 +12,6 @@ public class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String answer;
 	// private Set<Comment> comments = new HashSet<Comment>();
 	// private Set<Doc> docs = new HashSet<Doc>();
 	// private Set<Downloadrecoder> downloadrecoders = new
@@ -26,13 +25,8 @@ public class User implements java.io.Serializable {
 	private String password;
 	private String phone;
 	private String qq;
-	private String question;
 	private Integer role;
 	private String verfi;
-
-	public String getAnswer() {
-		return this.answer;
-	}
 
 	/*
 	 * @OneToMany(mappedBy = "user") public Set<Comment> getComments() { return
@@ -47,6 +41,7 @@ public class User implements java.io.Serializable {
 	 * getDownloadrecoders() { return this.downloadrecoders; }
 	 */
 
+	@Column(unique = true)
 	public String getEmail() {
 		return this.email;
 	}
@@ -65,7 +60,7 @@ public class User implements java.io.Serializable {
 		return level;
 	}
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	public String getName() {
 		return name;
 	}
@@ -80,16 +75,14 @@ public class User implements java.io.Serializable {
 		return this.password;
 	}
 
+	@Column(unique = true)
 	public String getPhone() {
 		return this.phone;
 	}
 
+	@Column(unique = true)
 	public String getQq() {
 		return this.qq;
-	}
-
-	public String getQuestion() {
-		return this.question;
 	}
 
 	public Integer getRole() {
@@ -99,10 +92,6 @@ public class User implements java.io.Serializable {
 	@Transient
 	public String getVerfi() {
 		return verfi;
-	}
-
-	public void setAnswer(String answer) {
-		this.answer = answer;
 	}
 
 	/*
@@ -149,10 +138,6 @@ public class User implements java.io.Serializable {
 
 	public void setQq(String qq) {
 		this.qq = qq;
-	}
-
-	public void setQuestion(String question) {
-		this.question = question;
 	}
 
 	public void setRole(Integer role) {

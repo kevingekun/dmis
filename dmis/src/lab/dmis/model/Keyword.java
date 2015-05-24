@@ -46,7 +46,7 @@ public class Keyword implements java.io.Serializable {
 	 * kds; }
 	 */
 
-	@Column(nullable = false)
+	@Column(nullable = false, unique = true)
 	public String getKeyword() {
 		return this.keyword;
 	}

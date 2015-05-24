@@ -15,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserAction extends BaseAction {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
@@ -64,7 +61,6 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String getAllInfo() {
-
 		return "personalCenter";
 	}
 
@@ -72,13 +68,6 @@ public class UserAction extends BaseAction {
 		return "loginOut";
 	}
 
-	/*
-	 * public String loginIndex(){
-	 * 
-	 * setAttribute("recentDoc",docService.getPage(1, 5));
-	 * setAttribute("recentNotice",noticeService.getPage(1, 5));
-	 * return"LoginIndex"; }
-	 */
 	/**
 	 * 加载全部用户
 	 * 
@@ -225,53 +214,6 @@ public class UserAction extends BaseAction {
 		setAttribute("page", userService.getPage(state, pageNo, pageContSize));
 		setAttribute("state", state);
 		return "list";
-	}
-
-	/**
-	 * 修改用户资料
-	 * 
-	 * @return
-	 * @throws IOException
-	 */
-	public void updateUser() throws IOException {
-		User uu = (User) getSession().getAttribute("LOGIN_USER");
-		// String question=uu.getQuestion();
-		// String answer=uu.getAnswer();
-		// if(question.equals(getParameter("question")))
-		// {
-		// if(answer.equals(getParameter("answer")))
-		// {
-		uu.setEmail(getParameter("email"));
-		uu.setPhone(getParameter("phone"));
-		uu.setQq(getParameter("qq"));
-		uu.setAnswer(getParameter("answer"));
-		uu.setQuestion(getParameter("question"));
-		userService.editUser(uu);
-		// }
-		// List<User> u=userService.findById(uu.getId());
-		// getSession().setAttribute("LOGIN_USER",u.get(0));
-		out().print("true");
-		// }
-		// else
-		// {
-		// out().print("false");
-		// }
-
-	}
-
-	public void resetpassword() throws IOException {
-		User uu = (User) getSession().getAttribute("LOGIN_USER");
-		String password = uu.getPassword();
-		if (password.equals(getParameter("oldpassword"))) {
-			uu.setPassword(getParameter("newpassword"));
-			// if(uu.getPassword("newpassword").equals)
-			userService.resetPassword(uu);
-			// List<User> u=userService.findById(uu.getId());
-			// getSession().setAttribute("LOGIN_USER",u.get(0));
-			out().print("true");
-		}
-		// out().print("false");
-		// return"resetpassword";
 	}
 
 	/**

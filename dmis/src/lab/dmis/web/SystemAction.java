@@ -16,22 +16,11 @@ import javax.mail.internet.MimeMessage;
 import lab.common.web.BaseAction;
 import lab.dmis.model.User;
 import lab.dmis.service.UserService;
-import lab.dmis.util.JsonSerialization;
-import lab.dmis.util.Str;
-import net.sf.json.JSONArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * @author Joki
- * 
- */
-
 public class SystemAction extends BaseAction {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private InputStream inputStream;
@@ -71,40 +60,6 @@ public class SystemAction extends BaseAction {
 			inputStream = outStream(list.size() != 0 ? "success" : "failed");
 		}
 		return "login";
-	}
-
-	/**
-	 * 验证用户名及验证码
-	 * 
-	 * @throws IOException
-	 */
-	public void NameAndVerfiCheck() throws IOException {
-		list = userService.NameAndVerfiCheck(user);
-		if (list.size() != 0) {
-			if (user.getVerfi().equals(getAttribute("VCID")))
-				message = JSONArray.fromObject(list,
-						JsonSerialization.jsonSer(Str.str)).toString();
-			else
-				message = "0";
-		} else
-			message = "1";
-		out().print(message);
-	}
-
-	/**
-	 * 用户重置密码
-	 * 
-	 * @throws IOException
-	 */
-	public void PasswordUpdate() throws IOException {
-		List<User> list = userService.NameAndVerfiCheck(user);
-		if (user.getAnswer().equals(list.get(0).getAnswer())) {
-			list.get(0).setPassword(user.getNewPassword());
-			userService.PasswordUpdate(list.get(0));
-			message = "success";
-		} else
-			message = "field";
-		out().print(message);
 	}
 
 	/**
