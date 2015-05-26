@@ -1,6 +1,5 @@
 package lab.dmis.web;
 
-//import org.apache.struts2.components.File;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
@@ -9,41 +8,31 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import lab.common.model.Page;
+import javax.annotation.Resource;
+
 import lab.common.util.Common;
 import lab.common.web.BaseAction;
 import lab.dmis.model.Doc;
 import lab.dmis.model.Type;
 import lab.dmis.model.User;
-import lab.dmis.service.CommentService;
 import lab.dmis.service.DocService;
-import lab.dmis.service.NoticeService;
 import lab.dmis.service.TypeService;
 import net.sf.json.JSONArray;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class DocAction extends BaseAction {
+
 	private static final long serialVersionUID = 1L;
-	@Autowired
-	private DocService docService;
-	@Autowired
-	private NoticeService noticeService;
-	@Autowired
-	private TypeService typeService;
-	@Autowired
-	private CommentService commentService;
+
+	private DocService docServiceImpl;
+	private TypeService typeServiceImpl;
 	private Doc doc;
 	private int pageNo = 1;
 	private int pageContSize = 8;
 	private File uploadFile;// 实际上传文件
 	private String uploadFileFileName;// 上传文件名
-	JSONArray jsonArray;
-	Page page = new Page();
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	List<Doc> list = new ArrayList();
 
 	/**
 	 * 跳转到添加文档页面
@@ -70,7 +59,7 @@ public class DocAction extends BaseAction {
 	 */
 	public void categoryCount() throws IOException {
 		List<Integer> list = new ArrayList<Integer>();
-		list = docService.countByCategory();
+		list = docServiceImpl.countByCategory();
 		/*
 		 * JsonConfig cfg = new JsonConfig(); cfg.setExcludes(new String[] {
 		 * "docs" }); JSONArray json = JSONArray.fromObject(list, cfg);
@@ -87,7 +76,7 @@ public class DocAction extends BaseAction {
 	 */
 	public void levelCount() throws IOException {
 		List<Integer> list = new ArrayList<Integer>();
-		list = docService.countByLevel();
+		list = docServiceImpl.countByLevel();
 		JSONArray json = JSONArray.fromObject(list);
 		getResponse().setCharacterEncoding("utf-8");
 		getResponse().getWriter().write(json.toString());
@@ -100,7 +89,7 @@ public class DocAction extends BaseAction {
 	 */
 	public void downloadCount() throws IOException {
 		List<Object> list = new ArrayList<Object>();
-		list = docService.countByDownload();
+		list = docServiceImpl.countByDownload();
 		System.err.println(list);
 		JSONArray json = JSONArray.fromObject(list);
 		System.err.println(json);
@@ -115,7 +104,7 @@ public class DocAction extends BaseAction {
 	 */
 	public String getAllDoc() {
 		setAttribute("actionName", getActionName());
-		setAttribute("page", docService.getPage(pageNo, 5,
+		setAttribute("page", docServiceImpl.getPage(pageNo, 5,
 				(User) getObjFromSession("LOGIN_USER")));
 		return "allDoc";
 	}
@@ -132,8 +121,8 @@ public class DocAction extends BaseAction {
 		doc.setUploadTime(Common.getTimestampTime(0));
 		String threeTypeName = getParameter("typeThree");// 获得三级类的值
 		Type threetype = new Type();
-		threetype = typeService.getByName(threeTypeName).get(0);// 根据三级类输入
-																// 的名字搜索Type实体
+		threetype = typeServiceImpl.getByName(threeTypeName).get(0);// 根据三级类输入
+		// 的名字搜索Type实体
 		doc.setType(threetype);
 		// System.out.println( threetype);
 		// System.out.println(doc.getLanguage());
@@ -164,9 +153,9 @@ public class DocAction extends BaseAction {
 		}
 		doc.setDocPath("doc/" + uploadfilename);
 
-		docService.uploaddocument(doc);
+		docServiceImpl.uploaddocument(doc);
 		// out().print("true");
-		docService.uploaddocument(doc);
+		docServiceImpl.uploaddocument(doc);
 		if (doc.getLevel() != null) {
 			return "upload_success";
 		} else {
@@ -189,8 +178,8 @@ public class DocAction extends BaseAction {
 			String threeTypeName = doc.getTypeName();// 获得三级类的值
 			System.err.println(threeTypeName);
 			Type threetype = new Type();
-			threetype = typeService.getByName(threeTypeName).get(0);// 根据三级类输入
-																	// 的名字搜索Type实体
+			threetype = typeServiceImpl.getByName(threeTypeName).get(0);// 根据三级类输入
+			// 的名字搜索Type实体
 			doc.setType(threetype);
 			System.out.println(threetype);
 		} else {
@@ -225,39 +214,12 @@ public class DocAction extends BaseAction {
 		}
 		doc.setDocPath("doc/" + uploadfilename);
 
-		docService.uploaddocument(doc);
+		docServiceImpl.uploaddocument(doc);
 		if (doc.getLevel() != null) {
 			return "upload_success";
 		} else {
 			return "error";
 		}
-	}
-
-	/**
-	 * 高级搜索
-	 * 
-	 * @return
-	 */
-	public String getAdvancedSearch() {
-		setAttribute("typeName", getParameter("typeName"));
-		setAttribute("typeId", getParameter("typeId"));
-		setAttribute("search", getParameter("keyword"));
-		setAttribute("year", getParameter("year"));
-		setAttribute("category", getParameter("category"));
-		setAttribute("language", getParameter("language"));
-		setAttribute("actionName", getActionName());
-		String uri = "&year=" + getParameter("year") + "&category="
-				+ getParameter("category") + "&language="
-				+ getParameter("language") + "&keyword="
-				+ getParameter("keyword") + "";
-		setAttribute("uri", uri);
-		setAttribute("page",
-				docService.getAdvancedSearch(pageNo, 5, getParameter("typeId"),
-						getParameter("year"), getParameter("category"),
-						getParameter("language"), getParameter("keyword"),
-						(User) getObjFromSession("LOGIN_USER")));
-
-		return "advancedDoc";
 	}
 
 	/**
@@ -268,12 +230,12 @@ public class DocAction extends BaseAction {
 	public String listAll() {
 		// int state = Integer.parseInt(getParameter("state"));
 		if (getParameter("pageNo") == null) {
-			setAttribute("page", docService.getPage(pageNo, pageContSize));
+			setAttribute("page", docServiceImpl.getPage(pageNo, pageContSize));
 			setAttribute("state", 2);
 			return "list";
 
 		} else {
-			setAttribute("page", docService.getPage(
+			setAttribute("page", docServiceImpl.getPage(
 					Integer.parseInt(getParameter("pageNo")), pageContSize));
 			setAttribute("state", 2);
 			return "list";
@@ -289,12 +251,12 @@ public class DocAction extends BaseAction {
 		int state = Integer.parseInt(getParameter("state"));
 		if (getParameter("pageNo") == null) {
 			setAttribute("page",
-					docService.getPage(state, pageNo, pageContSize));
+					docServiceImpl.getPage(state, pageNo, pageContSize));
 			setAttribute("state", state);
 			return "list";
 		} else {
 			System.out.println(getParameter("pageNo"));
-			setAttribute("page", docService.getPage(state,
+			setAttribute("page", docServiceImpl.getPage(state,
 					Integer.parseInt(getParameter("pageNo")), pageContSize));
 			setAttribute("state", state);
 			return "list";
@@ -310,17 +272,18 @@ public class DocAction extends BaseAction {
 		int state = Integer.parseInt(getParameter("state"));
 		int id = Integer.parseInt(getParameter("id"));
 		boolean isPass = false;
-		docService.deleteDocById(id);
+		docServiceImpl.deleteDocById(id);
 		if (state == 1) {
 			isPass = true;
 		}
-		int totalpage = docService.getPage(pageNo, pageContSize, isPass)
+		int totalpage = docServiceImpl.getPage(pageNo, pageContSize, isPass)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		setAttribute("page", docService.getPage(state, pageNo, pageContSize));
+		setAttribute("page",
+				docServiceImpl.getPage(state, pageNo, pageContSize));
 		setAttribute("state", state);
 		return "list";
 	}
@@ -333,66 +296,21 @@ public class DocAction extends BaseAction {
 	public String deleteCheck() {
 		int state = Integer.parseInt(getParameter("state"));
 		String[] ids = getRequest().getParameterValues("checkAll");
-		docService.deleteByIds(ids);
+		docServiceImpl.deleteByIds(ids);
 		boolean isPass = false;
 		if (state == 1) {
 			isPass = true;
 		}
-		int totalpage = docService.getPage(pageNo, pageContSize, isPass)
+		int totalpage = docServiceImpl.getPage(pageNo, pageContSize, isPass)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		setAttribute("page", docService.getPage(state, pageNo, pageContSize));
+		setAttribute("page",
+				docServiceImpl.getPage(state, pageNo, pageContSize));
 		setAttribute("state", state);
 		return "list";
-	}
-
-	/**
-	 * 根据标题查询
-	 * 
-	 * @return
-	 */
-	public String search() {
-		String keyword = getParameter("keyw");
-		if (keyword.length() != 0) {
-			Doc doc = new Doc();
-			Doc temp = new Doc();
-			List<Doc> docList = new ArrayList<Doc>();
-			doc.setTitle(keyword);
-			System.out.println(doc.getTitle());
-			temp = docService.QueryEqualTitle(doc);
-			docList = docService.QueryLikeTitle(doc);
-
-			setAttribute("doc", temp);
-
-			setAttribute("doclist", docList);
-
-			getSession().setAttribute("doc", temp);
-			if (temp.getAuthor() != null) { // 查不到对象
-				if (temp.getDocPath().endsWith(".doc")
-						|| temp.getDocPath().endsWith(".docx")) {
-					setAttribute("type", "doc");
-					return "success";
-				} else if (temp.getDocPath().endsWith(".pdf")) {
-					setAttribute("type", "pdf");
-					return "success";
-
-				} else if (temp.getDocPath().endsWith(".ppt")) {
-					setAttribute("type", "ppt");
-					return "success";
-				} else {
-					setAttribute("type", "xls");
-					return "success";
-				}
-			} else {
-				return "allDoc";
-			}
-		} else {
-			return "allDoc";
-		}
-
 	}
 
 	/**
@@ -403,7 +321,7 @@ public class DocAction extends BaseAction {
 
 	public void searchByid() throws IOException {
 		int id = Integer.parseInt(getParameter("id"));
-		List<Doc> list = docService.findById(id);
+		List<Doc> list = docServiceImpl.findById(id);
 		if (list.size() != 0) {
 			out().print("success");
 		} else {
@@ -417,29 +335,21 @@ public class DocAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	/*
-	 * public String passDoc() { // int state =
-	 * Integer.parseInt(getParameter("state")); // System.err.println(state);
-	 * List<Doc> d = docService.findById(Integer.parseInt(getParameter("id")));
-	 * doc = d.get(0); doc.setIsPass(true); docService.passDoc(doc); int
-	 * totalpage = docService.getPage(pageNo, pageContSize).getTotalPage();
-	 * pageNo = Integer.parseInt(getParameter("pageNo")); if (totalpage <
-	 * pageNo) { pageNo = pageNo - 1; } setAttribute("pageNo", pageNo); //
-	 * setAttribute("state", state); return "pass_success"; }
-	 */
 	public String passDoc() {
 		int state = Integer.parseInt(getParameter("state"));
-		List<Doc> d = docService.findById(Integer.parseInt(getParameter("id")));
+		List<Doc> d = docServiceImpl.findById(Integer
+				.parseInt(getParameter("id")));
 		doc = d.get(0);
 		doc.setIsPass(true);
-		docService.passDoc(doc);
-		int totalpage = docService.getPage(pageNo, pageContSize, false)
+		docServiceImpl.passDoc(doc);
+		int totalpage = docServiceImpl.getPage(pageNo, pageContSize, false)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		setAttribute("page", docService.getPage(state, pageNo, pageContSize));
+		setAttribute("page",
+				docServiceImpl.getPage(state, pageNo, pageContSize));
 		setAttribute("state", state);
 		return "list";
 	}
@@ -454,18 +364,19 @@ public class DocAction extends BaseAction {
 		String[] ids = getRequest().getParameterValues("checkAll");
 		for (int i = 0; i < ids.length; i++) {
 			int id = Integer.parseInt(ids[i]);
-			List<Doc> d = docService.findById(id);
+			List<Doc> d = docServiceImpl.findById(id);
 			doc = d.get(0);
 			doc.setIsPass(true);
-			docService.passDoc(doc);
+			docServiceImpl.passDoc(doc);
 		}
-		int totalpage = docService.getPage(pageNo, pageContSize, false)
+		int totalpage = docServiceImpl.getPage(pageNo, pageContSize, false)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		setAttribute("page", docService.getPage(state, pageNo, pageContSize));
+		setAttribute("page",
+				docServiceImpl.getPage(state, pageNo, pageContSize));
 		setAttribute("state", state);
 		return "list";
 	}
@@ -476,7 +387,7 @@ public class DocAction extends BaseAction {
 	 * @return
 	 */
 	public String reading() {
-		Doc doc = docService.reading(Integer.parseInt(getParameter("id")));
+		Doc doc = docServiceImpl.reading(Integer.parseInt(getParameter("id")));
 		setAttribute("docPath", doc.getDocPath());
 		setAttribute("type", doc.getFormat());
 		return "reading";
@@ -520,5 +431,23 @@ public class DocAction extends BaseAction {
 
 	public void setUploadFileFileName(String uploadFileFileName) {
 		this.uploadFileFileName = uploadFileFileName;
+	}
+
+	public DocService getDocServiceImpl() {
+		return docServiceImpl;
+	}
+
+	@Resource
+	public void setDocServiceImpl(DocService docServiceImpl) {
+		this.docServiceImpl = docServiceImpl;
+	}
+
+	public TypeService getTypeServiceImpl() {
+		return typeServiceImpl;
+	}
+
+	@Resource
+	public void setTypeServiceImpl(TypeService typeServiceImpl) {
+		this.typeServiceImpl = typeServiceImpl;
 	}
 }

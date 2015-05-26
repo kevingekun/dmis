@@ -4,30 +4,26 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
 
-import net.sf.json.JSONArray;
 import lab.common.web.BaseAction;
 import lab.dmis.model.User;
 import lab.dmis.service.DownloadRecoderService;
 import lab.dmis.util.JsonSerialization;
 import lab.dmis.util.Str;
+import net.sf.json.JSONArray;
 
 public class DownloadRecoderAction extends BaseAction {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	
-	@Autowired
-	private DownloadRecoderService downloadRecoderService;
-	
+
+	private DownloadRecoderService downloadRecoderServiceImpl;
+
 	private int pageNo = 1;
 	private int pageContSize = 6;
-	
+
 	private InputStream inputStream;
-	
+
 	public InputStream getInputStream() {
 		return inputStream;
 	}
@@ -38,47 +34,54 @@ public class DownloadRecoderAction extends BaseAction {
 
 	JSONArray jsonArray;
 
-	
 	/**
 	 * 获取下载记录
+	 * 
 	 * @throws IOException
 	 */
-	public void getDownloadRecoder() throws IOException{
+	public void getDownloadRecoder() throws IOException {
 
-		User uu=(User)getSession().getAttribute("LOGIN_USER");
-		String userId=uu.getId().toString();			
-		jsonArray = JSONArray.fromObject(downloadRecoderService.getPage(pageNo, pageContSize,userId),JsonSerialization.jsonSer(Str.str));
+		User uu = (User) getSession().getAttribute("LOGIN_USER");
+		String userId = uu.getId().toString();
+		jsonArray = JSONArray.fromObject(downloadRecoderServiceImpl.getPage(
+				pageNo, pageContSize, userId), JsonSerialization
+				.jsonSer(Str.str));
 
 		out().print(jsonArray.toString());
 	}
-	
+
 	/**
 	 * 删除一个downloadRecoder
+	 * 
 	 * @return
 	 */
-	public String delete(){
-		boolean isSuccess = downloadRecoderService.remove(Integer.parseInt(getParameter("id")));
-		inputStream = new ByteArrayInputStream((isSuccess?"success":"failed").getBytes());
+	public String delete() {
+		boolean isSuccess = downloadRecoderServiceImpl.remove(Integer
+				.parseInt(getParameter("id")));
+		inputStream = new ByteArrayInputStream((isSuccess ? "success"
+				: "failed").getBytes());
 		return "delete";
 	}
-	
+
 	/**
 	 * 删除选中的上传记录
-	 * @throws IOException 
+	 * 
+	 * @throws IOException
 	 */
-	public void removeChecked() throws IOException{
-		String message = downloadRecoderService.removeChecked(getParameter("ids"))?"success":"failed";
+	public void removeChecked() throws IOException {
+		String message = downloadRecoderServiceImpl
+				.removeChecked(getParameter("ids")) ? "success" : "failed";
 		out().print(message);
 	}
-	
-	
-	public DownloadRecoderService getDownloadRecoderService() {
-		return downloadRecoderService;
+
+	public DownloadRecoderService getDownloadRecoderServiceImpl() {
+		return downloadRecoderServiceImpl;
 	}
 
-	public void setDownloadRecoderService(
-			DownloadRecoderService downloadRecoderService) {
-		this.downloadRecoderService = downloadRecoderService;
+	@Resource
+	public void setDownloadRecoderServiceImpl(
+			DownloadRecoderService downloadRecoderServiceImpl) {
+		this.downloadRecoderServiceImpl = downloadRecoderServiceImpl;
 	}
 
 	public int getPageNo() {

@@ -1,12 +1,15 @@
 package lab.dmis.model;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
@@ -19,16 +22,13 @@ public class Doc implements java.io.Serializable {
 	private String author;
 	private String brief;
 	private String category;
-	// private Set<Comment> comments = new HashSet<Comment>();
 	private String docPath;
-	// private Set<Downloadrecoder> downloadrecoders = new
-	// HashSet<Downloadrecoder>();
 	private Integer downloadTimes;
 	private String format;
 	private Integer id;
 	private Boolean isPass;
 	private String journal;
-	// private Set<Keyworddoc> kds = new HashSet<Keyworddoc>();
+	private Set<Keyword> keywords = new HashSet<Keyword>();
 	private Integer language;
 	private Integer level;
 	private String publishedTime;
@@ -71,29 +71,17 @@ public class Doc implements java.io.Serializable {
 		return this.id;
 	}
 
-	/*
-	 * @OneToMany(mappedBy = "doc") public Set<Comment> getComments() { return
-	 * this.comments; }
-	 */
-
-	/*
-	 * public String getFilename() { String fileName = this.docPath
-	 * .substring(this.docPath.lastIndexOf("/") + 1);
-	 * 
-	 * return fileName; }
-	 */
-
 	public Boolean getIsPass() {
 		return this.isPass;
 	}
 
-	/*
-	 * @OneToMany(mappedBy = "doc") public Set<Downloadrecoder>
-	 * getDownloadrecoders() { return this.downloadrecoders; }
-	 */
-
 	public String getJournal() {
 		return this.journal;
+	}
+
+	@ManyToMany(mappedBy = "docs")
+	public Set<Keyword> getKeywords() {
+		return keywords;
 	}
 
 	@Column(nullable = false)
@@ -108,11 +96,6 @@ public class Doc implements java.io.Serializable {
 	public String getPublishedTime() {
 		return this.publishedTime;
 	}
-
-	/*
-	 * @OneToMany(mappedBy = "doc") public Set<Keyworddoc> getKds() { return
-	 * kds; }
-	 */
 
 	@Column(nullable = false)
 	public String getTitle() {
@@ -165,19 +148,9 @@ public class Doc implements java.io.Serializable {
 		this.downloadTimes = downloadTimes;
 	}
 
-	/*
-	 * public void setComments(Set<Comment> comments) { this.comments =
-	 * comments; }
-	 */
-
 	public void setFormat(String format) {
 		this.format = format;
 	}
-
-	/*
-	 * public void setDownloadrecoders(Set<Downloadrecoder> downloadrecoders) {
-	 * this.downloadrecoders = downloadrecoders; }
-	 */
 
 	public void setId(Integer id) {
 		this.id = id;
@@ -191,6 +164,10 @@ public class Doc implements java.io.Serializable {
 		this.journal = journal;
 	}
 
+	public void setKeywords(Set<Keyword> keywords) {
+		this.keywords = keywords;
+	}
+
 	public void setLanguage(Integer language) {
 		this.language = language;
 	}
@@ -198,10 +175,6 @@ public class Doc implements java.io.Serializable {
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
-
-	/*
-	 * public void setKds(Set<Keyworddoc> kds) { this.kds = kds; }
-	 */
 
 	public void setPublishedTime(String publishedTime) {
 		this.publishedTime = publishedTime;

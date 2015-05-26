@@ -15,7 +15,6 @@
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="org.gjt.mm.mysql.Driver" />
-		
 		<property name="url" value="jdbc:mysql://localhost:3306/dmis" />
 		<property name="username" value="root" />
 		<property name="password" value="root" /> 

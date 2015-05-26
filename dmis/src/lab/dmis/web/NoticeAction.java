@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import lab.common.web.BaseAction;
 import lab.dmis.model.Notice;
 import lab.dmis.service.NoticeService;
@@ -12,17 +14,11 @@ import lab.dmis.util.JsonSerialization;
 import lab.dmis.util.Str;
 import net.sf.json.JSONArray;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class NoticeAction extends BaseAction {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	@Autowired
-	private NoticeService noticeService;
+	private NoticeService noticeServiceImpl;
 
 	private Notice notice;
 	private int pageNo = 1;
@@ -38,7 +34,7 @@ public class NoticeAction extends BaseAction {
 	public void getNotices() throws IOException {
 
 		jsonArray = JSONArray.fromObject(
-				noticeService.getPage(pageNo, pageContSize),
+				noticeServiceImpl.getPage(pageNo, pageContSize),
 				JsonSerialization.jsonSer(Str.str));
 
 		out().print(jsonArray.toString());
@@ -51,7 +47,7 @@ public class NoticeAction extends BaseAction {
 	 */
 	public String add() {
 		notice.setTime(new Timestamp(new Date().getTime()));
-		noticeService.addNotice(notice);
+		noticeServiceImpl.addNotice(notice);
 		// int totalpage = noticeService.getPage(pageNo,
 		// pageContSize).getTotalPage();
 		// getRequest().setAttribute("pageNo", totalpage);
@@ -64,7 +60,7 @@ public class NoticeAction extends BaseAction {
 	 * @return
 	 */
 	public String list() {
-		setAttribute("page", noticeService.getPage(pageNo, pageContSize));
+		setAttribute("page", noticeServiceImpl.getPage(pageNo, pageContSize));
 		return "list";
 	}
 
@@ -74,14 +70,14 @@ public class NoticeAction extends BaseAction {
 	 */
 	public String listNotice() {
 		// pageNo = Integer.parseInt(getParameter("pageNo"));
-		setAttribute("page", noticeService.getPage(pageNo, pageContSize));
+		setAttribute("page", noticeServiceImpl.getPage(pageNo, pageContSize));
 		return "list";
 	}
 
 	public String listAll() { // setAttribute("recentNotice",noticeService.getPage(1,
 								// 5));
 		setAttribute("actionName", getActionName());
-		setAttribute("page", noticeService.getPage(pageNo, pageContSize));
+		setAttribute("page", noticeServiceImpl.getPage(pageNo, pageContSize));
 		return "listAll";
 	}
 
@@ -91,8 +87,8 @@ public class NoticeAction extends BaseAction {
 	 * @return
 	 */
 	public String delete2() {
-		noticeService.deleteById(Integer.parseInt(getParameter("id")));
-		int totalpage = noticeService.getPage(pageNo, pageContSize)
+		noticeServiceImpl.deleteById(Integer.parseInt(getParameter("id")));
+		int totalpage = noticeServiceImpl.getPage(pageNo, pageContSize)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
@@ -115,8 +111,8 @@ public class NoticeAction extends BaseAction {
 		} else {
 			ids = getRequest().getParameterValues("checkAll");
 		}
-		noticeService.deleteByIds(ids);
-		int totalpage = noticeService.getPage(pageNo, pageContSize)
+		noticeServiceImpl.deleteByIds(ids);
+		int totalpage = noticeServiceImpl.getPage(pageNo, pageContSize)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
@@ -128,7 +124,7 @@ public class NoticeAction extends BaseAction {
 
 	public void checkNotice() throws IOException {
 		int id = Integer.parseInt(getParameter("id"));
-		List<Notice> list = noticeService.findById(id);
+		List<Notice> list = noticeServiceImpl.findById(id);
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		getResponse().setCharacterEncoding("utf-8");
 		getResponse().getWriter().write(jsonArray.toString());
@@ -150,12 +146,13 @@ public class NoticeAction extends BaseAction {
 		this.pageContSize = pageContSize;
 	}
 
-	public NoticeService getNoticeService() {
-		return noticeService;
+	public NoticeService getNoticeServiceImpl() {
+		return noticeServiceImpl;
 	}
 
-	public void setNoticeService(NoticeService noticeService) {
-		this.noticeService = noticeService;
+	@Resource
+	public void setNoticeServiceImpl(NoticeService noticeServiceImpl) {
+		this.noticeServiceImpl = noticeServiceImpl;
 	}
 
 	public int getPageNo() {

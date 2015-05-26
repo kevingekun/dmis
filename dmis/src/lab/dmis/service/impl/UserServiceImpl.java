@@ -2,21 +2,21 @@ package lab.dmis.service.impl;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import lab.common.model.Page;
 import lab.common.service.impl.BaseManagerImpl;
 import lab.dmis.dao.UserDao;
 import lab.dmis.model.User;
 import lab.dmis.service.UserService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 		UserService {
 
-	@Autowired
-	private UserDao userDao;
+	private UserDao userDaoImpl;
 
 	/**
 	 * 用户登录检查
@@ -25,7 +25,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	public List<User> loginCheck(User user) {
 		String hql = "from User user where user.name ='" + user.getName()
 				+ "' and user.password = '" + user.getPassword() + "'";
-		return userDao.find(hql);
+		return userDaoImpl.find(hql);
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	public List<User> forgotCheck(User user) {
 		String hql = "from User user where user.name ='" + user.getName()
 				+ "' and user.email = '" + user.getEmail() + "'";
-		return userDao.find(hql);
+		return userDaoImpl.find(hql);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	public List<User> NameAndVerfiCheck(User user) {
 		String hql = "from User user where user.name = '" + user.getName()
 				+ "'";
-		return userDao.find(hql);
+		return userDaoImpl.find(hql);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	 */
 	public void editUser(User user) {
 
-		userDao.update(user);
+		userDaoImpl.update(user);
 
 	}
 
@@ -62,11 +62,11 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	 * 用户重置密码
 	 */
 	public void PasswordUpdate(User user) {
-		userDao.update(user);
+		userDaoImpl.update(user);
 	}
 
 	public void resetPassword(User user) {
-		userDao.update(user);
+		userDaoImpl.update(user);
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	 */
 	public Page getPage(int pageNo, int pageContSize) {
 		String sql = "from User";
-		return userDao.getPage(sql, pageNo, pageContSize);
+		return userDaoImpl.getPage(sql, pageNo, pageContSize);
 	}
 
 	public Page getPage(int state, int pageNo, int pageContSize) {
@@ -82,15 +82,15 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 		String hql1 = "from User u  order by u.id DESC";
 		String hql2 = "from User u where u.isForbidden=1 order by u.id DESC";
 		if (state == 1) {
-			return userDao.getPage(hql1, pageNo, pageContSize);
+			return userDaoImpl.getPage(hql1, pageNo, pageContSize);
 		} else {
-			return userDao.getPage(hql2, pageNo, pageContSize);
+			return userDaoImpl.getPage(hql2, pageNo, pageContSize);
 		}
 	}
 
 	public Page getPage(int pageNo, int pageContSize, boolean isForbidden) {
 		String hql = "from User u where u.isForbidden=1  order by u.id DESC";
-		return userDao.getPage(hql, pageNo, pageContSize);
+		return userDaoImpl.getPage(hql, pageNo, pageContSize);
 	}
 
 	/**
@@ -98,14 +98,14 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	 */
 	@Override
 	public void deleteById(int id) {
-		userDao.deleteByKey(id);
+		userDaoImpl.deleteByKey(id);
 	}
 
 	@Override
 	public void deleteByIds(String[] ids) {
 		for (int i = 0; i < ids.length; i++) {
 			int id = Integer.parseInt(ids[i]);
-			userDao.deleteByKey(id);
+			userDaoImpl.deleteByKey(id);
 		}
 
 	}
@@ -115,7 +115,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	 */
 	@Override
 	public void addUser(User user) {
-		userDao.save(user);
+		userDaoImpl.save(user);
 	}
 
 	/**
@@ -123,7 +123,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	 */
 	@Override
 	public void changeState(User user) {
-		userDao.update(user);
+		userDaoImpl.update(user);
 	}
 
 	/**
@@ -133,7 +133,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	@Override
 	public List<User> findById(int id) {
 		String sql = "from User where id='" + id + "'";
-		return userDao.find(sql);
+		return userDaoImpl.find(sql);
 	}
 
 	/**
@@ -143,15 +143,15 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	@Override
 	public List<User> checkUserName(String username) {
 		String sql = "from User user where user.name='" + username + "'";
-		return userDao.find(sql);
+		return userDaoImpl.find(sql);
 	}
 
-	public UserDao getUserDao() {
-		return userDao;
+	public UserDao getUserDaoImpl() {
+		return userDaoImpl;
 	}
 
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
+	@Resource
+	public void setUserDaoImpl(UserDao userDaoImpl) {
+		this.userDaoImpl = userDaoImpl;
 	}
-
 }

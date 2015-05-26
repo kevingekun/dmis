@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import lab.common.model.Page;
 import lab.common.service.impl.BaseManagerImpl;
 import lab.common.util.Common;
@@ -12,15 +14,13 @@ import lab.dmis.model.Doc;
 import lab.dmis.model.User;
 import lab.dmis.service.DocService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 		DocService {
 
-	@Autowired
-	private DocDao docDao;
+	private DocDao docDaoImpl;
 	private Doc doc;
 	String hql = "";
 
@@ -31,7 +31,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	@Override
 	public List<Integer> countByCategory() {
 		String sql = "select count(*) from Doc doc group by doc.format";
-		return docDao.find(sql);
+		return docDaoImpl.find(sql);
 	}
 
 	/**
@@ -41,7 +41,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	@Override
 	public List<Integer> countByLevel() {
 		String sql = "select count(*) from Doc doc group by doc.level";
-		return docDao.find(sql);
+		return docDaoImpl.find(sql);
 	}
 
 	/**
@@ -70,10 +70,10 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 				+ (now.get(Calendar.YEAR) - 1)
 				+ " GROUP BY dr.doc.id ORDER BY count(dr.doc.id) DESC limit 10";
 		try {
-			list.add(docDao.find(sql1));
-			list.add(docDao.find(sql2));
-			list.add(docDao.find(sql3));
-			list.add(docDao.find(sql4));
+			list.add(docDaoImpl.find(sql1));
+			list.add(docDaoImpl.find(sql2));
+			list.add(docDaoImpl.find(sql3));
+			list.add(docDaoImpl.find(sql4));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,7 +88,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	 */
 	public Page getPage(int pageNo, int pageContSize) {
 		hql = "from Doc doc order by doc.id DESC";
-		return docDao.getPage(hql, pageNo, pageContSize);
+		return docDaoImpl.getPage(hql, pageNo, pageContSize);
 	}
 
 	public Page getPage(int pageNo, int pageContSize, boolean isPass) {
@@ -97,7 +97,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 			pass = 1;
 		}
 		hql = "from Doc doc where doc.isPass=" + pass + " order by doc.id DESC";
-		return docDao.getPage(hql, pageNo, pageContSize);
+		return docDaoImpl.getPage(hql, pageNo, pageContSize);
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	public Page getPage(int pageNo, int pageContSize, User user) {
 		hql = "from Doc doc where doc.level>=" + user.getRole()
 				+ " order by doc.id DESC";
-		return docDao.getPage(hql, pageNo, pageContSize);
+		return docDaoImpl.getPage(hql, pageNo, pageContSize);
 	}
 
 	public Page getPage(int state, int pageNo, int pageContSize) {
@@ -114,11 +114,11 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 		String hql2 = "from Doc d where d.isPass=1 order by d.id DESC";
 		String hql3 = "from Doc d where d.isPass=0 order by d.id";
 		if (state == 2) {
-			return docDao.getPage(hql1, pageNo, pageContSize);
+			return docDaoImpl.getPage(hql1, pageNo, pageContSize);
 		} else if (state == 1) {
-			return docDao.getPage(hql2, pageNo, pageContSize);
+			return docDaoImpl.getPage(hql2, pageNo, pageContSize);
 		} else /* if(state == "0") */{
-			return docDao.getPage(hql3, pageNo, pageContSize);
+			return docDaoImpl.getPage(hql3, pageNo, pageContSize);
 		}
 	}
 
@@ -161,14 +161,14 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 		}
 
 		hql += " order by doc.id DESC";
-		return docDao.getPage(hql, pageNo, pageContSize);
+		return docDaoImpl.getPage(hql, pageNo, pageContSize);
 	}
 
 	@Override
 	public Doc QueryEqualTitle(Doc doc) {
 		// TODO Auto-generated method stub
 		Doc docTemp = new Doc();
-		docTemp = docDao.QueryEqualTitle(doc);
+		docTemp = docDaoImpl.QueryEqualTitle(doc);
 		return docTemp;
 	}
 
@@ -177,7 +177,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 		// TODO Auto-generated method stub
 		List<Doc> docListTemp = new ArrayList<Doc>();
 		List<Doc> docList = new ArrayList<Doc>();
-		docListTemp = docDao.QueryLikeTitle(doc);
+		docListTemp = docDaoImpl.QueryLikeTitle(doc);
 
 		for (int i = 0; i < 6 && i < docListTemp.size(); i++) { // 选取相关的前5个
 			if (docListTemp.get(i).getTitle() != doc.getTitle()) {
@@ -191,7 +191,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	@Override
 	public Doc QueryById(Doc doc) {
 		// TODO Auto-generated method stub
-		Doc temp = docDao.QueryById(doc);
+		Doc temp = docDaoImpl.QueryById(doc);
 		return temp;
 	}
 
@@ -199,7 +199,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	 * 靠主键删除文档
 	 */
 	public void deleteDocById(int id) {
-		docDao.deleteByKey(id);
+		docDaoImpl.deleteByKey(id);
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	@SuppressWarnings("unchecked")
 	public List<Doc> findById(int id) {
 		String hql = "from Doc where id='" + id + "'";
-		return docDao.find(hql);
+		return docDaoImpl.find(hql);
 	}
 
 	/**
@@ -219,7 +219,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	 * @return
 	 */
 	public void passDoc(Doc doc) {
-		docDao.update(doc);
+		docDaoImpl.update(doc);
 	}
 
 	/**
@@ -235,13 +235,13 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	 */
 	// 上传文献，数据库增加一条doc记录
 	public void uploaddocument(Doc doc) {
-		docDao.add(doc);
+		docDaoImpl.add(doc);
 	}
 
 	public void deleteByIds(String[] ids) {
 		for (int i = 0; i < ids.length; i++) {
 			int id = Integer.parseInt(ids[i]);
-			docDao.deleteByKey(id);
+			docDaoImpl.deleteByKey(id);
 		}
 
 	}
@@ -252,7 +252,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	public List<Doc> findAllByOriginalId(int originalId) {
 		String hql = "from Doc as d where d.originalId=" + originalId
 				+ " order by d.version desc";
-		return docDao.find(hql);
+		return docDaoImpl.find(hql);
 	}
 
 	/**
@@ -261,7 +261,7 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	 * @return
 	 */
 	public Doc reading(Integer id) {
-		return docDao.get(id);
+		return docDaoImpl.get(id);
 	}
 
 	public Doc getDoc() {
@@ -272,12 +272,12 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 		this.doc = doc;
 	}
 
-	public DocDao getDocDao() {
-		return docDao;
+	public DocDao getDocDaoImpl() {
+		return docDaoImpl;
 	}
 
-	public void setDocDao(DocDao docDao) {
-		this.docDao = docDao;
+	@Resource
+	public void setDocDaoImpl(DocDao docDaoImpl) {
+		this.docDaoImpl = docDaoImpl;
 	}
-
 }

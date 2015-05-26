@@ -2,10 +2,10 @@ package lab.dmis.web;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -17,22 +17,15 @@ import lab.common.web.BaseAction;
 import lab.dmis.model.User;
 import lab.dmis.service.UserService;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class SystemAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;
 
 	private InputStream inputStream;
 
-	@Autowired
-	private UserService userService;
+	private UserService userServiceImpl;
 
 	private User user;
-
-	String message = "";
-	@SuppressWarnings("rawtypes")
-	List<?> list = new ArrayList();
 
 	/**
 	 * 用户登录页面
@@ -49,7 +42,7 @@ public class SystemAction extends BaseAction {
 	 * @return
 	 */
 	public String LoginCheck() {
-		list = userService.loginCheck(user);
+		List<User> list = userServiceImpl.loginCheck(user);
 		if (list.size() != 0)
 			putObjToSession("LOGIN_USER", list.get(0));
 		String nameString = user.getName();
@@ -70,7 +63,7 @@ public class SystemAction extends BaseAction {
 	 */
 
 	public void UpdatePasswordBySendMail() throws Exception {
-		List<User> list = userService.forgotCheck(user);
+		List<User> list = userServiceImpl.forgotCheck(user);
 		if (list.size() != 0 && list.get(0).getEmail() != null) {
 			Properties props = new Properties();
 			props.put("mail.smtp.host", "smtp.163.com");
@@ -95,7 +88,7 @@ public class SystemAction extends BaseAction {
 			// 正文
 			message.setText(text + password + end);
 			list.get(0).setPassword(String.valueOf(password));
-			userService.update(list.get(0));
+			userServiceImpl.update(list.get(0));
 
 			message.saveChanges();
 			session.setDebug(true);// 控制台输出
@@ -124,12 +117,13 @@ public class SystemAction extends BaseAction {
 		return inputStream;
 	}
 
-	public UserService getUserService() {
-		return userService;
+	public UserService getUserServiceImpl() {
+		return userServiceImpl;
 	}
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	@Resource
+	public void setUserServiceImpl(UserService userServiceImpl) {
+		this.userServiceImpl = userServiceImpl;
 	}
 
 	public User getUser() {

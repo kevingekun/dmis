@@ -5,24 +5,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.Resource;
+
 import lab.common.web.BaseAction;
 import lab.dmis.model.User;
-import lab.dmis.service.DocService;
-import lab.dmis.service.NoticeService;
 import lab.dmis.service.UserService;
-
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;
 
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private DocService docService;
-	@Autowired
-	private NoticeService noticeService;
+	private UserService userServiceImpl;
 
 	private User user;
 	private int pageNo = 1;
@@ -77,11 +70,11 @@ public class UserAction extends BaseAction {
 		int state = Integer.parseInt(getParameter("state"));
 		if (getParameter("pageNo") == null) {
 			setAttribute("page",
-					userService.getPage(state, pageNo, pageContSize));
+					userServiceImpl.getPage(state, pageNo, pageContSize));
 			setAttribute("state", state);
 			return "list";
 		} else {
-			setAttribute("page", userService.getPage(state,
+			setAttribute("page", userServiceImpl.getPage(state,
 					Integer.parseInt(getParameter("pageNo")), pageContSize));
 			setAttribute("state", state);
 			return "list";
@@ -90,7 +83,7 @@ public class UserAction extends BaseAction {
 	}
 
 	public String listByState() {
-		setAttribute("page", userService.getPage(pageNo, pageContSize));
+		setAttribute("page", userServiceImpl.getPage(pageNo, pageContSize));
 		return "list";
 	}
 
@@ -105,11 +98,11 @@ public class UserAction extends BaseAction {
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(username);
 		if (m.matches()) {
-			if (userService.checkUserName(username).size() != 0) {
+			if (userServiceImpl.checkUserName(username).size() != 0) {
 				return "error";
 			} else {
-				userService.addUser(user);
-				int totalpage = userService.getPage(pageNo, pageContSize)
+				userServiceImpl.addUser(user);
+				int totalpage = userServiceImpl.getPage(pageNo, pageContSize)
 						.getTotalPage();
 				getRequest().setAttribute("pageNo", totalpage);
 				return "listUser";
@@ -126,7 +119,7 @@ public class UserAction extends BaseAction {
 	 */
 	public String listUser() {
 		pageNo = Integer.parseInt(getParameter("pageNo"));
-		setAttribute("page", userService.getPage(1, 1, pageContSize));
+		setAttribute("page", userServiceImpl.getPage(1, 1, pageContSize));
 		setAttribute("state", 1);
 		return "list";
 	}
@@ -137,8 +130,8 @@ public class UserAction extends BaseAction {
 	 * @return
 	 */
 	public String delete2() {
-		userService.deleteById(Integer.parseInt(getParameter("id")));
-		int totalpage = userService.getPage(pageNo, pageContSize)
+		userServiceImpl.deleteById(Integer.parseInt(getParameter("id")));
+		int totalpage = userServiceImpl.getPage(pageNo, pageContSize)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
@@ -166,16 +159,17 @@ public class UserAction extends BaseAction {
 		} else {
 			ids = getRequest().getParameterValues("checkAll");
 		}
-		userService.deleteByIds(ids);
+		userServiceImpl.deleteByIds(ids);
 
-		int totalpage = userService.getPage(pageNo, pageContSize, isF)
+		int totalpage = userServiceImpl.getPage(pageNo, pageContSize, isF)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		System.out.println(pageNo);
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		setAttribute("page", userService.getPage(state, pageNo, pageContSize));
+		setAttribute("page",
+				userServiceImpl.getPage(state, pageNo, pageContSize));
 		setAttribute("state", state);
 		return "list";
 	}
@@ -190,7 +184,7 @@ public class UserAction extends BaseAction {
 		int id = Integer.parseInt(getParameter("id"));
 		boolean isF = false;
 		int totalpage = 0;
-		List<User> u = userService.findById(id);
+		List<User> u = userServiceImpl.findById(id);
 		System.err.println(id);
 		user = u.get(0);
 		if (user.getIsForbidden() == true) {
@@ -199,19 +193,20 @@ public class UserAction extends BaseAction {
 		} else {
 			user.setIsForbidden(true);
 		}
-		userService.changeState(user);
+		userServiceImpl.changeState(user);
 		if (state == 1) {
-			totalpage = userService.getPage(pageNo, pageContSize)
+			totalpage = userServiceImpl.getPage(pageNo, pageContSize)
 					.getTotalPage();
 		} else {
-			totalpage = userService.getPage(pageNo, pageContSize, isF)
+			totalpage = userServiceImpl.getPage(pageNo, pageContSize, isF)
 					.getTotalPage();
 		}
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		setAttribute("page", userService.getPage(state, pageNo, pageContSize));
+		setAttribute("page",
+				userServiceImpl.getPage(state, pageNo, pageContSize));
 		setAttribute("state", state);
 		return "list";
 	}
@@ -223,7 +218,7 @@ public class UserAction extends BaseAction {
 	 */
 	public void checkUserName() throws IOException {
 		String username = getParameter("username");
-		if (userService.checkUserName(username).size() != 0) {
+		if (userServiceImpl.checkUserName(username).size() != 0) {
 			out().print("false");
 		} else {
 			out().print("true");
@@ -237,20 +232,21 @@ public class UserAction extends BaseAction {
 	 */
 	public void changRole() throws IOException {
 		int role = Integer.parseInt(getParameter("role"));
-		List<User> u = userService.findById(Integer
+		List<User> u = userServiceImpl.findById(Integer
 				.parseInt(getParameter("id")));
 		user = u.get(0);
 		user.setRole(role);
-		userService.changeState(user);
+		userServiceImpl.changeState(user);
 		out().print("true");
 	}
 
-	public UserService getUserService() {
-		return userService;
+	public UserService getUserServiceImpl() {
+		return userServiceImpl;
 	}
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
+	@Resource
+	public void setUserServiceImpl(UserService userServiceImpl) {
+		this.userServiceImpl = userServiceImpl;
 	}
 
 	public User getUser() {

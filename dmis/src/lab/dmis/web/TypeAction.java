@@ -2,8 +2,9 @@ package lab.dmis.web;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Resource;
 
 import lab.common.web.BaseAction;
 import lab.dmis.model.Type;
@@ -13,31 +14,21 @@ import lab.dmis.util.Str;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class TypeAction extends BaseAction {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	@Autowired
-	private TypeService typeService;
+	private TypeService typeServiceImpl;
 	private int pageNo = 1;
 	private int pageContSize = 4;
-
-	@SuppressWarnings("rawtypes")
-	List<?> list = new ArrayList();
 
 	/**
 	 * 获取分类
 	 * 
-	 * @return
 	 * @throws IOException
 	 */
 	public void getType() throws IOException {
-		list = typeService.getType();
+		List<Type> list = typeServiceImpl.getType();
 		out().print(
 				JSONArray.fromObject(list, JsonSerialization.jsonSer(Str.str))
 						.toString());
@@ -61,32 +52,32 @@ public class TypeAction extends BaseAction {
 			type.setParent(findById(sid));
 			// type.setParentId(sid);
 			type.setLevel(3);
-			typeService.addType(type);
+			typeServiceImpl.addType(type);
 		} else if (fid != -1) {
 			type.setName(typename);
 			type.setParent(findById(fid));
 			// type.setParentId(fid);
 			type.setLevel(2);
-			typeService.addType(type);
+			typeServiceImpl.addType(type);
 		} else {
 			type.setName(typename);
 			type.setParent(findById(0));
 			// type.setParentId(0);
 			type.setLevel(1);
-			typeService.addType(type);
+			typeServiceImpl.addType(type);
 		}
 		return "listAll";
 	}
 
 	public String listAll() {
-		setAttribute("firstType", typeService.firstType()); // 查询所有一级类别，存到firstType,前台遍历firstType
+		setAttribute("firstType", typeServiceImpl.firstType()); // 查询所有一级类别，存到firstType,前台遍历firstType
 		if (getParameter("pageNo") == null) {
-			setAttribute("page", typeService.getPage(pageNo, pageContSize));
+			setAttribute("page", typeServiceImpl.getPage(pageNo, pageContSize));
 			setAttribute("state", 0);
 			return "list";
 
 		} else {
-			setAttribute("page", typeService.getPage(
+			setAttribute("page", typeServiceImpl.getPage(
 					Integer.parseInt(getParameter("pageNo")), pageContSize));
 			setAttribute("state", 0);
 			return "list";
@@ -100,14 +91,14 @@ public class TypeAction extends BaseAction {
 	 */
 	public String list() {
 		int state = Integer.parseInt(getParameter("state"));
-		setAttribute("firstType", typeService.firstType()); // 查询所有一级类别，存到firstType,前台遍历firstType
+		setAttribute("firstType", typeServiceImpl.firstType()); // 查询所有一级类别，存到firstType,前台遍历firstType
 		if (getParameter("pageNo") == null) {
 			setAttribute("page",
-					typeService.getPage(state, pageNo, pageContSize));
+					typeServiceImpl.getPage(state, pageNo, pageContSize));
 			setAttribute("state", state);
 			return "list";
 		} else {
-			setAttribute("page", typeService.getPage(state,
+			setAttribute("page", typeServiceImpl.getPage(state,
 					Integer.parseInt(getParameter("pageNo")), pageContSize));
 			setAttribute("state", state);
 			return "list";
@@ -115,7 +106,7 @@ public class TypeAction extends BaseAction {
 	}
 
 	public void lista() throws IOException {
-		List<Type> list = typeService.firstType();
+		List<Type> list = typeServiceImpl.firstType();
 		JsonConfig cfg = new JsonConfig();
 		cfg.setExcludes(new String[] { "docs" });
 		JSONArray json = JSONArray.fromObject(list, cfg);
@@ -126,7 +117,7 @@ public class TypeAction extends BaseAction {
 	public void listaByParentId() throws IOException {
 		int parentid = Integer.parseInt(getParameter("parentid"));
 		try {
-			List<Type> listTwo = typeService.secondType(parentid);
+			List<Type> listTwo = typeServiceImpl.secondType(parentid);
 			JsonConfig cfg = new JsonConfig();
 			cfg.setExcludes(new String[] { "docs" });
 			JSONArray json = JSONArray.fromObject(listTwo, cfg);
@@ -134,14 +125,13 @@ public class TypeAction extends BaseAction {
 			getResponse().setCharacterEncoding("utf-8");
 			getResponse().getWriter().write(json.toString());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public void listaaByParentId() throws IOException {
 		int parentid = Integer.parseInt(getParameter("parentid"));
-		List<Type> listThree = typeService.thirdType(parentid);
+		List<Type> listThree = typeServiceImpl.thirdType(parentid);
 		JsonConfig cfg = new JsonConfig();
 		cfg.setExcludes(new String[] { "docs" });
 		JSONArray json = JSONArray.fromObject(listThree, cfg);
@@ -152,13 +142,14 @@ public class TypeAction extends BaseAction {
 
 	public void listByParentId() throws IOException {
 		int parentid = Integer.parseInt(getParameter("parentid"));
-		JSONArray json = JSONArray.fromObject(typeService.secondType(parentid));
+		JSONArray json = JSONArray.fromObject(typeServiceImpl
+				.secondType(parentid));
 		getResponse().setCharacterEncoding("utf-8");
 		getResponse().getWriter().write(json.toString());
 	}
 
 	public Type findById(int id) {
-		return typeService.findById(id);
+		return typeServiceImpl.findById(id);
 	}
 
 	public void findByName() throws IOException {
@@ -166,7 +157,7 @@ public class TypeAction extends BaseAction {
 		String typeName = java.net.URLDecoder.decode(getParameter("typeName"),
 				"UTF-8");
 		// System.err.println(typeName);
-		List<Type> list = typeService.getByName(typeName);
+		List<Type> list = typeServiceImpl.getByName(typeName);
 		if (list.size() == 0) {
 			out().print("true");
 		} else {
@@ -181,16 +172,17 @@ public class TypeAction extends BaseAction {
 	 */
 	public String delete() {
 		int state = Integer.parseInt(getParameter("state"));
-		typeService.deleteTypeById(Integer.parseInt(getParameter("id")));
+		typeServiceImpl.deleteTypeById(Integer.parseInt(getParameter("id")));
 
-		int totalpage = typeService.getPage(state, pageNo, pageContSize)
+		int totalpage = typeServiceImpl.getPage(state, pageNo, pageContSize)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		setAttribute("page", typeService.getPage(state, pageNo, pageContSize));
-		setAttribute("firstType", typeService.firstType());
+		setAttribute("page",
+				typeServiceImpl.getPage(state, pageNo, pageContSize));
+		setAttribute("firstType", typeServiceImpl.firstType());
 		setAttribute("state", state);
 		return "list";
 	}
@@ -203,25 +195,26 @@ public class TypeAction extends BaseAction {
 	public String delete_check() {
 		int state = Integer.parseInt(getParameter("state"));
 		String[] ids = getRequest().getParameterValues("checkAll");
-		typeService.deleteByIds(ids);
-		int totalpage = typeService.getPage(state, pageNo, pageContSize)
+		typeServiceImpl.deleteByIds(ids);
+		int totalpage = typeServiceImpl.getPage(state, pageNo, pageContSize)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}
-		setAttribute("page", typeService.getPage(state, pageNo, pageContSize));
-		setAttribute("firstType", typeService.firstType());
+		setAttribute("page",
+				typeServiceImpl.getPage(state, pageNo, pageContSize));
+		setAttribute("firstType", typeServiceImpl.firstType());
 		setAttribute("state", state);
 		return "list";
 	}
 
-	public TypeService getTypeService() {
-		return typeService;
+	public TypeService getTypeServiceImpl() {
+		return typeServiceImpl;
 	}
 
-	public void setTypeService(TypeService typeService) {
-		this.typeService = typeService;
+	@Resource
+	public void setTypeServiceImpl(TypeService typeServiceImpl) {
+		this.typeServiceImpl = typeServiceImpl;
 	}
-
 }
