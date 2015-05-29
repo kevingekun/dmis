@@ -7,7 +7,6 @@ import lab.common.service.BaseManager;
 import lab.dmis.model.Keyword;
 
 public interface KeywordService extends BaseManager<Keyword, Integer> {
-	public void deleteKeywordById(int id);
 
 	public Page getPage(int state, int pageNo, int pageContSize);
 
@@ -27,7 +26,7 @@ public interface KeywordService extends BaseManager<Keyword, Integer> {
 
 	public List<Keyword> findById(int id);// 根据ID查找
 
-	public void deleteByIds(String[] ids);// 批量删除
+	public void deleteByIds(List<String> ids);// 批量删除
 
 	public List<Keyword> findByName(String keywordName);// 根据Name查找
 

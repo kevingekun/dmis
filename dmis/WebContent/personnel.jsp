@@ -118,7 +118,7 @@
 								onClick="setSelectAll();" /></td>
 							<td><s:property value="id" /></td>
 							<td><s:property value="name" /></td>
-							<td id="role<s:property value="id" />"><s:property value="role" /></td>
+							<td id="role<s:property value="id" />"><s:property value="role"/></td>
 							<td><s:property value="phone" /></td>
 							<td><s:property value="email" /></td>
 							<td><s:property value="qq" /></td>
@@ -129,7 +129,7 @@
 								<td>未禁用</td>
 							</s:else>
 							<td>
-								<a class="btn btn-mini gray" href="User/delete2?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">删除</a>
+								<a class="btn btn-mini gray" href="User/delete?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">删除</a>
 								<s:if test="isForbidden">
 									<a class="btn btn-mini green" href="User/forbidden?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>&state=${state}">启用</a>
 								</s:if> <s:else>
@@ -148,7 +148,7 @@
 									var role = "<s:property value="role"/>" - 1; //0->一级；1->二级；2->三级
 									var td = "#role"+"<s:property value="id"/>";
 									var x=document.getElementById(id);
-									x.selectedIndex = role;//设置初始等级																
+									x.selectedIndex = role;//设置初始等级	
 									function t(obj){
 										var id2 = obj.id.substring(6);	
 										var roleid = "role" + id2;

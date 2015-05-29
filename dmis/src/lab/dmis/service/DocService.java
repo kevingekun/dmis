@@ -27,13 +27,11 @@ public interface DocService extends BaseManager<Doc, Integer> {
 
 	public Doc QueryById(Doc doc);
 
-	public void deleteDocById(int id);
-
 	public List<Doc> findById(int id);// 通过ID查找
 
 	public void passDoc(Doc doc);// 通过文档
 
-	public void deleteByIds(String[] ids);// 批量删除
+	public void deleteByIds(List<String> ids);// 批量删除
 
 	public void uploaddocument(Doc doc);
 

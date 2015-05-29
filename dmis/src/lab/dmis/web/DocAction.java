@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -102,103 +103,34 @@ public class DocAction extends BaseAction {
 	}
 
 	/**
-	 * 获取所有文档
-	 * 
-	 * @return
-	 */
-	public String getAllDoc() {
-		setAttribute("actionName", getActionName());
-		setAttribute("page", docServiceImpl.getPage(pageNo, 5,
-				(User) getObjFromSession("LOGIN_USER")));
-		return "allDoc";
-	}
-
-	/**
-	 * 上传文献
+	 * 上传文档文献
 	 * 
 	 * @return
 	 * @throws IOException
 	 * @throws ParseException
 	 */
-
 	public String uploadDoc() throws IOException, ParseException {
-		doc.setUploadTime(Common.getTimestampTime(0));
-		String threeTypeName = getParameter("typeThree");// 获得三级类的值
-		Type threetype = new Type();
-		threetype = typeServiceImpl.getByName(threeTypeName).get(0);// 根据三级类输入
-		// 的名字搜索Type实体
-		doc.setType(threetype);
-		// System.out.println( threetype);
-		// System.out.println(doc.getLanguage());
-		User uu = (User) getSession().getAttribute("LOGIN_USER");
-		System.out.println(uu);
-		doc.setUser(uu);// 上传用户
-		// doc.setPublishedTime(Common.getTimestampTime(0));
-
-		int docType = uploadFileFileName.lastIndexOf(".");
-		String lastname = uploadFileFileName.substring(docType + 1,
-				uploadFileFileName.length());
-		System.out.println(lastname);
-		doc.setFormat(lastname);
-		// 站点的doc目录下
-		String realpath = ServletActionContext.getServletContext().getRealPath(
-				"/doc");
-		Date date = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-		String time = formatter.format(date);
-		String userid = Integer.toString(uu.getId());
-		String uploadfilename = userid + "-" + time + "-" + uploadFileFileName;
-		if (uploadFile != null) {
-			File savefile = new File(new File(realpath), uploadfilename);// 创建一个
-																			// File实例，表示指定路径指定名称的文件
-			if (!savefile.getParentFile().exists())
-				savefile.getParentFile().mkdirs();
-			FileUtils.copyFile(uploadFile, savefile);// 文件上传至targetDirectory
-		}
-		doc.setDocPath("doc/" + uploadfilename);
-
-		docServiceImpl.uploaddocument(doc);
-		// out().print("true");
-		docServiceImpl.uploaddocument(doc);
-		if (doc.getLevel() != null) {
-			return "upload_success";
-		} else {
-			return "personalCenter";
-		}
-	}
-
-	/**
-	 * 上传文档
-	 * 
-	 * @return
-	 * @throws IOException
-	 * @throws ParseException
-	 */
-	public String uploadDocDoc() throws IOException, ParseException {
 		doc.setUploadTime(Common.getTimestampTime(0));
 		System.err.println(doc.getCategory());
 		System.err.println(doc.getTypeName());
-		if (doc.getCategory().equals("1")) {
+		if (!doc.getTypeName().equals("-1")) {
 			String threeTypeName = doc.getTypeName();// 获得三级类的值
-			System.err.println(threeTypeName);
+			System.err.println("3tp" + threeTypeName);
 			Type threetype = new Type();
 			threetype = typeServiceImpl.getByName(threeTypeName).get(0);// 根据三级类输入
 			// 的名字搜索Type实体
 			doc.setType(threetype);
-			System.out.println(threetype);
-		} else {
-			doc.setCategory(doc.getCategory());
+			System.err.println(threetype);
 		}
-		System.out.println(doc.getLanguage());
+		System.err.println(doc.getLanguage());
 		User uu = (User) getSession().getAttribute("LOGIN_USER");
-		System.out.println(uu);
+		System.err.println(uu);
 		doc.setUser(uu);// 上传用户
-		// doc.setPublishedTime(Common.getTimestampTime(0));
 
 		int docType = uploadFileFileName.lastIndexOf(".");
 		String lastname = uploadFileFileName.substring(docType + 1,
 				uploadFileFileName.length());
-		System.out.println(lastname);
+		System.err.println(lastname);
 		doc.setFormat(lastname);
 		// 站点的doc目录下
 		String realpath = ServletActionContext.getServletContext().getRealPath(
@@ -208,7 +140,7 @@ public class DocAction extends BaseAction {
 		String time = formatter.format(date);
 		String userid = Integer.toString(uu.getId());
 		String uploadfilename = userid + "-" + time + "-" + uploadFileFileName;
-		System.out.println(uploadfilename);
+		System.err.println(uploadfilename);
 		if (uploadFile != null) {
 			File savefile = new File(new File(realpath), uploadfilename);// 创建一个
 																			// File实例，表示指定路径指定名称的文件
@@ -219,30 +151,12 @@ public class DocAction extends BaseAction {
 		doc.setDocPath("doc/" + uploadfilename);
 
 		docServiceImpl.uploaddocument(doc);
+		setAttribute("page", docServiceImpl.getPage(pageNo, pageContSize));
+		setAttribute("state", 2);
 		if (doc.getLevel() != null) {
-			return "upload_success";
+			return "list";
 		} else {
 			return "error";
-		}
-	}
-
-	/**
-	 * 分页显示DOC
-	 * 
-	 * @return
-	 */
-	public String listAll() {
-		// int state = Integer.parseInt(getParameter("state"));
-		if (getParameter("pageNo") == null) {
-			setAttribute("page", docServiceImpl.getPage(pageNo, pageContSize));
-			setAttribute("state", 2);
-			return "list";
-
-		} else {
-			setAttribute("page", docServiceImpl.getPage(
-					Integer.parseInt(getParameter("pageNo")), pageContSize));
-			setAttribute("state", 2);
-			return "list";
 		}
 	}
 
@@ -274,37 +188,18 @@ public class DocAction extends BaseAction {
 	 */
 	public String delete() {
 		int state = Integer.parseInt(getParameter("state"));
-		int id = Integer.parseInt(getParameter("id"));
+		List<String> ids = new ArrayList<String>();
+		String id = getParameter("id");
+		if (id != null) {
+			ids.add(id);
+		} else {
+			ids = Arrays.asList(getRequest().getParameterValues("checkAll"));
+		}
 		boolean isPass = false;
-		docServiceImpl.deleteDocById(id);
 		if (state == 1) {
 			isPass = true;
 		}
-		int totalpage = docServiceImpl.getPage(pageNo, pageContSize, isPass)
-				.getTotalPage();
-		pageNo = Integer.parseInt(getParameter("pageNo"));
-		if (totalpage < pageNo) {
-			pageNo = pageNo - 1;
-		}
-		setAttribute("page",
-				docServiceImpl.getPage(state, pageNo, pageContSize));
-		setAttribute("state", state);
-		return "list";
-	}
-
-	/**
-	 * 批量删除
-	 * 
-	 * @return
-	 */
-	public String deleteCheck() {
-		int state = Integer.parseInt(getParameter("state"));
-		String[] ids = getRequest().getParameterValues("checkAll");
 		docServiceImpl.deleteByIds(ids);
-		boolean isPass = false;
-		if (state == 1) {
-			isPass = true;
-		}
 		int totalpage = docServiceImpl.getPage(pageNo, pageContSize, isPass)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
@@ -331,7 +226,6 @@ public class DocAction extends BaseAction {
 		} else {
 			out().print("faild");
 		}
-
 	}
 
 	/**

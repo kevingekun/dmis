@@ -140,7 +140,7 @@
 								</td>
 								<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"><s:property value="content" /></td>
 								<td><s:date name="time" format="yyyy-MM-dd hh:mm" /></td>
-								<td><a class="btn btn-mini gray" href="Notice/delete2?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a></td>
+								<td><a class="btn btn-mini gray" href="Notice/delete?id=<s:property value="id"/>&pageNo=<s:property value="#request.page.pageNo"/>">删除</a></td>
 							</tr>
 						</s:iterator>
 					</tbody>

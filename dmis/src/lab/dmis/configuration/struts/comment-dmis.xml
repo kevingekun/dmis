@@ -8,5 +8,4 @@
             <result name="listByhaveHandledSuccess">/alterDoc.jsp</result>
         </action>
     </package>
-    
 </struts>

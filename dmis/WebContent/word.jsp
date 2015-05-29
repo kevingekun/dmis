@@ -440,7 +440,7 @@
 			var checkselect = $("#checkselect").val();
 			if (checkselect == "true") {
 				var pageNo = $("#dqPageNo").val();
-				form2.action = "Keyword/deleteCheck?pageNo=" + pageNo+"&state="+state;
+				form2.action = "Keyword/delete?pageNo=" + pageNo+"&state="+state;
 				document.getElementById("form2").submit();
 			} else {
 				alert("请选中需要删除的数据！");

@@ -16,15 +16,11 @@ public interface TypeService extends BaseManager<Type, Integer> {
 
 	public List<Type> firstType();
 
-	public List<Type> secondType(int parentId);
-
-	public List<Type> thirdType(int parentId);
-
-	public void deleteTypeById(int id);
+	public List<Type> searchTypeByParentId(Object parentId);
 
 	public Type findById(int id);
 
-	public void deleteByIds(String[] ids);// 批量删除
+	public void deleteByIds(List<String> ids);// 批量删除
 
 	public List<Type> getType();
 

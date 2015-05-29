@@ -10,9 +10,6 @@
 <html>
 <head>
 <title>新增文献</title>
-<!-- <script type="text/javascript" src="js/forms/prototype.js"></script>
-<script type="text/javascript" src="js/forms/effects.js"></script>
-<script type="text/javascript" src="js/forms/validation.js"></script> -->
 <script type="text/javascript" src="js/jquery.min.js"></script>
 
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
@@ -85,16 +82,16 @@
 
 						<div class="field-widget2" id="docType">
 							<input type="hidden" id="fIdDoc" value="-1" /> <select
-								id="typeOneDoc" name="doc.typeOne" class="validate-selection"
+								id="typeOneDoc" name="typeOne" class="validate-selection"
 								onchange="selectOne(this,'typeTwoDoc','typeThreeDoc');typeCheck();">
 								<!-- validate-selection validation-failed -->
 								<option value="-1">一级分类</option>
 							</select> <input type="hidden" id="sIdDoc" value="-1" /> <select
-								id="typeTwoDoc" name="doc.typeTwo" class="validate-selection"
+								id="typeTwoDoc" name="typeTwo" class="validate-selection"
 								onchange="selectTwo(this,'typeThreeDoc');typeCheck();">
 								<option value="-1">二级分类</option>
 							</select> <input type="hidden" id="tIdDoc" value="-1" /> <select
-								id="typeThreeDoc" name="typeThree" class="validate-selection"
+								id="typeThreeDoc" name="doc.typeName" class="validate-selection"
 								onchange="typeCheck();">
 								<option value="-1">三级分类</option>
 							</select>
@@ -160,7 +157,7 @@
 		$.ajax({
 			type : 'GET',
 			dataType : 'json',
-			url : '/dmis/Type/TypeAction/lista',
+			url : '/dmis/Type/listByParentId',
 			success : function(jsonData) {
 				//document.getElementById("typeOne").options.add(new Option("asd",11));
 				var data = eval(jsonData);
@@ -186,7 +183,7 @@
 			$.ajax({
 				type : 'GET',
 				dataType : 'json',
-				url : '/dmis/Type/TypeAction/listaByParentId?parentid='
+				url : '/dmis/Type/listByParentId?parentid='
 						+ parentid,//parentid=父类的id
 				success : function(jsonData) {
 					var data = eval(jsonData);
@@ -221,7 +218,7 @@
 			$.ajax({
 				type : 'GET',
 				dataType : 'json',
-				url : '/dmis/Type/TypeAction/listaaByParentId?parentid='
+				url : '/dmis/Type/listByParentId?parentid='
 						+ parentwoid,
 				success : function(jsonData) {
 					var data = eval(jsonData);
@@ -341,14 +338,9 @@
 		return true;
 	}
  	$("#btn").click(function(){
-		checkTitle();
-		typeCheck();
-		categoryCheck('language','level');
-		categoryCheck('level','language');
-		isvalidatefile();
-		if(isvalidatefile()&&categoryCheck('level','language')
-				&&categoryCheck('language','level')&&typeCheck()
-				&&checkTitle()){
+		if(checkTitle()&&categoryCheck('language','level')&&
+				categoryCheck('level','language')&&typeCheck()
+				&&isvalidatefile()){
 			$("#test").submit();
 		}
 	});

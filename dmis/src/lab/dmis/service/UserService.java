@@ -22,17 +22,13 @@ public interface UserService extends BaseManager<User, Integer> {
 
 	public Page getPage(int pageNo, int pageContSize, boolean isForbidden);
 
-	public void deleteById(int id);
-
-	public void deleteByIds(String[] ids);
+	public void deleteByIds(List<String> ids);
 
 	public void addUser(User user);
 
 	public void changeState(User user);
 
 	public List<User> findById(int id);
-
-	public void editUser(User user);
 
 	public void resetPassword(User user);
 

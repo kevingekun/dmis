@@ -3,6 +3,7 @@ package lab.dmis.web;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -51,62 +52,24 @@ public class KeywordAction extends BaseAction {
 	}
 
 	/**
-	 * listall
-	 * 
-	 * @return
-	 */
-	public String listAll() {
-		if (getParameter("pageNo") == null) {
-			setAttribute("page",
-					keywordServiceImpl.getPage(pageNo, pageContSize));
-			setAttribute("state", 2);
-			return "list";
-		} else {
-			setAttribute("page", keywordServiceImpl.getPage(
-					Integer.parseInt(getParameter("pageNo")), pageContSize));
-			setAttribute("state", 2);
-			return "list";
-		}
-	}
-
-	/**
-	 * deletekeywordbyid
+	 * 删除
 	 * 
 	 * @return
 	 */
 	public String delete() {
 		int state = Integer.parseInt(getParameter("state"));
-		int id = Integer.parseInt(getParameter("id"));
+		List<String> ids = new ArrayList<String>();
+		String id = getParameter("id");
+		if (id != null) {
+			ids.add(id);
+		} else {
+			ids = Arrays.asList(getRequest().getParameterValues("checkAll"));
+		}
 		boolean isPass = false;
-		keywordServiceImpl.deleteKeywordById(id);
 		if (state == 1) {
 			isPass = true;
 		}
-		int totalpage = keywordServiceImpl
-				.getPage(pageNo, pageContSize, isPass).getTotalPage();
-		pageNo = Integer.parseInt(getParameter("pageNo"));
-		if (totalpage < pageNo) {
-			pageNo = pageNo - 1;
-		}
-		setAttribute("page",
-				keywordServiceImpl.getPage(state, pageNo, pageContSize));
-		setAttribute("state", state);
-		return "list";
-	}
-
-	/**
-	 * deletecheck
-	 * 
-	 * @return
-	 */
-	public String deleteCheck() {
-		int state = Integer.parseInt(getParameter("state"));
-		String[] ids = getRequest().getParameterValues("checkAll");
 		keywordServiceImpl.deleteByIds(ids);
-		boolean isPass = false;
-		if (state == 1) {
-			isPass = true;
-		}
 		int totalpage = keywordServiceImpl
 				.getPage(pageNo, pageContSize, isPass).getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
@@ -117,45 +80,6 @@ public class KeywordAction extends BaseAction {
 				keywordServiceImpl.getPage(state, pageNo, pageContSize));
 		setAttribute("state", state);
 		return "list";
-	}
-
-	/**
-	 * search
-	 * 
-	 * @return
-	 */
-	public String search() {
-		String keyword = getParameter("keyw");
-		Keyword keyWord = new Keyword();
-		keyWord.setKeyword(keyword);
-		Keyword temp = new Keyword();
-		List<Keyword> keywordList = new ArrayList<Keyword>();
-		temp = keywordServiceImpl.QueryEqualName(keyWord);
-		keywordList = keywordServiceImpl.QueryLikeName(keyWord);
-		setAttribute("keyword", temp);
-		setAttribute("keywordList", keywordList);
-		return "searchsuccess";
-	}
-
-	/**
-	 * searchbyid
-	 * 
-	 * @return
-	 */
-	public String hrefsearch() {
-		int keywordId = Integer.parseInt(getParameter("keywordId"));
-		Keyword keyWord = new Keyword();
-		keyWord.setId(keywordId);
-		Keyword temp = new Keyword();
-		List<Keyword> keywordList = new ArrayList<Keyword>();
-		// Set<Doc> docList = new HashSet<Doc>();
-		temp = keywordServiceImpl.QueryById(keyWord);
-		keywordList = keywordServiceImpl.QueryLikeName(temp);
-
-		setAttribute("keyword", temp);
-		setAttribute("keywordList", keywordList);
-
-		return "searchsuccess";
 	}
 
 	/**
@@ -196,7 +120,10 @@ public class KeywordAction extends BaseAction {
 		keyword.setCommitTime(new Timestamp(new Date().getTime()));
 		if (keywordServiceImpl.findByName(keyword.getKeyword()).size() == 0) {
 			keywordServiceImpl.addKeyword(keyword);
-			return "save_success";
+			setAttribute("page",
+					keywordServiceImpl.getPage(pageNo, pageContSize));
+			setAttribute("state", 2);
+			return "list";
 		} else {
 			return "error";
 		}

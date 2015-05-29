@@ -12,7 +12,7 @@ public interface NoticeService extends BaseManager<Notice, Integer> {
 
 	public void deleteById(int id);
 
-	public void deleteByIds(String[] ids);
+	public void deleteByIds(List<String> ids);
 
 	public void addNotice(Notice notice);
 

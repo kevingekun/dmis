@@ -1,6 +1,8 @@
 package lab.dmis.web;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -77,8 +79,9 @@ public class UserAction extends BaseAction {
 	 * 添加用户
 	 * 
 	 * @return
+	 * @throws InterruptedException
 	 */
-	public String add() {
+	public String add() throws InterruptedException {
 		String username = user.getName();
 		String regex = "([0-9]|[A-Z]|[a-z]|[\\w])+";
 		Pattern p = Pattern.compile(regex);
@@ -88,43 +91,15 @@ public class UserAction extends BaseAction {
 				return "error";
 			} else {
 				userServiceImpl.addUser(user);
-				int totalpage = userServiceImpl.getPage(pageNo, pageContSize)
-						.getTotalPage();
-				getRequest().setAttribute("pageNo", totalpage);
-				return "listUser";
+				setAttribute("page",
+						userServiceImpl.getPage(1, 1, pageContSize));
+				setAttribute("state", 1);
+				return "list";
 			}
 		} else {
 			return "error";
 		}
 
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public String listUser() {
-		pageNo = Integer.parseInt(getParameter("pageNo"));
-		setAttribute("page", userServiceImpl.getPage(1, 1, pageContSize));
-		setAttribute("state", 1);
-		return "list";
-	}
-
-	/**
-	 * 删除用户
-	 * 
-	 * @return
-	 */
-	public String delete2() {
-		userServiceImpl.deleteById(Integer.parseInt(getParameter("id")));
-		int totalpage = userServiceImpl.getPage(pageNo, pageContSize)
-				.getTotalPage();
-		pageNo = Integer.parseInt(getParameter("pageNo"));
-		if (totalpage < pageNo) {
-			pageNo = pageNo - 1;
-		}
-		getRequest().setAttribute("pageNo", pageNo);
-		return "listUser";
 	}
 
 	/**
@@ -134,23 +109,22 @@ public class UserAction extends BaseAction {
 	 */
 	public String delete() {
 		int state = Integer.parseInt(getParameter("state"));
-		String[] ids = new String[pageContSize];
+		List<String> ids = new ArrayList<String>();
 		String id = getParameter("id");
 		boolean isF = false;
+		if (id != null) {
+			ids.add(id);
+		} else {
+			ids = Arrays.asList(getRequest().getParameterValues("checkAll"));
+		}
 		if (state == 2) {
 			isF = true;
 		}
-		if (id != null) {
-			ids[0] = id;
-		} else {
-			ids = getRequest().getParameterValues("checkAll");
-		}
 		userServiceImpl.deleteByIds(ids);
-
 		int totalpage = userServiceImpl.getPage(pageNo, pageContSize, isF)
 				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
-		System.out.println(pageNo);
+		// System.out.println(pageNo);
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}

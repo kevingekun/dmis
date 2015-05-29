@@ -196,13 +196,6 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	}
 
 	/**
-	 * 靠主键删除文档
-	 */
-	public void deleteDocById(int id) {
-		docDaoImpl.deleteByKey(id);
-	}
-
-	/**
 	 * 靠ID查找文档
 	 * 
 	 * @return
@@ -238,9 +231,9 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 		docDaoImpl.add(doc);
 	}
 
-	public void deleteByIds(String[] ids) {
-		for (int i = 0; i < ids.length; i++) {
-			int id = Integer.parseInt(ids[i]);
+	public void deleteByIds(List<String> ids) {
+		for (int i = 0; i < ids.size(); i++) {
+			int id = Integer.parseInt(ids.get(i));
 			docDaoImpl.deleteByKey(id);
 		}
 

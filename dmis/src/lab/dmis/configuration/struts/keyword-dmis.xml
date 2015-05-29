@@ -2,16 +2,9 @@
         "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-		<package name="Keyword" namespace="/Keyword" extends="struts-default">
-			<action name="*" class="keywordAction" method="{1}">
-				<result name="list">../word.jsp</result>
-				<result name="delete_success" type="redirect">/Keyword/listAll?pageNo=${#request.pageNo}</result>
-				<result name="searchsuccess" >/showKeyword.jsp</result>
-				<result name="save_success" type="redirect">/Keyword/listAll</result>
-				
-				<result name="pass_success" type="redirect">/Keyword/listAll?pageNo=${#request.pageNo}</result>
-			</action>
-			
-		</package>
-	
+	<package name="Keyword" namespace="/Keyword" extends="struts-default">
+		<action name="*" class="keywordAction" method="{1}">
+			<result name="list">/word.jsp</result>
+		</action>
+	</package>
 </struts>

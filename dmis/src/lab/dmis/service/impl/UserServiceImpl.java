@@ -50,15 +50,6 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	}
 
 	/**
-	 * 更新用户资料，调用DAO层的update()存储到数据库
-	 */
-	public void editUser(User user) {
-
-		userDaoImpl.update(user);
-
-	}
-
-	/**
 	 * 用户重置密码
 	 */
 	public void PasswordUpdate(User user) {
@@ -93,21 +84,12 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 		return userDaoImpl.getPage(hql, pageNo, pageContSize);
 	}
 
-	/**
-	 * 删除用户
-	 */
 	@Override
-	public void deleteById(int id) {
-		userDaoImpl.deleteByKey(id);
-	}
-
-	@Override
-	public void deleteByIds(String[] ids) {
-		for (int i = 0; i < ids.length; i++) {
-			int id = Integer.parseInt(ids[i]);
+	public void deleteByIds(List<String> ids) {
+		for (int i = 0; i < ids.size(); i++) {
+			int id = Integer.parseInt(ids.get(i));
 			userDaoImpl.deleteByKey(id);
 		}
-
 	}
 
 	/**
@@ -154,4 +136,5 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	public void setUserDaoImpl(UserDao userDaoImpl) {
 		this.userDaoImpl = userDaoImpl;
 	}
+
 }

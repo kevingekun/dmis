@@ -197,7 +197,7 @@
 			$.ajax({
 				type : 'GET',
 				dataType : 'json',
-				url : 'Type/listaByParentId?parentid=' + parentid,
+				url : 'Type/listByParentId?parentid=' + parentid,
 				success : function(jsonData) {
 					var data = eval(jsonData);
 					$.each(data, function(i, n) {
@@ -250,7 +250,7 @@
 		var checkselect = $("#checkselect").val();
 		if (checkselect == "true") {
 			var pageNo = $("#dqPageNo").val();
-			form2.action = "Type/delete_check?pageNo=" + pageNo+"&state="+state;
+			form2.action = "Type/delete?pageNo=" + pageNo+"&state="+state;
 			document.getElementById("form2").submit();
 		} else {
 			alert("请选中需要删除的数据！");

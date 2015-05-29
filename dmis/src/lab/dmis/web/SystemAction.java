@@ -50,9 +50,9 @@ public class SystemAction extends BaseAction {
 		List<User> list = userServiceImpl.loginCheck(user);
 		if (list.size() != 0)
 			putObjToSession("LOGIN_USER", list.get(0));
-		String nameString = user.getName();
-		System.err.println(nameString);
-		if (nameString.equals("admin")) {
+		String name = user.getName();
+		System.err.println(name);
+		if (name.equals("admin")) {
 			inputStream = outStream(list.size() != 0 ? "admin" : "failed");
 		} else {
 			inputStream = outStream(list.size() != 0 ? "success" : "failed");

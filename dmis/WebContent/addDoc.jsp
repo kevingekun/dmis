@@ -21,7 +21,7 @@
 			<h5>新增文档</h5>
 		</div>
 		<div class="form_content">
-			<form id="test" action="Doc/uploadDocDoc" method="post"
+			<form id="test" action="Doc/uploadDoc" method="post"
 				enctype="multipart/form-data">
 				<fieldset>
 					<legend>文档上传</legend>
@@ -107,14 +107,14 @@
 			</form>
 		</div>
 	</div>
-	<script type="text/javascript">
+<script type="text/javascript">
 		 $("#category").change(function() {
 			var category = $("#category option:selected").text().trim();
 			if (category == "分类文档"){
 				$.ajax({
 					type : 'GET',
 					dataType : 'json',
-					url : '/dmis/Type/TypeAction/lista',
+					url : '/dmis/Type/listByParentId',
 					success : function(jsonData) {
 						var data = eval(jsonData);
 						$.each(data, function(i, n) {
@@ -145,7 +145,7 @@
 					$.ajax({
 						type : 'GET',
 						dataType : 'json',
-						url : '/dmis/Type/TypeAction/listaByParentId?parentid='
+						url : '/dmis/Type/listByParentId?parentid='
 								+ parentid,//parentid=父类的id
 						success : function(jsonData) {
 							var data = eval(jsonData);
@@ -180,7 +180,7 @@
 					$.ajax({
 						type : 'GET',
 						dataType : 'json',
-						url : '/dmis/Type/TypeAction/listaaByParentId?parentid='
+						url : '/dmis/Type/listByParentId?parentid='
 								+ parentwoid,
 						success : function(jsonData) {
 							var data = eval(jsonData);
@@ -257,7 +257,7 @@
 			} */
 			function typeCheck(){
 				var category = $("#category").val();
-				if(category=="1"){
+				if(category=="分类文档"){
 					var typeone = $("#typeOneDoc").val();
 					var typetwo = $("#typeTwoDoc").val();
 					var typethree = $("#typeThreeDoc").val();

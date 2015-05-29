@@ -44,17 +44,13 @@ public class TypeServiceImpl extends BaseManagerImpl<Type, Integer> implements
 		}
 	}
 
-	public void deleteTypeById(int id) {
-		typeDaoImpl.deleteByKey(id);
-	}
-
 	public Type findById(int id) {
 		return typeDaoImpl.get(id);
 	}
 
-	public void deleteByIds(String[] ids) {
-		for (int i = 0; i < ids.length; i++) {
-			int id = Integer.parseInt(ids[i]);
+	public void deleteByIds(List<String> ids) {
+		for (int i = 0; i < ids.size(); i++) {
+			int id = Integer.parseInt(ids.get(i));
 			typeDaoImpl.deleteByKey(id);
 		}
 	}
@@ -72,14 +68,13 @@ public class TypeServiceImpl extends BaseManagerImpl<Type, Integer> implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Type> secondType(int parentId) {
-		String sql = "from Type t where t.parent='" + parentId + "'";
-		return typeDaoImpl.find(sql);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Type> thirdType(int parentId) {
-		String sql = "from Type t where t.parent='" + parentId + "'";
+	public List<Type> searchTypeByParentId(Object parentId) {
+		String sql;
+		if (parentId == null) {
+			sql = "from Type t where t.level = 1";
+		} else {
+			sql = "from Type t where t.parent='" + parentId + "'";
+		}
 		return typeDaoImpl.find(sql);
 	}
 

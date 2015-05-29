@@ -95,9 +95,6 @@ public class KeywordServiceImpl extends BaseManagerImpl<Keyword, Integer>
 	 * hql = "from Keyword k where k.isPass='false' order by k.id DESC"; return
 	 * keywordDao.find(hql); }
 	 */
-	public void deleteKeywordById(int id) {
-		keywordDaoImpl.deleteByKey(id);
-	}
 
 	public void addKeyword(Keyword keyword) {
 		keywordDaoImpl.save(keyword);
@@ -119,9 +116,9 @@ public class KeywordServiceImpl extends BaseManagerImpl<Keyword, Integer>
 		return keywordDaoImpl.find(hql);
 	}
 
-	public void deleteByIds(String[] ids) {
-		for (int i = 0; i < ids.length; i++) {
-			int id = Integer.parseInt(ids[i]);
+	public void deleteByIds(List<String> ids) {
+		for (int i = 0; i < ids.size(); i++) {
+			int id = Integer.parseInt(ids.get(i));
 			keywordDaoImpl.deleteByKey(id);
 		}
 	}

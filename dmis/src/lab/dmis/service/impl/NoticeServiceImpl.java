@@ -35,12 +35,11 @@ public class NoticeServiceImpl extends BaseManagerImpl<Notice, Integer>
 	}
 
 	@Override
-	public void deleteByIds(String[] ids) {
-		for (int i = 0; i < ids.length; i++) {
-			int id = Integer.parseInt(ids[i]);
+	public void deleteByIds(List<String> ids) {
+		for (int i = 0; i < ids.size(); i++) {
+			int id = Integer.parseInt(ids.get(i));
 			noticeDaoImpl.deleteByKey(id);
 		}
-
 	}
 
 	/**

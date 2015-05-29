@@ -6,7 +6,7 @@ $(document).ready(function()
 				$.ajax({
 					type : 'GET',
 					dataType : 'json',
-					url : '/dmis/Type/TypeAction/lista',
+					url : '/dmis/Type/TypeAction/listByParentId',
 					success : function(jsonData) {
 						//document.getElementById("typeOne").options.add(new Option("asd",11));
 						var data = eval(jsonData);
@@ -36,7 +36,7 @@ $(document).ready(function()
 					$.ajax({
 						type : 'GET',
 						dataType : 'json',
-						url : '/dmis/Type/TypeAction/listaByParentId?parentid='
+						url : '/dmis/Type/TypeAction/listByParentId?parentid='
 								+ parentid,//parentid=父类的id
 						success : function(jsonData) {
 							var data = eval(jsonData);
@@ -72,7 +72,7 @@ $(document).ready(function()
 					$.ajax({
 						type : 'GET',
 						dataType : 'json',
-						url : '/dmis/Type/TypeAction/listaaByParentId?parentid='
+						url : '/dmis/Type/TypeAction/listByParentId?parentid='
 								+ parentwoid,
 						success : function(jsonData) {
 							var data = eval(jsonData);
