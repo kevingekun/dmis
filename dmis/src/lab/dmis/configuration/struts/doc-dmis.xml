@@ -6,7 +6,7 @@
 <constant name="struts.i18n.encoding" value="UTF-8"/>  
   <constant name="struts.multipart.maxSize" value="10701096"/>  
 	<package name="Doc" namespace="/Doc" extends="struts-default" >
-		<action name="*" class="lab.dmis.web.DocAction" method="{1}">
+		<action name="*" class="docAction" method="{1}">
 		<interceptor-ref name="fileUpload">
 		 <param name="allowedTypes">application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,
 		 application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-works,application/zip,application/x-zip-compressed,application/vnd.ms-excel,

@@ -5,7 +5,7 @@
 <struts>
 <constant name="struts.i18n.encoding" value="UTF-8"/>  
 	<package name="NOTICE" namespace="/Notice" extends="struts-default" >
-		<action name="*" class="lab.dmis.web.NoticeAction" method="{1}">
+		<action name="*" class="noticeAction" method="{1}">
 			<result name="list">../notice.jsp</result>
 			<result name="listNotice" type="redirect">/Notice/listNotice?pageNo=${#request.pageNo}</result>
 			<result name="listAll">/noticeAll.jsp</result>

@@ -16,6 +16,11 @@ import lab.dmis.service.KeywordDocService;
 import lab.dmis.service.KeywordService;
 import net.sf.json.JSONArray;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("keywordAction")
+@Scope("prototype")
 public class KeywordAction extends BaseAction {
 	private static final long serialVersionUID = 1L;
 

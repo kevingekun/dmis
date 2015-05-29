@@ -21,7 +21,11 @@ import net.sf.json.JSONArray;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component("docAction")
+@Scope("prototype")
 public class DocAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;

@@ -4,7 +4,7 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
     <package name="Comment" namespace="/Comment"  extends="json-default">
-        <action name="*" class="lab.dmis.web.CommentAction" method="{1}">
+        <action name="*" class="commentAction" method="{1}">
             <result name="listByhaveHandledSuccess">/alterDoc.jsp</result>
         </action>
     </package>

@@ -14,6 +14,11 @@ import lab.dmis.util.JsonSerialization;
 import lab.dmis.util.Str;
 import net.sf.json.JSONArray;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("noticeAction")
+@Scope("prototype")
 public class NoticeAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;
@@ -25,6 +30,10 @@ public class NoticeAction extends BaseAction {
 	private int pageContSize = 6;
 
 	JSONArray jsonArray;
+
+	public NoticeAction() {
+		System.err.println(this);
+	}
 
 	/**
 	 * 获取公告记录

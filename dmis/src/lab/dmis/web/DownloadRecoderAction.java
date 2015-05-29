@@ -13,6 +13,11 @@ import lab.dmis.util.JsonSerialization;
 import lab.dmis.util.Str;
 import net.sf.json.JSONArray;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("downloadRecoderAction")
+@Scope("prototype")
 public class DownloadRecoderAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;

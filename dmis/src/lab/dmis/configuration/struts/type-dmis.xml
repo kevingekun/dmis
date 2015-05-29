@@ -3,7 +3,7 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="TYPE" namespace="/Type" extends="struts-default" >
-		<action name="*" class="lab.dmis.web.TypeAction" method="{1}">
+		<action name="*" class="typeAction" method="{1}">
 			<result name="list">/type.jsp</result>
 			<result name="delete_success" type="redirect">/Type/listAll?pageNo=${#request.pageNo}</result>
 			<result name="listAll" type="redirect">/Type/listAll</result>

@@ -17,6 +17,11 @@ import lab.common.web.BaseAction;
 import lab.dmis.model.User;
 import lab.dmis.service.UserService;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("systemAction")
+@Scope("prototype")
 public class SystemAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;

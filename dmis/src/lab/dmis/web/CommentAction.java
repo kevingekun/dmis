@@ -9,6 +9,11 @@ import lab.dmis.model.Comment;
 import lab.dmis.service.CommentService;
 import net.sf.json.JSONArray;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("commentAction")
+@Scope("prototype")
 public class CommentAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;

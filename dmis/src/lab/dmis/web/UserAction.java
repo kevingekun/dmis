@@ -11,6 +11,11 @@ import lab.common.web.BaseAction;
 import lab.dmis.model.User;
 import lab.dmis.service.UserService;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("userAction")
+@Scope("prototype")
 public class UserAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;
@@ -20,16 +25,6 @@ public class UserAction extends BaseAction {
 	private User user;
 	private int pageNo = 1;
 	private int pageContSize = 3;
-
-	/**
-	 * 直接请求页面
-	 * 
-	 * @return
-	 */
-	public String pageRequest() {
-
-		return SUCCESS;
-	}
 
 	/**
 	 * 管理员请求页面
@@ -46,15 +41,6 @@ public class UserAction extends BaseAction {
 	public String LoginOut() {
 		removeObjFromSession("LOGIN_USER");
 		return "loginOut";
-	}
-
-	/**
-	 * 跳转用户中心
-	 * 
-	 * @return
-	 */
-	public String getAllInfo() {
-		return "personalCenter";
 	}
 
 	public String respassword() {

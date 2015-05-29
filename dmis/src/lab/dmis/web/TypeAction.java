@@ -14,6 +14,11 @@ import lab.dmis.util.Str;
 import net.sf.json.JSONArray;
 import net.sf.json.JsonConfig;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component("typeAction")
+@Scope("prototype")
 public class TypeAction extends BaseAction {
 
 	private static final long serialVersionUID = 1L;

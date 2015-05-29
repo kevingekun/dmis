@@ -165,7 +165,7 @@ $(document).ready(function(){
 			data:user,
 			success:function(result){
 				if(result == "admin"){
-					location.href='/dmis/Admin/getAdminIndex';
+					location.href='/dmis/User/getAdminIndex';
 				}else 
 					alertTip("用户名或密码错误，请重新登录！");
 			}

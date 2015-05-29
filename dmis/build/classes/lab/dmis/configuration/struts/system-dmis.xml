@@ -5,7 +5,7 @@
 <struts>
 	<constant name="struts.i18n.encoding" value="UTF-8" />
 	<package name="SYSTEM" namespace="/System" extends="struts-default">
-		<action name="*" class="lab.dmis.web.SystemAction" method="{1}">
+		<action name="*" class="systemAction" method="{1}">
 			<result name="login" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
