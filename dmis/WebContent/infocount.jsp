@@ -10,12 +10,11 @@
 <base href="<%=basePath %>">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="css/bg/yetou.css"/>
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
+<link rel="stylesheet" type="text/css" href="css/dmis.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 <link rel="stylesheet" href="css/chart/chart.css" />
-
 <script src="js/jquery.min.js" type="text/javascript"></script>
 </head>
 <body id="table1">
@@ -26,13 +25,12 @@
        <a id="btn2" class="btn btn-small green" style="margin:5px 0 0 3px;"> 文档等级</a>
        <a id="btn3" class="btn btn-small green" style="margin:5px 0 0 3px;">下载量</a>
 	</div>
-		<div id="isEmpty" class="widget-content" style="float: left;">
-        	<div id="docChart" class="content"></div>
-    		<div id="yearChange" class="count_left" style="display:none;">
-    			<a id="yearChangeId" class="btn btn-small green" style="margin:5px 0 0 3px;">下载量</a>
-    		</div>
+	<div id="isEmpty" class="widget-content" style="float: left;">
+        <div id="docChart" class="content"></div>
+    	<div id="yearChange" class="count_left" style="display:none;">
+    		<a id="yearChangeId" class="btn btn-small green" style="margin:5px 0 0 3px;">下载量</a>
     	</div>
-	
+    </div>
 </div>
 </body>
 <script src="js/echarts/build/dist/echarts-all.js"></script>

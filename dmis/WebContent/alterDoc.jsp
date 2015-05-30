@@ -11,15 +11,10 @@
 <html>
 <head>
 
-<link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
-<link rel="stylesheet" type="text/css" href="css/dmis.css"/>
-<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
-<link rel="stylesheet" type="text/css" href="css/uniform.css" />
-<link rel="stylesheet" type="text/css" href="css/select2.css" />
-<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
+<link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
+<link rel="stylesheet" type="text/css" href="css/dmis.css" />
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 
@@ -81,17 +76,14 @@
 							<th style="width: 300px;">评论内容</th>
 							<th style="width: 80px;">发表评论的用户</th>
 							<th style="width: 80px;">操作</th>
-
 						</tr>
 					</thead>
 					<tbody>
-
 						<s:iterator value="#request.page.pageList">
 							<tr id='<s:property value="id" />'>
 								<td><s:property value="id" /></td>
-								<td><a
-									href='Doc/reading?id=<s:property value="doc.id" />'><s:property
-											value="doc.title" /></a></td>
+								<td><a href='Doc/reading?id=<s:property value="doc.id" />'>
+										<s:property value="doc.title" /></a></td>
 								<td style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 									<a style="cursor:hand;text-decoration:none;" onclick="commentCheck(<s:property value="id"/>)">
 									<s:property value="content" /></a></td>
@@ -107,69 +99,14 @@
 					</tbody>
 				</table>
 			</s:form>
-
-
-			<!-- Modal -->
-			<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">×</button>
-					<h3 id="myModalLabel">文件重传</h3>
-				</div>
-				<div class="modal-body">
-					<form id="uploadDocDocupload" action="Doc/reUploadDoc" method="post"
-						enctype="multipart/form-data">
-						<input id="docId" name="doc.id" class="hidden"/>
-						<input id="commentId" name="commentId" class="hidden"/>
-						<div class="row">
-							<div class="span2">当前版本：</div>
-							<div id="curVersion" class="span2"></div>
-						</div><br />
-						<div class="row">
-							<div class="span2">更新后版本：</div>
-							<div class="span2">
-								<input type="text" name="doc.version">
-							</div>
-						</div><br />
-						<div class="row">
-							<div class="span2">语言：</div>
-							<div class="span2">
-								<select name="doc.language">
-									<option value="1">中文</option>
-									<option value="0">英文</option>
-								</select>
-							</div>
-						</div><br/>
-						<div class="row">
-							<div class="span2">文件：</div>
-							<div class="span4">
-								<input name="uploadFile" type="file" />
-							</div>
-						</div><br/>
-						<div class="row">
-							<div class="span4"></div>
-							<div class="btn-group span1">
-								<input type="reset" class="btn btn-primary" value="重置" />
-								<input type="submit" class="btn btn-success" value="上传" />
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
-				</div>
-			</div>
-			<!--/ Modal -->
-
 			<div id="upPageBar">
 				<div class="pagination alternate"
 					style="float: left; margin-top: 20px;">
 					<ul>
 						<s:if test="#request.page.showPrv != 0">
-							<li class id="firstPage" data-id="PAGE"><a
+							<li id="firstPage" data-id="PAGE"><a
 								href="Comment/listByhaveHandled?pageNo=1&haveHandled=${state}">首页</a></li>
-							<li class id="lastPage" data-id="PAGE"><a
+							<li id="lastPage" data-id="PAGE"><a
 								href="Comment/listByhaveHandled?pageNo=<s:property value="#request.page.pageNo -1"/>&haveHandled=${state}">上一页</a></li>
 						</s:if>
 						<s:else>
@@ -193,9 +130,9 @@
 							</s:else>
 						</s:iterator>
 						<s:if test="#request.page.showNext != 0">
-							<li class id="nextPage" data-id="PAGE"><a
+							<li id="nextPage" data-id="PAGE"><a
 								href="Comment/listByhaveHandled?pageNo=<s:property value="#request.page.pageNo +1"/>&haveHandled=${state}">下一页</a></li>
-							<li class id="endPage" data-id="PAGE"><a
+							<li id="endPage" data-id="PAGE"><a
 								href="Comment/listByhaveHandled?pageNo=<s:property value="#request.page.totalPage"/>&haveHandled=${state}">尾页</a></li>
 						</s:if>
 						<s:else>
@@ -213,7 +150,6 @@
 		</div>
 	</div>
 	<script src="js/jquery.min.js" type="text/javascript"></script>
-	<script src="js/bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(function() {
 			var state = $('#checkRadio').val();
@@ -233,14 +169,16 @@
 					var data = eval(jsonData);
 	      			$("#docTitle")[0].value=data[0].doc.title;
 	      			$("#comment_textarea")[0].value=data[0].content;
+	      			
+	      			$("#mask").slideDown("fast");
+	    			$("#comment_check").fadeIn("slow");
+	    			$("#commentcheck_form_content").fadeIn("slow");
 				},
 				error:function(){
-					alert("errooor");
+					alert("查询失败！");
 				}
 			});
-			$("#mask").slideDown("fast");
-			$("#comment_check").fadeIn("slow");
-			$("#commentcheck_form_content").fadeIn("slow");
+			
 		}
 		$("#cancle").click(function(){
 			$("#comment_check").fadeOut("slow");

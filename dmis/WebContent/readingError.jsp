@@ -13,7 +13,7 @@
 </head>
 <body style="background:#f9f9f9;">
 <div style="margin-left: 30px;margin-top:30px">
-	<a style="color: orange;">操作失败！</a>
+	<a style="color: orange;">文件不存在！</a>
 </div>
 </body>
 </html>

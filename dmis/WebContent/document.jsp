@@ -10,19 +10,13 @@
 <base href="<%=basePath%>">
 <html>
 <head>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
 <link rel="stylesheet" type="text/css" href="css/dmis.css" />
-<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
-<link rel="stylesheet" type="text/css" href="css/uniform.css" />
-<link rel="stylesheet" type="text/css" href="css/select2.css" />
-<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
-
-<script src="js/jquery.min.js" type="text/javascript"></script>
 </head>
 <body id="table1">
 	<input type="text" id="checkRadio" value="${state}"

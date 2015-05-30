@@ -1,3 +1,4 @@
+<%@page import="org.objectweb.asm.tree.TryCatchBlockNode"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.pageoffice.cn" prefix="po"%>
@@ -29,6 +30,7 @@
 <link href=" font-awesome/css/font-awesome.css" rel="stylesheet" />
 </head>
 <body>
+<%try{ %>
 	<input id="DOCPATH" value="<s:property value="#request.docPath"/>" type="hidden" />
 	<input id="TYPE" value="<s:property value="#request.type"/>" type="hidden" />
 
@@ -48,6 +50,9 @@
 			</div>
 		</div>
 	</s:else>
+<%}catch (Exception e){ %>
+	<jsp:include page="readingError.jsp"></jsp:include>
+<% } %>
 	<!-- end pageoffice -->
 	<!--end-Footer-part-->
 	<script src=" js/jquery.min.js"></script>

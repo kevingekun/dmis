@@ -11,7 +11,6 @@
 <head>
 <title>新增文献</title>
 <script type="text/javascript" src="js/jquery.min.js"></script>
-
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
@@ -34,7 +33,7 @@
 							<input name="doc.title" id="title" class="required"
 								onblur="checkTitle()" />
 							<div class="validation-advice" id="advice-required-field1"
-								style="display: none;">required field.</div>
+								style="display: none;">输入标题!</div>
 						</div>
 					</div>
 

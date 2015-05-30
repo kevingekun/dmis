@@ -13,15 +13,9 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
-
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
 <link rel="stylesheet" type="text/css" href="css/dmis.css" />
-<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
-<link rel="stylesheet" type="text/css" href="css/uniform.css" />
-<link rel="stylesheet" type="text/css" href="css/select2.css" />
-<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 </head>
@@ -162,7 +156,6 @@
 						</tr>
 					</thead>
 					<tbody>
-
 						<s:iterator value="#request.page.pageList">
 							<tr>
 								<td><input type="checkbox" style="margin-left: 8px"

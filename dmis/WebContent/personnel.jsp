@@ -14,18 +14,11 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
 <link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
-
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css"/>
 <link rel="stylesheet" type="text/css" href="css/dmis.css"/>
-<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
-<link rel="stylesheet" type="text/css" href="css/uniform.css" />
-<link rel="stylesheet" type="text/css" href="css/select2.css" />
-<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 <body id="table1">
 <input type="text" id="checkRadio" value="${state}" style='display:none'/>
@@ -63,7 +56,7 @@
 						</div>
 						<div class="field-widget">
 							<input name="user.password" id="password" class="required"
-								type="password" onblur="checkPassword();"/>
+								type="password" placeholder="6到12位密码" onblur="checkPassword();"/>
 							<div class="validation-advice" id="advice-required-field2"
 								style="display: none;">required field.</div>
 						</div>
@@ -74,7 +67,7 @@
 						</div>
 						<div class="field-widget">
 							<input id="vpassword" class="required"
-								type="password" onblur="verifyPass()"/>
+								type="password" placeholder="再次输入密码" onblur="verifyPass()"/>
 							<div class="validation-advice" id="advice-required-field3"
 								style="display: none;">required field.</div>
 						</div>
@@ -340,19 +333,23 @@
 			return true;
 		}
 	}
-	function verifyPass() {
-		var pass1, pass2;
-		pass1 = $("#password").val();
-		pass2 = $("#vpassword").val();
-		if(pass1.length == 0){
+	function checkPassword(){
+		var password = $("#password").val();
+		if(password.length < 6 || password.length > 12){
 			$("#password")[0].className = "required validation-failed";
-			$("#advice-required-field2")[0].innerHTML="不能为空！";
+			$("#advice-required-field2")[0].innerHTML="6-12位密码！";
 			$("#advice-required-field2").removeAttr("style");
 			return false;
 		}else{
 			$("#password")[0].className = "required";
 			$("#advice-required-field2").attr("style","display:none;");
+			return true;
 		}
+	}
+	function verifyPass() {
+		var pass1, pass2;
+		pass1 = $("#password").val();
+		pass2 = $("#vpassword").val();
 		if (pass2.length == 0) {
 			$("#vpassword")[0].className = "required validation-failed";
 			$("#advice-required-field3")[0].innerHTML="确认密码！";
@@ -361,20 +358,18 @@
 		} else {
 			if (pass1 != pass2) {
 				$("#vpassword")[0].className = "required validation-failed";
-				$("#advice-required-field3")[0].innerHTML="不一致！";
+				$("#advice-required-field3")[0].innerHTML="密码不一致！";
 				$("#advice-required-field3").removeAttr("style");
 				return false;
 			} else {
-				$("#password")[0].className = "required";
 				$("#vpassword")[0].className = "required";
-				$("#advice-required-field2").attr("style","display:none;");
 				$("#advice-required-field3").attr("style","display:none;");
 				return true;
 			}
 		}
 	}
 	$("#btn").click(function(){
-		if(checkUsername() && verifyPass()){
+		if(checkUsername() && checkPassword() && verifyPass()){
 			$("#test").submit();
 		}
 	});	

@@ -12,20 +12,13 @@
 <head>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/ckeditor/ckeditor.js"></script>
-
+<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/bg/yetou.css" />
 <link rel="stylesheet" type="text/css" href="css/dmis.css"/>
-<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.min.css" />
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-media.css" />
-<link rel="stylesheet" type="text/css" href="css/uniform.css" />
-<link rel="stylesheet" type="text/css" href="css/select2.css" />
-<link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.css" />
-<link rel="stylesheet" type="text/css" href="css/matrix-style.css" />
 <link rel="stylesheet" type="text/css" href="css/buttons/buttons.css" />
 <link rel="stylesheet" type="text/css" href="css/forms/style.css" />
 
-<script src="js/bootstrap.min.js" type="text/javascript"></script>
 </head>
 <body id="table1">
 	<div id="mask" class="mask" style="display: none;background-color: rgb(40, 95, 108);"></div>

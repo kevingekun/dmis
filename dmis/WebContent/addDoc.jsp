@@ -31,7 +31,7 @@
 						</div>
 						<div class="field-widget">
 							<input name="doc.title" id="title" class="required" onblur="checkTitle()"/><!-- required validation-failed -->
-							<div class="validation-advice" id="advice-required-field1" style="display:none;">required field.</div>
+							<div class="validation-advice" id="advice-required-field1" style="display:none;">输入标题!</div>
 						</div>
 					</div>
 
@@ -90,7 +90,7 @@
 						</div>
 						<div class="field-widget">
 							<input type="file" id="file" name="uploadFile" class="file-class" />
-							<div class="validation-advice" id="file-required" style="display:none;">type error.</div>
+							<div class="validation-advice" id="file-required" style="display:none;">type error</div>
 						</div>
 					</div>
 					<div class="form-row">
@@ -318,11 +318,6 @@
 				return true;
 			}
 			$("#btn").click(function(){
-				/* checkTitle();
-				typeCheck();
-				categoryCheck('language','level');
-				categoryCheck('level','language');
-				isvalidatefile(); */
 				if(checkTitle()&&typeCheck()&&categoryCheck('language','level')&&
 						categoryCheck('level','language')&&isvalidatefile()){
 					$("#test").submit();
