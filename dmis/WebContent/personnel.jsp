@@ -44,7 +44,7 @@
 							<label for="field1">用户名</label>:
 						</div>
 						<div class="field-widget">
-							<input name="user.name" id="username" class="required"
+							<input name="userVo.name" id="username" class="required"
 								type="text" placeholder="必须为字母数字下划线" onblur="checkUsername();"/>
 							<div class="validation-advice" id="advice-required-field1"
 								style="display: none;">required field.</div>
@@ -55,10 +55,10 @@
 							<label for="field1">密码</label>:
 						</div>
 						<div class="field-widget">
-							<input name="user.password" id="password" class="required"
+							<input name="userVo.password" id="password" class="required"
 								type="password" placeholder="6到12位密码" onblur="checkPassword();"/>
 							<div class="validation-advice" id="advice-required-field2"
-								style="display: none;">required field.</div>
+								style="display: none; width:72px;">required field.</div>
 						</div>
 					</div>
 					<div class="form-row">
@@ -66,10 +66,10 @@
 							<label for="field1">确认密码</label>:
 						</div>
 						<div class="field-widget">
-							<input id="vpassword" class="required"
+							<input name="userVo.newPassword" id="vpassword" class="required"
 								type="password" placeholder="再次输入密码" onblur="verifyPass()"/>
 							<div class="validation-advice" id="advice-required-field3"
-								style="display: none;">required field.</div>
+								style="display: none; width:72px;">required field.</div>
 						</div>
 					</div>
 					<div class="form-row">
@@ -111,7 +111,8 @@
 								onClick="setSelectAll();" /></td>
 							<td><s:property value="id" /></td>
 							<td><s:property value="name" /></td>
-							<td id="role<s:property value="id" />"><s:property value="role"/></td>
+							<td id="role<s:property value="id" />">
+								<s:property value="role"/></td>
 							<td><s:property value="phone" /></td>
 							<td><s:property value="email" /></td>
 							<td><s:property value="qq" /></td>
@@ -339,6 +340,7 @@
 			$("#password")[0].className = "required validation-failed";
 			$("#advice-required-field2")[0].innerHTML="6-12位密码！";
 			$("#advice-required-field2").removeAttr("style");
+			$("#advice-required-field2").attr("style","width:72px;");
 			return false;
 		}else{
 			$("#password")[0].className = "required";
@@ -360,6 +362,7 @@
 				$("#vpassword")[0].className = "required validation-failed";
 				$("#advice-required-field3")[0].innerHTML="密码不一致！";
 				$("#advice-required-field3").removeAttr("style");
+				$("#advice-required-field3").attr("style","width:72px;");
 				return false;
 			} else {
 				$("#vpassword")[0].className = "required";

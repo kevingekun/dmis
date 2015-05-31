@@ -9,9 +9,11 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import lab.common.model.Page;
 import lab.common.web.BaseAction;
 import lab.dmis.model.User;
 import lab.dmis.service.UserService;
+import lab.dmis.vo.UserVo;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,7 @@ public class UserAction extends BaseAction {
 	private UserService userServiceImpl;
 
 	private User user;
+	private UserVo userVo;
 	private int pageNo = 1;
 	private int pageContSize = 3;
 
@@ -69,6 +72,13 @@ public class UserAction extends BaseAction {
 		}
 
 	}
+	
+	public String listAfterAdd(){
+		setAttribute("page",
+				userServiceImpl.getPage(1, 1, pageContSize));
+		setAttribute("state", 1);
+		return "list";
+	}
 
 	public String listByState() {
 		setAttribute("page", userServiceImpl.getPage(pageNo, pageContSize));
@@ -82,19 +92,30 @@ public class UserAction extends BaseAction {
 	 * @throws InterruptedException
 	 */
 	public String add() throws InterruptedException {
-		String username = user.getName();
+		String username = userVo.getName();
 		String regex = "([0-9]|[A-Z]|[a-z]|[\\w])+";
 		Pattern p = Pattern.compile(regex);
 		Matcher m = p.matcher(username);
 		if (m.matches()) {
 			if (userServiceImpl.checkUserName(username).size() != 0) {
 				return "error";
-			} else {
-				userServiceImpl.addUser(user);
+			} else if(userVo.getPassword().equals(userVo.getNewPassword())){
+				userServiceImpl.addUser(new User(userVo));
+				 return "listAfterAdd";
+				 //刚添加的用户的默认值属性为空！！why？？？？
+				/*user = userServiceImpl.checkUserName(userVo.getName()).get(0);
+				System.err.println(user.getRole());
+				Page page = userServiceImpl.getPage(1, 1, pageContSize);
+				List<User> list = (List<User>) page.getPageList();
+				for(User u: list){
+					System.err.println(u.getId()+"role"+u.getRole());
+				}
 				setAttribute("page",
-						userServiceImpl.getPage(1, 1, pageContSize));
+						page);
 				setAttribute("state", 1);
-				return "list";
+				return "list";*/
+			}else{
+				return "error";
 			}
 		} else {
 			return "error";
@@ -215,6 +236,15 @@ public class UserAction extends BaseAction {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	
+	public UserVo getUserVo() {
+		return userVo;
+	}
+
+	public void setUserVo(UserVo userVo) {
+		this.userVo = userVo;
 	}
 
 	public int getPageNo() {

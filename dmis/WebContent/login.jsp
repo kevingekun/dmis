@@ -120,11 +120,11 @@ function submit(){
 	var user = $("#loginform").serialize();
 	$.ajax({
 		type:"POST",
-		url:"/dmis/System/LoginCheck",
+		url:"System/LoginCheck",
 		data:user,
 		success:function(result){
 			if(result == "admin"){
-				location.href='/dmis/User/getAdminIndex';
+				location.href='User/getAdminIndex';
 			}else 
 				alert("用户名或密码错误，请重新登录！");
 		}
@@ -134,7 +134,7 @@ $("#forgotCheck").click(function(){
 	var user = $("#forgotform").serialize();
 	$.ajax({
 		type:"POST",
-		url:"/dmis/System/UpdatePasswordBySendMail",
+		url:"System/UpdatePasswordBySendMail",
 		data:user,
 		success:function(result){
 			if(result == "success"){
@@ -147,6 +147,4 @@ $("#forgotCheck").click(function(){
 });
 </script>
 </body>
-
-
 </html>

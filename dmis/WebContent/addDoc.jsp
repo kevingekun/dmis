@@ -114,7 +114,7 @@
 				$.ajax({
 					type : 'GET',
 					dataType : 'json',
-					url : '/dmis/Type/listByParentId',
+					url : 'Type/listByParentId',
 					success : function(jsonData) {
 						var data = eval(jsonData);
 						$.each(data, function(i, n) {
@@ -145,7 +145,7 @@
 					$.ajax({
 						type : 'GET',
 						dataType : 'json',
-						url : '/dmis/Type/listByParentId?parentid='
+						url : 'Type/listByParentId?parentid='
 								+ parentid,//parentid=父类的id
 						success : function(jsonData) {
 							var data = eval(jsonData);
@@ -180,7 +180,7 @@
 					$.ajax({
 						type : 'GET',
 						dataType : 'json',
-						url : '/dmis/Type/listByParentId?parentid='
+						url : 'Type/listByParentId?parentid='
 								+ parentwoid,
 						success : function(jsonData) {
 							var data = eval(jsonData);

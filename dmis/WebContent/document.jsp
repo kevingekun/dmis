@@ -332,7 +332,7 @@
 		$("#fileEdit1").click(
 			function(){
 				location.href="Doc/addDoc";
-			}		
+			}	
 		);
 		$("#fileEdit2").click(
 			function(){

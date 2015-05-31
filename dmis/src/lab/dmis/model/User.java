@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import lab.dmis.vo.UserVo;
+
 @Entity
 @org.hibernate.annotations.Entity(dynamicInsert = true, dynamicUpdate = true)
 public class User implements java.io.Serializable {
@@ -21,13 +23,13 @@ public class User implements java.io.Serializable {
 	private Boolean isForbidden;
 	private Integer level;
 	private String name;
-	private String newPassword;
 	private String password;
 	private String phone;
 	private String qq;
 	private Integer role;
 	private String verfi;
 
+	
 	/*
 	 * @OneToMany(mappedBy = "user") public Set<Comment> getComments() { return
 	 * this.comments; }
@@ -40,6 +42,13 @@ public class User implements java.io.Serializable {
 	 * @JoinColumn(name = "userId") public Set<Downloadrecoder>
 	 * getDownloadrecoders() { return this.downloadrecoders; }
 	 */
+
+	public User() {
+	}
+	public User(UserVo userVo){
+		this.name = userVo.getName();
+		this.password = userVo.getPassword();
+	}
 
 	@Column(unique = true)
 	public String getEmail() {
@@ -65,10 +74,6 @@ public class User implements java.io.Serializable {
 		return name;
 	}
 
-	@Transient
-	public String getNewPassword() {
-		return newPassword;
-	}
 
 	@Column(nullable = false)
 	public String getPassword() {
@@ -122,10 +127,6 @@ public class User implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void setNewPassword(String newPassword) {
-		this.newPassword = newPassword;
 	}
 
 	public void setPassword(String password) {

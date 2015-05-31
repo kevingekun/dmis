@@ -9,6 +9,7 @@
 			<result name="list">/personnel.jsp</result>
 			<result name="error">/error.jsp</result>
 			<result name="index">/welcome.jsp</result>
+			<result name="listAfterAdd" type="redirect">/User/listAfterAdd</result>
 		</action>
 	</package>
 </struts>
