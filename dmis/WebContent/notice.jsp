@@ -122,8 +122,8 @@
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="#request.page.pageList">
-							<tr id="<s:property value="id"/>">
+						<s:iterator value="#request.page.pageList" status="status">
+							<tr id="<s:property value="id"/>" class="formcolor">
 								<td><input type="checkbox" style="margin-left: 7px"
 									name="checkAll" id="checkAll" value="<s:property value="id"/>"
 									onclick="setSelectAll();" /></td>

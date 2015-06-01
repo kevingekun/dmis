@@ -67,7 +67,7 @@
 		</div>
 		</div>
 		<div class="widget-content nopadding">
-			<s:form name="form2" id="form2" method="post">
+			<s:form name="form2" id="form2" method="post" style="margin:0px;">
 				<table class="table table-bordered table-striped with-check">
 					<thead>
 						<tr>
@@ -80,7 +80,7 @@
 					</thead>
 					<tbody>
 						<s:iterator value="#request.page.pageList">
-							<tr id='<s:property value="id" />'>
+							<tr id='<s:property value="id" />' class="formcolor">
 								<td><s:property value="id" /></td>
 								<td><a href='Doc/reading?id=<s:property value="doc.id" />'>
 										<s:property value="doc.title" /></a></td>

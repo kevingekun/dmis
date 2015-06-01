@@ -84,7 +84,7 @@
 					</thead>
 					<tbody>
 						<s:iterator value="#request.page.pageList">
-							<tr>
+							<tr class="formcolor">
 								<td><input type="checkbox" style="margin-left: 12px"
 									name="checkAll" id="checkAll" value="<s:property value="id"/>"
 									onClick="setSelectAll();" /></td>

@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import lab.common.model.Page;
 import lab.common.web.BaseAction;
 import lab.dmis.model.User;
 import lab.dmis.service.UserService;
@@ -98,10 +97,14 @@ public class UserAction extends BaseAction {
 		Matcher m = p.matcher(username);
 		if (m.matches()) {
 			if (userServiceImpl.checkUserName(username).size() != 0) {
+				this.addFieldError("error", "用户名已经存在！");
 				return "error";
-			} else if(userVo.getPassword().equals(userVo.getNewPassword())){
+			} else if(userVo.getPassword().length()<6||userVo.getPassword().length()>12){
+				this.addFieldError("error", "密码长度不符合要求！");
+				return "error";
+			}else if(userVo.getPassword().equals(userVo.getNewPassword())){
 				userServiceImpl.addUser(new User(userVo));
-				 return "listAfterAdd";
+				return "listAfterAdd";
 				 //刚添加的用户的默认值属性为空！！why？？？？
 				/*user = userServiceImpl.checkUserName(userVo.getName()).get(0);
 				System.err.println(user.getRole());
@@ -115,9 +118,11 @@ public class UserAction extends BaseAction {
 				setAttribute("state", 1);
 				return "list";*/
 			}else{
+				this.addFieldError("error", "添加失败");
 				return "error";
 			}
 		} else {
+			this.addFieldError("error", "用户名格式错误");
 			return "error";
 		}
 

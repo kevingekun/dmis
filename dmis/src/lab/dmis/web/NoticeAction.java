@@ -28,6 +28,8 @@ public class NoticeAction extends BaseAction {
 	private Notice notice;
 	private int pageNo = 1;
 	private int pageContSize = 3;
+	
+	//private List<Object> notices = new ArrayList<Object>();
 
 	JSONArray jsonArray;
 
@@ -49,6 +51,7 @@ public class NoticeAction extends BaseAction {
 	 * @return
 	 */
 	public String list() {
+		//notices.add(noticeServiceImpl.getPage(pageNo, pageContSize)); 前台可直接得到 notices
 		setAttribute("page", noticeServiceImpl.getPage(pageNo, pageContSize));
 		return "list";
 	}
@@ -118,4 +121,11 @@ public class NoticeAction extends BaseAction {
 		this.pageNo = pageNo;
 	}
 
+/*	public List<Object> getNotices() {
+		return notices;
+	}
+
+	public void setNotices(List<Object> notices) {
+		this.notices = notices;
+	}*/
 }

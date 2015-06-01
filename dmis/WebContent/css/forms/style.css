@@ -358,3 +358,6 @@ input.validation-passed,textarea.validation-passed {
 	color: #FFF;
 	font-weight: bold;
 }
+.formcolor{
+	background-color: rgba(239, 239, 239, 1);
+}

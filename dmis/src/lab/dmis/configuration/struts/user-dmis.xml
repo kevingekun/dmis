@@ -4,12 +4,17 @@
         "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 	<package name="USER" namespace="/User" extends="struts-default">
+
+		<!-- <default-action-ref name="UnderConstruction" /> 有bug不能解决
+		<action name="welcome">
+			<result>/welcome.jsp</result>
+		</action> -->
 		<action name="*" class="userAction" method="{1}">
 			<result name="loginOut" type="redirect">login.jsp</result>
 			<result name="list">/personnel.jsp</result>
 			<result name="error">/error.jsp</result>
 			<result name="index">/welcome.jsp</result>
-			<result name="listAfterAdd" type="redirect">/User/listAfterAdd</result>
+			<result name="listAfterAdd" type="redirectAction">listAfterAdd</result><!-- 使用redirect也可以 -->
 		</action>
 	</package>
 </struts>

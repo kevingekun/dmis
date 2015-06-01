@@ -156,6 +156,7 @@ public class DocAction extends BaseAction {
 		if (doc.getLevel() != null) {
 			return "list";
 		} else {
+			this.addFieldError("error", "文档上传失败！");
 			return "error";
 		}
 	}

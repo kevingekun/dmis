@@ -125,6 +125,7 @@ public class KeywordAction extends BaseAction {
 			setAttribute("state", 2);
 			return "list";
 		} else {
+			this.addFieldError("error", "词条添加失败！");
 			return "error";
 		}
 
