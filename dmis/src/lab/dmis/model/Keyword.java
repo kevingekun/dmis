@@ -37,7 +37,9 @@ public class Keyword implements java.io.Serializable {
 	}
 
 	@ManyToMany
-	@JoinTable(name = "keyworddoc", joinColumns = @JoinColumn(name = "keywordId"), inverseJoinColumns = @JoinColumn(name = "docId"))
+	@JoinTable(name = "keyworddoc", 
+				joinColumns = @JoinColumn(name = "keywordId"), 
+				inverseJoinColumns = @JoinColumn(name = "docId"))
 	public Set<Doc> getDocs() {
 		return docs;
 	}
