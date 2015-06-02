@@ -46,7 +46,7 @@ public class SystemAction extends BaseAction {
 	 * 
 	 * @return
 	 */
-	public String LoginCheck() {
+	public String LoginCheck(){
 		List<User> list = userServiceImpl.loginCheck(user);
 		if (list.size() != 0)
 			putObjToSession("LOGIN_USER", list.get(0));

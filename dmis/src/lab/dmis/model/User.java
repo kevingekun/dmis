@@ -14,10 +14,6 @@ public class User implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	// private Set<Comment> comments = new HashSet<Comment>();
-	// private Set<Doc> docs = new HashSet<Doc>();
-	// private Set<Downloadrecoder> downloadrecoders = new
-	// HashSet<Downloadrecoder>();
 	private String email;
 	private Integer id;
 	private Boolean isForbidden;
@@ -30,18 +26,6 @@ public class User implements java.io.Serializable {
 	private String verfi;
 
 	
-	/*
-	 * @OneToMany(mappedBy = "user") public Set<Comment> getComments() { return
-	 * this.comments; }
-	 * 
-	 * @OneToMany(mappedBy = "user") public Set<Doc> getDocs() { return
-	 * this.docs; }
-	 * 
-	 * @OneToMany
-	 * 
-	 * @JoinColumn(name = "userId") public Set<Downloadrecoder>
-	 * getDownloadrecoders() { return this.downloadrecoders; }
-	 */
 
 	public User() {
 	}
@@ -98,16 +82,6 @@ public class User implements java.io.Serializable {
 	public String getVerfi() {
 		return verfi;
 	}
-
-	/*
-	 * public void setComments(Set<Comment> comments) { this.comments =
-	 * comments; }
-	 * 
-	 * public void setDocs(Set<Doc> docs) { this.docs = docs; }
-	 * 
-	 * public void setDownloadrecoders(Set<Downloadrecoder> downloadrecoders) {
-	 * this.downloadrecoders = downloadrecoders; }
-	 */
 
 	public void setEmail(String email) {
 		this.email = email;

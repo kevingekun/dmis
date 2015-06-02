@@ -93,7 +93,7 @@
 								   target="_blank" style="text-decoration: none;"><s:property
 											value="title" /></a></td>
 								<td><s:property value="format" /></td>
-								<td><s:property value="author" /></td>
+								<td><s:property value="user.name" /></td>
 								<td><s:date name="uploadTime" format="yyyy-MM-dd HH:mm" /></td>
 								<s:if test="isPass">
 									<td>通过</td>

@@ -28,7 +28,7 @@ public class UserAction extends BaseAction {
 	private User user;
 	private UserVo userVo;
 	private int pageNo = 1;
-	private int pageContSize = 3;
+	private int pageContSize = 8;
 
 	/**
 	 * 管理员请求页面

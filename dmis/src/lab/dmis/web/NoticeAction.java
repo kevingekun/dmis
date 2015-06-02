@@ -27,7 +27,7 @@ public class NoticeAction extends BaseAction {
 
 	private Notice notice;
 	private int pageNo = 1;
-	private int pageContSize = 3;
+	private int pageContSize = 8;
 	
 	//private List<Object> notices = new ArrayList<Object>();
 

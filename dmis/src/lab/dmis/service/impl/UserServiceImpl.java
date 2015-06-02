@@ -22,7 +22,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	 * 用户登录检查
 	 */
 	@SuppressWarnings("unchecked")
-	public List<User> loginCheck(User user) {
+	public List<User> loginCheck(User user){
 		String hql = "from User user where user.name ='" + user.getName()
 				+ "' and user.password = '" + user.getPassword() + "'";
 		return userDaoImpl.find(hql);

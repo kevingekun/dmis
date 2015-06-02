@@ -65,11 +65,13 @@ public class DocAction extends BaseAction {
 	public void categoryCount() throws IOException {
 		List<Integer> list = new ArrayList<Integer>();
 		list = docServiceImpl.countByCategory();
+		System.err.println(list);
 		/*
 		 * JsonConfig cfg = new JsonConfig(); cfg.setExcludes(new String[] {
 		 * "docs" }); JSONArray json = JSONArray.fromObject(list, cfg);
 		 */
 		JSONArray json = JSONArray.fromObject(list);
+		System.err.println(json);
 		getResponse().setCharacterEncoding("utf-8");
 		getResponse().getWriter().write(json.toString());
 	}

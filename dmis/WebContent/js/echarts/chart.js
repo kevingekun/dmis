@@ -63,7 +63,7 @@ function docDownload(num){
 	var dldChart = echarts.init(document.getElementById('docChart'));
 	option = {
 		    title : {
-		        text: '文档下载量统计',
+		        text: '文档下载量排行',
 		        subtext: 'professional statistical'
 		    },
 		    tooltip : {

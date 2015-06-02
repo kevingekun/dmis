@@ -20,8 +20,6 @@
 	</bean>
 
 	<!-- 配置sessionFactory -->
-	<!-- <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean" 
-		p:dataSource-ref="dataSource"> -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
 		p:dataSource-ref="dataSource">
