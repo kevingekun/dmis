@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 
 import lab.common.model.Page;
 import lab.common.service.impl.BaseManagerImpl;
-import lab.common.util.Common;
 import lab.dmis.dao.DocDao;
 import lab.dmis.model.Doc;
 import lab.dmis.model.User;
@@ -27,21 +26,40 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	/**
 	 * 统计文档类型
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Integer> countByCategory() {
-		String sql = "select count(*) from Doc doc group by doc.format";
-		return docDaoImpl.find(sql);
+		String sql = null;
+		List<Integer> list = new ArrayList<Integer>();
+		String[] strings = {"doc","docx","pdf","ppt","pptx","xls","xlsx"};
+		for(String s:strings){
+			sql = "select count(*) from Doc doc where doc.format='"+s+"'";
+			try {
+				list.add((Integer.parseInt(String.valueOf(docDaoImpl.find(sql).get(0)))));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 	/**
 	 * 统计文档各个等级数量
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Integer> countByLevel() {
-		String sql = "select count(*) from Doc doc group by doc.level";
-		return docDaoImpl.find(sql);
+		String sql = null;
+		List<Integer> list = new ArrayList<Integer>();
+		String[] strings = {"1","2","3"};
+		for(String s:strings){
+			sql = "select count(*) from Doc doc where doc.level="+s;
+			System.err.println(sql);
+			try {
+				list.add((Integer.parseInt(String.valueOf(docDaoImpl.find(sql).get(0)))));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 	/**
@@ -123,79 +141,6 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 	}
 
 	/**
-	 * 高级搜索
-	 */
-	public Page getAdvancedSearch(int pageNo, int pageContSize, String typeId,
-			String year, String category, String language, String keyword,
-			User user) {
-		hql = "from Doc doc where doc.level>=" + user.getRole() + "";
-		if (!typeId.equals("") || !year.equals("") || !category.equals("")
-				|| !language.equals("") || !keyword.equals(""))
-			hql += " and";
-		if (!typeId.equals("")) {
-			hql += " doc.type.id = '" + Integer.parseInt(typeId) + "'";
-			if (!year.equals("") || !category.equals("")
-					|| !language.equals("") || !keyword.equals(""))
-				hql += " and";
-		}
-		if (!year.equals("")) {
-			hql += " doc.uploadTime >= '"
-					+ Common.getTimestampTime(Integer.parseInt(year)) + "'";
-			if (!category.equals("") || !language.equals("")
-					|| !keyword.equals(""))
-				hql += " and";
-		}
-		if (!category.equals("")) {
-			hql += " doc.category = '" + category + "'";
-			if (!language.equals("") || !keyword.equals(""))
-				hql += " and";
-		}
-		if (!language.equals("")) {
-			hql += " doc.language = '" + Integer.parseInt(language) + "'";
-			if (!keyword.equals(""))
-				hql += " and";
-		}
-		if (!keyword.equals("")) {
-			hql += " (doc.title LIKE '%" + keyword + "%' or doc.brief LIKE '%"
-					+ keyword + "%' or doc.type.name LIKE '%" + keyword + "%')";
-		}
-
-		hql += " order by doc.id DESC";
-		return docDaoImpl.getPage(hql, pageNo, pageContSize);
-	}
-
-	@Override
-	public Doc QueryEqualTitle(Doc doc) {
-		// TODO Auto-generated method stub
-		Doc docTemp = new Doc();
-		docTemp = docDaoImpl.QueryEqualTitle(doc);
-		return docTemp;
-	}
-
-	@Override
-	public List<Doc> QueryLikeTitle(Doc doc) {
-		// TODO Auto-generated method stub
-		List<Doc> docListTemp = new ArrayList<Doc>();
-		List<Doc> docList = new ArrayList<Doc>();
-		docListTemp = docDaoImpl.QueryLikeTitle(doc);
-
-		for (int i = 0; i < 6 && i < docListTemp.size(); i++) { // 选取相关的前5个
-			if (docListTemp.get(i).getTitle() != doc.getTitle()) {
-				docList.add(docListTemp.get(i));
-			}
-		}
-
-		return docList;
-	}
-
-	@Override
-	public Doc QueryById(Doc doc) {
-		// TODO Auto-generated method stub
-		Doc temp = docDaoImpl.QueryById(doc);
-		return temp;
-	}
-
-	/**
 	 * 靠ID查找文档
 	 * 
 	 * @return
@@ -215,37 +160,23 @@ public class DocServiceImpl extends BaseManagerImpl<Doc, Integer> implements
 		docDaoImpl.update(doc);
 	}
 
+	
 	/**
-	 * 上传文档
-	 * 
-	 * @return
+	 * 上传文献
 	 */
-	/*
-	 * public void uploadDoc() { }
-	 */
-	/**
-	 * 批量删除
-	 */
-	// 上传文献，数据库增加一条doc记录
 	public void uploaddocument(Doc doc) {
 		docDaoImpl.add(doc);
 	}
 
+	/**
+	 * 批量删除
+	 */
 	public void deleteByIds(List<String> ids) {
 		for (int i = 0; i < ids.size(); i++) {
 			int id = Integer.parseInt(ids.get(i));
 			docDaoImpl.deleteByKey(id);
 		}
 
-	}
-
-	// 通过原文件id查找历史版本
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<Doc> findAllByOriginalId(int originalId) {
-		String hql = "from Doc as d where d.originalId=" + originalId
-				+ " order by d.version desc";
-		return docDaoImpl.find(hql);
 	}
 
 	/**

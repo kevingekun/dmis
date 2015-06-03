@@ -25,6 +25,7 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	public List<User> loginCheck(User user){
 		String hql = "from User user where user.name ='" + user.getName()
 				+ "' and user.password = '" + user.getPassword() + "'";
+		System.err.println(hql);
 		return userDaoImpl.find(hql);
 	}
 
@@ -37,27 +38,6 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 		String hql = "from User user where user.name ='" + user.getName()
 				+ "' and user.email = '" + user.getEmail() + "'";
 		return userDaoImpl.find(hql);
-	}
-
-	/**
-	 * 验证用户名是否存在已经验证码是否正确
-	 */
-	@SuppressWarnings("unchecked")
-	public List<User> NameAndVerfiCheck(User user) {
-		String hql = "from User user where user.name = '" + user.getName()
-				+ "'";
-		return userDaoImpl.find(hql);
-	}
-
-	/**
-	 * 用户重置密码
-	 */
-	public void PasswordUpdate(User user) {
-		userDaoImpl.update(user);
-	}
-
-	public void resetPassword(User user) {
-		userDaoImpl.update(user);
 	}
 
 	/**

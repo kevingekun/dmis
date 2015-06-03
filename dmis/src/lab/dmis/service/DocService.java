@@ -17,16 +17,6 @@ public interface DocService extends BaseManager<Doc, Integer> {
 
 	public Page getPage(int pageNo, int pageContSize, boolean isPass);
 
-	public Page getAdvancedSearch(int pageNo, int pageContSize, String typeId,
-			String year, String category, String language, String keyword,
-			User user);
-
-	public Doc QueryEqualTitle(Doc doc); // 精确查询
-
-	public List<Doc> QueryLikeTitle(Doc doc); // 模糊查询
-
-	public Doc QueryById(Doc doc);
-
 	public List<Doc> findById(int id);// 通过ID查找
 
 	public void passDoc(Doc doc);// 通过文档
@@ -37,14 +27,9 @@ public interface DocService extends BaseManager<Doc, Integer> {
 
 	public Doc reading(Integer id);
 
-	public List<Doc> findAllByOriginalId(int originalId);
-
 	public List<Integer> countByCategory();
 
 	public List<Integer> countByLevel();
 
 	public List<Object> countByDownload();
-
-	// public void uploadDoc(Doc doc);
-
 }

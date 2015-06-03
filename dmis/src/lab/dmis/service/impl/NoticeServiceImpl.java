@@ -30,7 +30,6 @@ public class NoticeServiceImpl extends BaseManagerImpl<Notice, Integer>
 	 * 根据ID删除公告
 	 */
 	public void deleteById(int id) {
-		// String sql = "delete * from Notice where id="+id;
 		noticeDaoImpl.deleteByKey(id);
 	}
 

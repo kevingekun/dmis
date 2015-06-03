@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 public class KeywordDaoImpl extends BaseDAOImpl<Keyword, Integer> implements
 		KeywordDao {
 
+	@SuppressWarnings("unchecked")
 	public Keyword QueryEqualName(Keyword keyWord) {
 
 		String hql = "from Keyword where keyword=?";
@@ -26,6 +27,7 @@ public class KeywordDaoImpl extends BaseDAOImpl<Keyword, Integer> implements
 	@Override
 	public List<Keyword> QueryLikeName(Keyword keyWord) {
 		String hql = "from Keyword where keyword like ?";
+		@SuppressWarnings("unchecked")
 		List<Keyword> keywordList = find(hql, "%" + keyWord.getKeyword() + "%");
 		return keywordList;
 	}
@@ -33,6 +35,7 @@ public class KeywordDaoImpl extends BaseDAOImpl<Keyword, Integer> implements
 	@Override
 	public Keyword QueryById(Keyword keyWord) {
 		String hql = "from Keyword where id=?";
+		@SuppressWarnings("unchecked")
 		List<Keyword> keywordList = find(hql, keyWord.getId());
 		return keywordList.get(0);
 	}
@@ -40,6 +43,7 @@ public class KeywordDaoImpl extends BaseDAOImpl<Keyword, Integer> implements
 	@Override
 	public Keyword findByName(String keyword) {
 		String hql = "from Keyword where keyword=?";
+		@SuppressWarnings("unchecked")
 		List<Keyword> list = find(hql, keyword);
 		return list.get(0);
 

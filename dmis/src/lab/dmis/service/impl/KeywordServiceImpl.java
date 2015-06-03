@@ -1,6 +1,5 @@
 package lab.dmis.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,47 +19,9 @@ public class KeywordServiceImpl extends BaseManagerImpl<Keyword, Integer>
 	private KeywordDao keywordDaoImpl;
 	private Keyword keyword;
 
-	@Override
-	public Keyword QueryEqualName(Keyword keyWord) {
-		// TODO Auto-generated method stub
-		Keyword keyword = new Keyword();
-		keyword = keywordDaoImpl.QueryEqualName(keyWord);
-
-		if (keyword.getContent() == null) {
-			keyword.setContent("你查找的知识点不存在，请浏览相关文档对您是否有帮助。");
-
-		}
-		return keyword;
-
-	}
-
-	@Override
-	public List<Keyword> QueryLikeName(Keyword keyWord) {
-		// TODO Auto-generated method stub
-		List<Keyword> keywordListTemp = keywordDaoImpl.QueryLikeName(keyWord);
-		List<Keyword> keywordList = new ArrayList<Keyword>();
-
-		for (int i = 0; i < keywordListTemp.size() && i < 6; i++) { // 选取相关的前5个
-			if (keywordListTemp.get(i).getKeyword() != keyWord.getKeyword()) {
-
-				keywordList.add(keywordListTemp.get(i));
-			}
-
-		}
-
-		return keywordList;
-	}
-
-	@Override
-	public Keyword QueryById(Keyword keyWord) {
-		// TODO Auto-generated method stub
-		return keywordDaoImpl.QueryById(keyWord);
-	}
-
 	public Page getPage(int pageNo, int pageContSize) {
 		String hql = "from Keyword k order by k.id DESC";
 		return keywordDaoImpl.getPage(hql, pageNo, pageContSize);
-
 	}
 
 	public Page getPage(int pageNo, int pageContSize, boolean isPass) {
@@ -85,16 +46,6 @@ public class KeywordServiceImpl extends BaseManagerImpl<Keyword, Integer>
 			return keywordDaoImpl.getPage(hql3, pageNo, pageContSize);
 		}
 	}
-
-	/*
-	 * @SuppressWarnings("unchecked") public List<Keyword> isPassList(){ String
-	 * hql = "from Keyword k where k.isPass='true' order by k.id DESC"; return
-	 * keywordDao.find(hql); }
-	 * 
-	 * @SuppressWarnings("unchecked") public List<Keyword> noPassList(){ String
-	 * hql = "from Keyword k where k.isPass='false' order by k.id DESC"; return
-	 * keywordDao.find(hql); }
-	 */
 
 	public void addKeyword(Keyword keyword) {
 		keywordDaoImpl.save(keyword);

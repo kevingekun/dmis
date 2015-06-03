@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 public class DocDaoImpl extends BaseDAOImpl<Doc, Integer> implements DocDao {
 
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Doc QueryEqualTitle(Doc doc) {
 		
@@ -47,10 +48,9 @@ public class DocDaoImpl extends BaseDAOImpl<Doc, Integer> implements DocDao {
 		List<Doc> list=find(hql, doc.getId());
 		return list.get(0);
 	}
-//
+
 	@Override
 	public void add(Doc doc) {
-		// TODO Auto-generated method stub
 		save(doc);
 	}
 

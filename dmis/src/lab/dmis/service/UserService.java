@@ -12,10 +12,6 @@ public interface UserService extends BaseManager<User, Integer> {
 
 	public List<User> forgotCheck(User user);
 
-	public List<User> NameAndVerfiCheck(User user);
-
-	public void PasswordUpdate(User user);
-
 	public Page getPage(int pageNo, int pageContSize);
 
 	public Page getPage(int state, int pageNo, int pageContSize);
@@ -29,8 +25,6 @@ public interface UserService extends BaseManager<User, Integer> {
 	public void changeState(User user);
 
 	public List<User> findById(int id);
-
-	public void resetPassword(User user);
 
 	public List<User> checkUserName(String username);
 
