@@ -136,21 +136,21 @@ public class UserAction extends BaseAction {
 	public String delete() {
 		int state = Integer.parseInt(getParameter("state"));
 		List<String> ids = new ArrayList<String>();
+		int totalpage = 0;
 		String id = getParameter("id");
-		boolean isF = false;
 		if (id != null) {
 			ids.add(id);
 		} else {
 			ids = Arrays.asList(getRequest().getParameterValues("checkAll"));
 		}
-		if (state == 2) {
-			isF = true;
+		if (state == 1) {
+			totalpage = userServiceImpl.getPage(pageNo, pageContSize)
+					.getTotalPage();
+		}else{
+			totalpage = userServiceImpl.getPage(pageNo, pageContSize, true)
+					.getTotalPage();
 		}
-		userServiceImpl.deleteByIds(ids);
-		int totalpage = userServiceImpl.getPage(pageNo, pageContSize, isF)
-				.getTotalPage();
 		pageNo = Integer.parseInt(getParameter("pageNo"));
-		// System.out.println(pageNo);
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}

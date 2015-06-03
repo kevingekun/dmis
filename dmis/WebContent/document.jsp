@@ -228,10 +228,10 @@
 					url:"Keyword/bindDoc?keywordid="+keywordId+"&docid="+docId,
 					success:function(result){
 						if(result=="success"){
-							alert("绑定成功！");
+							alert("关联成功！");
 							cancleFile_keyword_doc();
 						}if(result=="repeat"){
-							alert("重复绑定！");
+							alert("已关联！");
 						}
 					},
 					error:function(){

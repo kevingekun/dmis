@@ -80,7 +80,11 @@ public class UserServiceImpl extends BaseManagerImpl<User, Integer> implements
 	}
 
 	public Page getPage(int pageNo, int pageContSize, boolean isForbidden) {
-		String hql = "from User u where u.isForbidden=1  order by u.id DESC";
+		int isF = 0;
+		if(isForbidden == true){
+			isF = 1;
+		}
+		String hql = "from User u where u.isForbidden='"+isF+"'  order by u.id DESC";
 		return userDaoImpl.getPage(hql, pageNo, pageContSize);
 	}
 

@@ -59,20 +59,27 @@ public class KeywordAction extends BaseAction {
 	public String delete() {
 		int state = Integer.parseInt(getParameter("state"));
 		List<String> ids = new ArrayList<String>();
+		int totalpage = 0;
 		String id = getParameter("id");
 		if (id != null) {
 			ids.add(id);
 		} else {
 			ids = Arrays.asList(getRequest().getParameterValues("checkAll"));
 		}
-		boolean isPass = false;
-		if (state == 1) {
-			isPass = true;
-		}
 		keywordServiceImpl.deleteByIds(ids);
-		int totalpage = keywordServiceImpl
-				.getPage(pageNo, pageContSize, isPass).getTotalPage();
+		if(state == 2){
+			totalpage = keywordServiceImpl
+					.getPage(pageNo, pageContSize).getTotalPage();
+		}else if (state == 1) {
+			totalpage = keywordServiceImpl
+					.getPage(pageNo, pageContSize, true).getTotalPage();
+		}else{
+			totalpage = keywordServiceImpl
+					.getPage(pageNo, pageContSize, false).getTotalPage();
+		}
+		System.err.println(totalpage);
 		pageNo = Integer.parseInt(getParameter("pageNo"));
+		System.err.println(pageNo);
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
 		}

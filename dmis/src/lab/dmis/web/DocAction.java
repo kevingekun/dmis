@@ -191,20 +191,25 @@ public class DocAction extends BaseAction {
 	 */
 	public String delete() {
 		int state = Integer.parseInt(getParameter("state"));
+		System.err.println("state:"+state);
 		List<String> ids = new ArrayList<String>();
+		int totalpage = 0;
 		String id = getParameter("id");
 		if (id != null) {
 			ids.add(id);
 		} else {
 			ids = Arrays.asList(getRequest().getParameterValues("checkAll"));
 		}
-		boolean isPass = false;
-		if (state == 1) {
-			isPass = true;
-		}
 		docServiceImpl.deleteByIds(ids);
-		int totalpage = docServiceImpl.getPage(pageNo, pageContSize, isPass)
-				.getTotalPage();
+		if(state == 2){
+			totalpage = docServiceImpl.getPage(pageNo, pageContSize).getTotalPage();
+		}else if (state == 1) {
+			totalpage = docServiceImpl.getPage(pageNo, pageContSize, true)
+					.getTotalPage();
+		}else{
+			totalpage = docServiceImpl.getPage(pageNo, pageContSize, false)
+					.getTotalPage();
+		}
 		pageNo = Integer.parseInt(getParameter("pageNo"));
 		if (totalpage < pageNo) {
 			pageNo = pageNo - 1;
